@@ -7,9 +7,6 @@ gem 'rails', '4.2.6'
 group :production do
   gem 'pg'
 end
-group :development, :test do
-  gem 'sqlite3'
-end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -41,6 +38,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'sqlite3'
+  gem 'jasmine-rails' # if you plan to use JavaScript/CoffeeScript
 end
 
 group :development do
@@ -51,14 +50,9 @@ group :development do
   gem 'spring'
 end
 
-# debugger is useful in development mode too
-group :development, :test do
-  # gem 'debugger'
-  gem 'jasmine-rails' # if you plan to use JavaScript/CoffeeScript
-end
 # setup Cucumber, RSpec, autotest support
 group :test do
-  gem 'rspec-rails', '2.14'
+  gem 'rspec-rails', '3.4.2'
   gem 'simplecov', :require => false
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels' # basic imperative step defs
