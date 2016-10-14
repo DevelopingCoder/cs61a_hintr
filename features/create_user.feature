@@ -7,7 +7,7 @@ Feature: user creation
   
 Background: I am a hintr admin
   
-  Given the following accounts exist
+  Given the following accounts exist:
     | email                     | password          | admin |
     | testadmin@gmail.com       | password          | 1     |
     | testuser@gmail.com        | password          | 0     |
