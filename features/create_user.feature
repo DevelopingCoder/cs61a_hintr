@@ -27,3 +27,4 @@ Scenario: Admin should be able to delete users
   Then I should see all users
   And I click on "delete" for "testuser@gmail.com"
   Then I should not see "testuser@gmail.com"
+  
