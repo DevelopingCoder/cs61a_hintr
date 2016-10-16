@@ -9,10 +9,6 @@ Given /^I am on (.*)$/ do |page|
     step("I visit #{page}")
 end
 
-Given /^I am not logged in$/ do
-    pending
-end
-
 Given /^I log in with email: "(.*)" and password: "(.*)"$/ do
     pending
 end

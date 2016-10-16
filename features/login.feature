@@ -11,7 +11,6 @@ Background: user already has an account
     | testuser@gmail.com        | password          | false |
   
 Scenario: Not logged in user will get redirected to login page
-  Given I am not logged in
   Given I visit the home page
   Then I should be on the login page
   And I fill in "email" with "testuser@gmail.com"
