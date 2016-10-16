@@ -5,6 +5,10 @@ ruby '2.3.0'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
 
+#Use devise for login
+gem 'devise', '3.4.1'
+gem 'bootstrap-sass'
+
 group :production do
   gem 'pg'
 end
