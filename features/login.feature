@@ -1,5 +1,4 @@
 Feature: user login 
-  
     As a 61a TA
     So that I can login to the hintr app
     I want to be able to login and see the dashboard
@@ -12,15 +11,15 @@ Background: user already has an account
   
 Scenario: Not logged in user will get redirected to login page
   Given I am not logged in
-  Given I visit the home page
+  And I visit the home page
   Then I should be on the login page
-  And I fill in "email" with "testuser@gmail.com"
-  And I fill in "password" with "password"
+  And I fill in the email field with "testuser@gmail.com"
+  And I fill in the password field with "password"
   And I click "login"
   Then I should be on the user dashboard for "testuser@gmail.com"
   
 Scenario: Logged in user will get redirected to dashboard
-  Given I am logged in
+  Given I log in with email: "testuser@gmail.com" and pass: "password"
   And I visit the home page
   Then I should be on the dashboard
   And I should not be on the login page

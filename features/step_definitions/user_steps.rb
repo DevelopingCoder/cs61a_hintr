@@ -1,30 +1,32 @@
 # Step for populating the DB with users
 Given /^the following accounts exist:$/ do |users_table| 
-    pending
+    users_table.hashes.each do |user|
+        Movie.create user
+    end
 end
 
 Given /^I visit (.*)$/ do |page|
-    pending
+    visit path_to(page)
 end
 
 Given /^I am on the dashboard$/ do
     pending
 end
 
-Given /^I am( not)? logged in$/ do |not_logged_in|
+Given /^I am not logged in$/ do
     pending
 end
 
-And /^I fill in the (.*) field with "([^"]*)"$/ do |page, input|
+Given /^I log in with email: "(.*)" and password: "(.*)"$/ do
     pending
 end
 
-And /^I fill in the password with "([^"]*)"$/ do |password| 
-    pending
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+  fill_in(field, :with => value)
 end
 
-And /^I click "([^"]*)"$/ do |button|
-    pending
+When /^(?:|I )press "([^"]*)"$/ do |button|
+  click_button(button)
 end
 
 And /^I click on "([^"]*)" for "([^"]*)"$/ do |button, input|
