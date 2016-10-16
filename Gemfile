@@ -9,6 +9,8 @@ gem 'rails', '4.2.6'
 gem 'devise', '3.4.1'
 gem 'bootstrap-sass'
 
+gem 'jquery-turbolinks'
+
 group :production do
   gem 'pg'
 end
