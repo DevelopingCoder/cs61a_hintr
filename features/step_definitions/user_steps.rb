@@ -5,12 +5,8 @@ Given /^the following accounts exist:$/ do |users_table|
     end
 end
 
-Given /^I visit (.*)$/ do |page|
-    visit path_to(page)
-end
-
-Given /^I am on the dashboard$/ do
-    pending
+Given /^I am on (.*)$/ do |page|
+    step("I visit #{page}")
 end
 
 Given /^I am not logged in$/ do
@@ -21,27 +17,7 @@ Given /^I log in with email: "(.*)" and password: "(.*)"$/ do
     pending
 end
 
-When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
-  fill_in(field, :with => value)
-end
-
-When /^(?:|I )press "([^"]*)"$/ do |button|
-  click_button(button)
-end
-
-And /^I click on "([^"]*)" for "([^"]*)"$/ do |button, input|
-    pending
-end
-
-Then /^I should( not)? be on (.*)$/ do |not_on_page, page|
-    pending
-end
-
-Then /^I should( not)? see "([^"]*)"$/ do |value|
-    pending
-end
-
-Then /^I should see all users$/ do 
-    pending
+Then /^I should see (\d+) users?$/ do |num|
+    expect(all('tr#user').count).to eq num
 end
 
