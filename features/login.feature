@@ -8,10 +8,9 @@ Background: user already has an account
   
   Given the following accounts exist:
     | email                     | password          | admin |
-    | testuser@gmail.com        | password          | 0     |
+    | testuser@gmail.com        | password          | false |
   
 Scenario: Not logged in user will get redirected to login page
-  Given I am not logged in
   Given I visit the home page
   Then I should be on the login page
   And I fill in "email" with "testuser@gmail.com"
@@ -20,20 +19,19 @@ Scenario: Not logged in user will get redirected to login page
   Then I should be on the user dashboard for "testuser@gmail.com"
   
 Scenario: Logged in user will get redirected to dashboard
-  Given I am logged in
+  Given I log in with email: "testuser@gmail.com" and password: "password"
   And I visit the home page
   Then I should be on the dashboard
-  And I should not be on the login page
   
 Scenario: Logging out should log the user out
-  Given I am logged in
+  Given I log in with email: "testuser@gmail.com" and password: "password"
   And I am on the dashboard
   And I click "logout"
   Then I should be on the logout page
 
 Scenario: User can see full user list
-  Given I am logged in
+  Given I log in with email: "testuser@gmail.com" and password: "password"
   And I am on the dashboard
   And I click "users"
-  Then I should see all users
+  Then I should see 1 user
   
