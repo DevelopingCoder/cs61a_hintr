@@ -16,13 +16,14 @@ class PagesController < ApplicationController
             success = User.create({:name=>name, :email => email, :password => password})
             if success
                 flash[:notice] = "Email invite(s) have been sent"
-            else
-                flash[:notice] = "User creation unsuccessful"
+            # else
+            #     flash[:notice] = "User creation unsuccessful"
             end
         end
         redirect_to display_users_path
     end
     
+    #Add checks to ensure no deletion of admin? No deletion of self?
     def delete_user
         if current_user.admin?
             email = params[:delete_email]
@@ -31,11 +32,11 @@ class PagesController < ApplicationController
                 success = pop_user.destroy
                 if success
                     flash[:notice] = "User deletion successful"
-                else
-                    flash[:notice] = "User deletion unsuccessful"
+                # else
+                #     flash[:notice] = "User deletion unsuccessful"
                 end
-            else
-                flash[:notice] = "User with specified email does not exist"
+            # else
+            #     flash[:notice] = "User with specified email does not exist"
             end
         end
         redirect_to display_users_path
