@@ -1,9 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
+
+#Use devise for login
+gem 'devise', '3.4.1'
+gem 'bootstrap-sass'
+
+gem 'jquery-turbolinks'
 
 group :production do
   gem 'pg'

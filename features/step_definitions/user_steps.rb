@@ -1,45 +1,29 @@
 # Step for populating the DB with users
 Given /^the following accounts exist:$/ do |users_table| 
-    pending
+    users_table.hashes.each do |user|
+        User.create user
+    end
 end
 
-Given /^I visit (.*)$/ do |page|
-    pending
+Given /^I am on (.*)$/ do |page|
+    visit path_to(page)
 end
 
-Given /^I am on the dashboard$/ do
-    pending
-end
+Given /^I log in with email: "(.*)" and password: "(.*)"$/ do |email, pass|
+    visit path_to("the login page")
+    fill_in("user_email", :with => email)
+    fill_in("user_password", :with => pass)
+    click_button("Login")
+end    
 
-Given /^I am( not)? logged in$/ do |not_logged_in|
-    pending
+And /^I logout$/ do
+  current_driver = Capybara.current_driver
+  Capybara.current_driver = :rack_test
+  page.driver.submit :delete, path_to("the logout page"), {}
+  Capybara.current_driver = current_driver 
 end
-
-And /^I fill in the (.*) field with "([^"]*)"$/ do |page, input|
-    pending
-end
-
-And /^I fill in the password with "([^"]*)"$/ do |password| 
-    pending
-end
-
-And /^I click "([^"]*)"$/ do |button|
-    pending
-end
-
-And /^I click on "([^"]*)" for "([^"]*)"$/ do |button, input|
-    pending
-end
-
-Then /^I should( not)? be on (.*)$/ do |not_on_page, page|
-    pending
-end
-
-Then /^I should( not)? see "([^"]*)"$/ do |value|
-    pending
-end
-
-Then /^I should see all users$/ do 
-    pending
-end
+    
+# Then /^I should see (\d+) users?$/ do |num|
+#     expect(all('tr#user').count).to eq num
+# end
 
