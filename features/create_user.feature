@@ -5,25 +5,36 @@ Feature: user creation
   I want to be able to add users so they can signup
   And I want to be able to delete users
   
-Background: I am a hintr admin
+  And as a nonadmin
+  I should not be able to add users
+  And I should not be able to delete users
+  
+Background: An admin and a nonadmin account exist
   
   Given the following accounts exist:
-    | email                     | password          | admin |
-    | testadmin@gmail.com       | password          | true  |
-    | testuser@gmail.com        | password          | false |
+  | name       | email                     | password          | admin |
+  | testadmin  | testadmin@gmail.com       | password          | true  |
+  | testuser   | testuser@gmail.com        | password          | false |
   
-  And I am logged in
-  And I visit the dashboard
   
 Scenario: Admin should be able to add a new user email
-  Given I click "users"
+  Given I log in with email: "testadmin@gmail.com" and password: "password"
+  And I follow "Users"
   Then I should see all users
-  And I fill in "Add New User" with "testuser@gmail.com"
-  And I click "Add"
+  And I fill in "add_email" with "testuser1@gmail.com"
+  And I press "Add"
   Then I should see "Email invite(s) have been sent"
-  
 Scenario: Admin should be able to delete users
-  Given I click "users"
-  And I click on "delete" for "testuser@gmail.com"
+  Given I log in with email: "testadmin@gmail.com" and password: "password"
+  And I follow "Users"
+  And I fill in "delete_email" with "testuser@gmail.com"
+  And I press "Delete"
   Then I should not see "testuser@gmail.com"
   
+Scenario: Nonadmins should not be able to add or delete user
+  Given I log in with email: "testuser@gmail.com" and password: "password"
+  And I follow "Users"
+  Then I should see all users
+  But I should not see "Add"
+  And I should not see "Add New User"
+  And I should not see "delete testuser@gmail.com"
