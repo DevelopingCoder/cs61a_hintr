@@ -7,3 +7,5 @@
 <a href="https://codeclimate.com/github/rails/rails"><img src="https://codeclimate.com/github/rails/rails/badges/issue_count.svg" /></a>
 
 pivotal tracker - https://www.pivotaltracker.com/projects/1887731/settings
+
+CS61a-Hintr is a Saas app in the cloud made for the organizers of the Cal undergraduate course "CS61A" to collaborate, crowdsource, and vote on hints for their test questions. 
