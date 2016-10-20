@@ -18,6 +18,10 @@ module NavigationHelpers
     
     when /^the sign-in page$/
       '/users/sign_in'
+    when /^the login page$/
+      new_user_session_path
+    when /^the logout page$/
+      destroy_user_session_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

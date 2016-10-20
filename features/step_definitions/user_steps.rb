@@ -5,27 +5,11 @@ Given /^the following accounts exist:$/ do |users_table|
     end
 end
 
-Given /^I am on the dashboard$/ do
-    pending
-end
-
-Given /^I am not logged in$/ do
-    pending
-end
-
 Given /^I log in with email: "(.*)" and password: "(.*)"$/ do |email, password|
     step %Q{I am on the sign-in page}
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
     step %Q{I press "Log in"}
-end
-
-And /^I click on "([^"]*)" for "([^"]*)"$/ do |button, input|
-    pending
-end
-
-Then /^I should see (\d+) users?$/ do |num|
-    expect(all('tr#user').count).to eq num
 end
 
 Then /^I should see all users$/ do 
@@ -34,3 +18,13 @@ Then /^I should see all users$/ do
     end
 end
 
+# Given /^I am on (.*)$/ do |page|
+#     visit path_to(page)
+# end
+
+And /^I logout$/ do
+  current_driver = Capybara.current_driver
+  Capybara.current_driver = :rack_test
+  page.driver.submit :delete, path_to("the logout page"), {}
+  Capybara.current_driver = current_driver 
+end
