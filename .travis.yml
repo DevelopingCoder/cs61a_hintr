@@ -5,6 +5,9 @@ rvm:
  #- rbx-2
 # uncomment and edit the following line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
+addons:
+  code_climate:
+    repo_token: 976c5a538786dc6c13287d99da060bf1c55ca851a44523e8634cd7854da38e2e bundle exec rake
 
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
@@ -13,3 +16,4 @@ script:
   - bundle exec cucumber
 after_script:
   - bundle exec rake send_to_codeclimate
+  
