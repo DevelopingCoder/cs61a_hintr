@@ -10,4 +10,4 @@
 
 pivotal tracker - https://www.pivotaltracker.com/projects/1887731/settings
 
-CS61a-Hintr is a Saas app in the cloud made for the organizers of the Cal undergraduate course "CS61A" to collaborate, crowdsource, and vote on hints for their test questions. 
+CS61a-Hintr is a Saas app in the cloud made for the organizers of the Cal undergraduate course "CS61A" to collaborate, crowdsource, and vote on hints and concepts for lab questions. 
