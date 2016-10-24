@@ -14,20 +14,22 @@ Background: An admin and a nonadmin account exist
   Given the following accounts exist:
   | name       | email                     | password          | admin |
   | testadmin  | testadmin@gmail.com       | password          | true  |
-  | testuser2  | test2@gmail.com           | password          | false |
-  | testuser3  | test3@gmail.com           | password          | false |
-  | testadmin2 | testadmin2@gmail.com      | password          | true  |
+  | testuser   | test2@gmail.com           | password          | false |
+  | testuser   | test3@gmail.com           | password          | false |
+  | testuser   | testadmin2@gmail.com      | password          | true  |
   
   Given I log in with email: "testadmin@gmail.com" and password: "password"
   And I follow "Users"
 
 Scenario: Admin should be able to add a new user email
+  Then I should see all users
   And I fill in "add_email" with "testuser1@gmail.com"
   And I press "Add"
   Then I should see "Email invite(s) have been sent"
   And I should see "testuser1@gmail.com"
 
 Scenario: Admin should be able to add batch user emails
+  Then I should see all users
   And I fill in "add_email" with "testuser1@gmail.com, testuser2@gmail.com, testuser3@gmail.com"
   And I press "Add"
   Then I should see "Email invite(s) have been sent"
