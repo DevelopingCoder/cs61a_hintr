@@ -7,6 +7,9 @@ coverage
 # Ignore bundler config.
 /.bundle
 
+#Ignore .byebughistory
+.byebug_history
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
