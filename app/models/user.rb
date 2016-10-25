@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
     user = self
     mail = Mail.new do
       from     'do-not-reply@hintr.app.com'
-      #to       user.email
-      to       'evansheng112@berkeley.edu'
+      to       user.email
+      # to       'jaysid95@berkeley.edu'
       subject  'Welcome to cs61a Hintr!'
       
       text_part do
