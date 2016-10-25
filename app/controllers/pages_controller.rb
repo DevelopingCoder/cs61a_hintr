@@ -6,8 +6,12 @@ class PagesController < ApplicationController
     def add_user
         if current_user.admin?
             email = params[:add_email]
+<<<<<<< bb18468162551b3dcb332105213c33f504d32753
             # password = generate_password
             password = SecureRandom.urlsafe_base64(6)
+=======
+            password = generate_password
+>>>>>>> Created Cuke tests for Uploading
             name = ''
             #Check if user is already added
             success = User.create({:name=>name, :email => email, :password => password})
