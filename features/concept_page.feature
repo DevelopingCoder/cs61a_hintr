@@ -6,7 +6,9 @@ Feature: Concept page
   And I want to be able to vote on comments
   
 Background: A user and concept exists
-  Given the concept "printing" exists with status "no comments" and tags "none, strings"
+  Given the following concepts exist:
+  | name       | status          | tags                            |
+  | printing   | no comments     | none, strings                   |
   And the following comments exist:
   | concept    | body                                 |
   | printing   | print statements evaluate to None    | 

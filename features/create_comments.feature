@@ -7,7 +7,9 @@ Feature: Comment creation
 Background: A user and concept exists
   
   Given I am logged in
-  And the concept "printing" exists with status "no comments" and tags "none, strings"
+  And the following concepts exist:
+  | name       | status          | tags                            |
+  | printing   | no comments     | none, strings                   |
   And I follow "concepts"
   And I follow "printing"
  
@@ -20,4 +22,4 @@ Scenario: Create a valid comment
 Scenario: Create an invalid comment
   Given I press "new comment"
   And I press "submit"
-  Then I should see "comment must have body" # or some similar error message
+  Then I should see "comment must have body"
