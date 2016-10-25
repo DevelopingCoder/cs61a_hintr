@@ -11,7 +11,7 @@ Background: A hintr account and concepts exist
   Given the following accounts exist:
   | name       | email                     | password          | admin |
   | testuser   | testuser@gmail.com        | password          | false |
-  And the following concepts exists:
+  And the following concepts exist:
   | name       | status       | tags                            |
   | printing   | assigned     | none, strings                   |
   | recursion  | in_progress  | tail recursion, tree recursion  |
@@ -20,4 +20,4 @@ Background: A hintr account and concepts exist
 
 Scenario: User can view a list of concepts and their status 
   When I follow "Concepts"
-  Then I should see all concepts
+  Then I should see all the concepts
