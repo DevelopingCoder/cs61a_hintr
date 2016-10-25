@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Upvotes:</strong>
+  <%= @comment.upvotes %>
+</p>
+
+<p>
+  <strong>Downvotes:</strong>
+  <%= @comment.downvotes %>
+</p>
+
+<p>
+  <strong>Is final:</strong>
+  <%= @comment.is_final %>
+</p>
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>
