@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     Mail.defaults do
       delivery_method :smtp, {
         :address => 'smtp.gmail.com',
-        #:port => '587',
+        :port => '587',
         :user_name => 'hintr.app.noreply@gmail.com',
         :password => 'hintrapp169',
         :authentication => :plain,
