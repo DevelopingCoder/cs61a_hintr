@@ -32,3 +32,8 @@ Scenario: A user can downvote a comment
   Given I follow "printing"
   And I downvote "print takes in strings as arguments"
   Then "print takes in strings as arguments" should have 1 downvote
+
+Scenario: A user can delete a comment
+  Given I follow "printing"
+  And I delete "print statements evaluate to None"
+  Then I should not see "print statements evaluate to None"
