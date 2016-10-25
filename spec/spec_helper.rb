@@ -21,10 +21,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
-<<<<<<< 0f0ddc34bdb145ef6bd8f22a75993a206a7f6514
 
-=======
->>>>>>> got factory girl to work for creating users and admins, created tdd for add and deleting users, created tdd for users not having same privileges
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
