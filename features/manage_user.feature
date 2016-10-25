@@ -22,14 +22,12 @@ Background: An admin and a nonadmin account exist
   And I follow "Users"
 
 Scenario: Admin should be able to add a new user email
-  Then I should see all users
   And I fill in "add_email" with "testuser1@gmail.com"
   And I press "Add"
   Then I should see "Email invite(s) have been sent"
   And I should see "testuser1@gmail.com"
 
 Scenario: Admin should be able to add batch user emails
-  Then I should see all users
   And I fill in "add_email" with "testuser1@gmail.com, testuser2@gmail.com, testuser3@gmail.com"
   And I press "Add"
   Then I should see "Email invite(s) have been sent"
