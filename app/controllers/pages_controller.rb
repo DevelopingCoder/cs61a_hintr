@@ -14,8 +14,9 @@ class PagesController < ApplicationController
             name = 'Change Me'
             #Check if user is already added
             success = User.create({:name=>name, :email => email, :password => password})
-            if success
+            if success.id
                 flash[:notice] = "Email invite(s) have been sent"
+                success.send_email()
             # else
             #     flash[:notice] = "User creation unsuccessful"
             end

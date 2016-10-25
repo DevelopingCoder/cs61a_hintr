@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    </head>
+    <body>
+        <h1>Welcome to hintr!</h1>
+        <p>Your login is: <%= @user.email %></p>
+        <p>Your password is: <%= @user.password %></p>
+        <p>Login <%= link_to "here", "https://cs61a-hintr.herokuapp.com" %>
+        Make sure to change your password and set your name when you log in!
+        
+        Thanks,
+        
+        the hintr team</p>
+    </body>
+</html>
