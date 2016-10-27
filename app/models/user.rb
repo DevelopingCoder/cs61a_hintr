@@ -37,4 +37,7 @@ class User < ActiveRecord::Base
     
     mail.deliver!
   end
+  
+  has_many :votes
+  has_many :messages, :through => :votes
 end
