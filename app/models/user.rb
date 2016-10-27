@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+         
+  has_many :votes
+  has_many :messages, :through => :votes
 
   def send_email()
     # assuming the user has been created,
@@ -104,5 +107,4 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
 end
