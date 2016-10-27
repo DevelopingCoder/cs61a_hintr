@@ -14,9 +14,9 @@ Background: An admin and a nonadmin account exist
   Given the following accounts exist:
   | name       | email                     | password          | admin |
   | testadmin  | testadmin@gmail.com       | password          | true  |
-  | testuser   | test2@gmail.com           | password          | false |
-  | testuser   | test3@gmail.com           | password          | false |
-  | testuser   | testadmin2@gmail.com      | password          | true  |
+  | testuser2  | test2@gmail.com           | password          | false |
+  | testuser3  | test3@gmail.com           | password          | false |
+  | testadmin2 | testadmin2@gmail.com      | password          | true  |
   
   Given I log in with email: "testadmin@gmail.com" and password: "password"
   And I follow "Users"
@@ -49,14 +49,23 @@ Scenario: Admin should be able to delete users
 Scenario: Admins should not be able to delete other admins
   Then the checkbox for "delete_testadmin@gmail.com" should be disabled
   Then the checkbox for "delete_testadmin2@gmail.com" should be disabled
+
+Scenario: Admin should not be able to remove admin privelege from himself/herself
+  When I press "admin_testadmin@gmail.com"
+  Then I should see "Cannot remove admin priveleges from self"
+  And "testadmin@gmail.com" should be an admin
  
 Scenario: Admin should be able to assign a user admin privileges
-  When I press "admin_testuser@gmail.com"
-  Then "testuser@gmail.com" should be an admin
+  When I press "admin_test2@gmail.com"
+  Then I should see "Are you sure you want to make testuser2 an admin?"
+  When I press "Confirm"
+  Then "test2@gmail.com" should be an admin
   
-Scenario: Admin should be able to revoke a user admin privileges
+Scenario: Admin should be able to remove admin privileges
   When I press "admin_testadmin2@gmail.com"
-  Then "testuser@gmail.com" should not be an admin
+  Then I should see "Are you sure remove admin priveleges for testadmin2?"
+  When I press "Confirm"
+  Then "testadmin2@gmail.com" should not be an admin
   
 Scenario: Users should not be able to add or delete user
   Given I logout
