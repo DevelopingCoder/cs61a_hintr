@@ -363,6 +363,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
+  mail
   metric_fu
   pg
   rails (= 4.2.6)

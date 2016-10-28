@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class PagesController < ApplicationController
     before_action :require_login
  
@@ -10,12 +12,14 @@ class PagesController < ApplicationController
     def add_user
         if current_user.admin?
             email = params[:add_email]
-            password = generate_password
+            # password = generate_password
+            password = SecureRandom.urlsafe_base64(6)
             name = 'Change Me'
             #Check if user is already added
             success = User.create({:name=>name, :email => email, :password => password})
-            if success
+            if success.id
                 flash[:notice] = "Email invite(s) have been sent"
+                success.send_email()
             # else
             #     flash[:notice] = "User creation unsuccessful"
             end
