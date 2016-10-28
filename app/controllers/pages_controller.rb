@@ -1,20 +1,14 @@
 require 'securerandom'
 
 class PagesController < ApplicationController
-    before_action :require_login
- 
-    def require_login
-        if not (user_signed_in?)
-            redirect_to new_user_session_path # halts request cycle
-        end
-    end
+    before_action :authenticate_user!
     
     def add_user
         if current_user.admin?
             email = params[:add_email]
             # password = generate_password
             password = SecureRandom.urlsafe_base64(6)
-            name = 'Change Me'
+            name = ''
             #Check if user is already added
             success = User.create({:name=>name, :email => email, :password => password})
             if success.id
