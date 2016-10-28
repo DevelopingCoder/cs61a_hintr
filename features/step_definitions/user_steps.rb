@@ -10,6 +10,7 @@ Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, pass
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
     step %Q{I press "Log in"}
+    puts("hello")
 end
 
 Then /^I should see all users$/ do 
