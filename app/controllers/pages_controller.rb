@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class PagesController < ApplicationController
     before_action :require_login
     def require_login
