@@ -5,10 +5,8 @@ class PagesController < ApplicationController
         if current_user.admin?
             email = params[:add_email]
             # parse emails into array of email strings
-            User.create(email)
-            if success.id
+            if User.create(email)
                 flash[:notice] = "Email invite(s) have been sent"
-                success.send_email()
             else
                 flash[:notice] = "User creation unsuccessful"
             end
