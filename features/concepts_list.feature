@@ -12,10 +12,15 @@ Background: A hintr account and concepts exist
   | name       | email                     | password          | admin |
   | testuser   | testuser@gmail.com        | password          | false |
   And the following concepts exist:
-  | name       | status       | tags                            |
-  | printing   | assigned     | none, strings                   |
-  | recursion  | in_progress  | tail recursion, tree recursion  |
-  | loops      | no_comments  | iteration                       |
+  | name       | msg_status       | description         |
+  | printing   | assigned         | print method        |
+  | recursion  | in_progress      | recursive functions |
+  | loops      | no_comments      | for, while          |
+  # add the tags into the test when we have implemented tags
+  # | name       | msg_status       | tags                            |
+  # | printing   | assigned         | none, strings                   |
+  # | recursion  | in_progress      | tail recursion, tree recursion  |
+  # | loops      | no_comments      | iteration                       |
   And I log in with email: "testuser@gmail.com" and password: "password"
 
 Scenario: User can view a list of concepts and their status 

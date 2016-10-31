@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161027035223) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "content"
+    t.string   "author"
     t.integer  "concept_id"
     t.boolean  "finalized"
     t.datetime "created_at"

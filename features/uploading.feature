@@ -6,7 +6,6 @@ Background: A user account exists
 
     Given the following accounts exist:
     | name       | email                     | password          | admin |
-<<<<<<< bb18468162551b3dcb332105213c33f504d32753
     | testadmin  | testadmin@gmail.com       | password          | false |
     
     Given I log in with email: "testuser@gmail.com" and password: "password"
@@ -56,20 +55,6 @@ Scenario: I can upload multiple files
     When I am on the concepts page
     Then I should see "test concept"
     And I should see "test concept 2"
-=======
-    | testuser   | testuser@gmail.com        | password          | false |
-    
-    Given I log in with email: "testuser@gmail.com" and password: "password"
-
-  
-Scenario: I can upload a concepts file
-    Given I follow "Uploads"
-    And I choose to upload a "Concepts" file
-    Then I upload "concepts.csv"
-    When I am on the home page
-    And I follow "Concepts"
-    Then I should see "test concept"
->>>>>>> Created Cuke tests for Uploading
     When I follow "test concept"
     Then I should see "test tag 1"
     And I should see "test tag 2"
