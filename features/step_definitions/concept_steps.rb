@@ -12,19 +12,24 @@ And /^the following messages exist:$/ do |messages_table|
 end
 
 And /^I upvote "(.*)"$/ do |message|
-    pending # get the message and increment its upvotes
+    message_to_upvote = Message.find_by_content(message)
+    # click_on("upvote-#{message_to_upvote.id}")
+    # page.find("upvote-#{message_to_upvote.id}")
+    step %Q{I follow "Upvote-#{message_to_upvote.id}"}
 end
 
 And /^I downvote "(.*)"$/ do |message|
-    pending # get the message and increment its downvotes
+    step %Q{I follow "Downvote-#{message_to_upvote.id}"}
 end
 
 Then /"(.*)" should have (\d) upvotes?$/ do |message, upvotes|
-    pending
+    message = Message.find_by_content(message)
+    page.find("#num-upvotes-#{message.id}").should have_content(upvotes)
 end
 
-Then /"(.*)" should have (\d) downvotes?$/ do |message, upvotes|
-    pending
+Then /"(.*)" should have (\d) downvotes?$/ do |message, downvotes|
+    message = Message.find_by_content(message)
+    page.find("#num-downvotes-#{message.id}").should have_content(downvotes)
 end
 
 Then /^I should see all the concepts$/ do

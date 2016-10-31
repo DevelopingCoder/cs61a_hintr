@@ -8,7 +8,29 @@
 <ul>
   <% @messages.each do |message| %>
     <li>
-      <%= message.content %>
+      <div class="row">
+        <div class="col-md-2" id="votes">
+          <div class="row" id="upvotes">
+            <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
+              <%= link_to "Upvote-#{message.id}", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id} btn btn-default", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
+              <%= message.upvotes %>
+            </div>
+          </div>
+          <div class="row" id="downvotes">
+            <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
+              <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id} btn btn-default", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
+              <%= message.downvotes %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10" id="message">
+          <%= message.content %>
+        </div>
+      </div>
     </li>
   <% end %>
 </ul>
