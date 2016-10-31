@@ -13,10 +13,7 @@
         <%= link_to 'hintr', root_path, class: 'navbar-brand' %>
       </div>
       <div id="navbar">
-        <ul class="nav navbar-nav">
-          <li><%= link_to 'Home', root_path %></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right">
+       <ul class="nav navbar-nav pull-right">
           <% if user_signed_in? %>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -48,9 +45,24 @@
     <%= yield :top_content %>
 
   <div class="container">
-    <h1><%= yield :header %></h1>
-
-    <%= yield %>
+    <div class="row">
+      <% if user_signed_in? %>
+        <div class="col-sm-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><%= link_to 'Home', root_path %></li>
+            <li role="presentation"><%= link_to 'Users', display_users_path %></li>
+            <li role="presentation"><%= link_to 'Uploads', upload_path %></li>
+          </ul>
+        </div>
+        <div class="col-sm-10">
+          <h1><%= yield :header %></h1>
+          <%= yield %>
+        </div>
+      <% else %>
+        <h1><%= yield :header %></h1>
+        <%= yield %>
+      <% end %>
+    </div>
   </div>
 
 </body>

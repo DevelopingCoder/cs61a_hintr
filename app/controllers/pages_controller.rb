@@ -58,5 +58,7 @@ class PagesController < ApplicationController
         @users = User.all
         # If @users is nil, then log it b/c users should never be nil
     end
-
+    
+    def upload_menu
+    end
 end
