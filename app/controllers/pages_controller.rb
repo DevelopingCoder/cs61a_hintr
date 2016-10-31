@@ -1,21 +1,16 @@
-require 'securerandom'
-
 class PagesController < ApplicationController
     before_action :authenticate_user!
     
     def add_user
         if current_user.admin?
             email = params[:add_email]
-            # password = generate_password
-            password = SecureRandom.urlsafe_base64(6)
-            name = ''
-            #Check if user is already added
-            success = User.create({:name=>name, :email => email, :password => password})
+            # parse emails into array of email strings
+            User.create(email)
             if success.id
                 flash[:notice] = "Email invite(s) have been sent"
                 success.send_email()
-            # else
-            #     flash[:notice] = "User creation unsuccessful"
+            else
+                flash[:notice] = "User creation unsuccessful"
             end
         end
         redirect_to display_users_path
@@ -47,6 +42,9 @@ class PagesController < ApplicationController
     def display_users
         @users = User.all
         # If @users is nil, then log it b/c users should never be nil
+        if @users == nil
+            puts "LOGGING! WHY IS USERS NIL"
+        end
     end
 
 end

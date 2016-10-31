@@ -21,18 +21,18 @@
 </table>
 
 <%if current_user.admin? %>
-      <div class='Add User'>
-        <%=form_tag(display_users_path, :method => :post) do %>
-          <%= email_field_tag("add_email") %>
-          <%= label_tag("User Email") %>
-          <%= submit_tag("Add") %>
-        <% end %>
-      </div>
-      <div class='Delete User'>
-        <%=form_tag(display_users_path, :method => :put) do %>
-          <%= email_field_tag("delete_email") %>
-          <%= label_tag("User Email") %>
-          <%= submit_tag("Delete") %>
-        <% end %>
-      </div>
+  <div class="form-group">
+    <%=form_tag(display_users_path, :method => :post) do %> 
+      <%= label_tag("User Email") %>
+      <%= email_field_tag("add_email") %>
+      <%= submit_tag("Add") %>
     <% end %>
+  </div>
+  <div class="form-group">
+    <%=form_tag(display_users_path, :method => :put) do %>
+      <%= label_tag("User Email") %>
+      <%= email_field_tag("delete_email") %>
+      <%= submit_tag("Delete") %>
+    <% end %>
+  </div>
+<% end %>

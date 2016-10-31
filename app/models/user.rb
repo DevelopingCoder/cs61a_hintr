@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -6,6 +8,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   
   def send_email()
+    # assuming the user has been created,
+    # sends an email to the user's email with username and password
     require 'mail'
     
     Mail.defaults do
@@ -34,7 +38,21 @@ class User < ActiveRecord::Base
       end
       
     end
-    
     mail.deliver!
+  end
+  
+  def self.add_email(email_list)
+    # takes in an email
+    # returns success of user creation
+    password = SecureRandom.urlsafe_base64(6)
+    name = ''
+    #Check if email is already being used
+    user = User.create({:name=>name, :email => email, :password => password})
+    if user.id
+      #send the email
+      return true
+    else
+      return false 
+    end
   end
 end
