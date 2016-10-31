@@ -8,7 +8,7 @@ gem 'rails', '4.2.6'
 #Use devise for login
 gem 'devise', '3.4.1'
 gem 'bootstrap-sass'
-
+gem 'mail'
 gem 'jquery-turbolinks'
 
 group :production do

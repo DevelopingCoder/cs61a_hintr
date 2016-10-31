@@ -8,7 +8,7 @@ class PagesController < ApplicationController
             email = params[:add_email]
             # password = generate_password
             password = SecureRandom.urlsafe_base64(6)
-            name = ''
+            name = 'Change Me'
             #Check if user is already added
             success = User.create({:name=>name, :email => email, :password => password})
             if success.id
@@ -38,10 +38,6 @@ class PagesController < ApplicationController
             end
         end
         redirect_to display_users_path
-    end
-    
-    def generate_password
-        'password'    
     end
     
     def display_users

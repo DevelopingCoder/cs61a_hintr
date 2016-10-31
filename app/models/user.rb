@@ -6,4 +6,38 @@ class User < ActiveRecord::Base
   
   has_many :votes
   has_many :messages, :through => :votes
+  validates :name, presence: true
+  
+  def send_email()
+    require 'mail'
+    
+    Mail.defaults do
+      delivery_method :smtp, {
+        :address => 'smtp.gmail.com',
+        :port => '587',
+        :user_name => 'hintr.app.noreply@gmail.com',
+        :password => 'hintrapp169',
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      } 
+    end
+    user = self
+    mail = Mail.new do
+      from     'do-not-reply@hintr.app.com'
+      to       user.email
+      # to       'jaysid95@berkeley.edu'
+      subject  'Welcome to cs61a Hintr!'
+      
+      text_part do
+        body  "Welcome to hintr!\n" + 
+              "Your login is: " + user.email + "\n" + 
+              "Your password is: " + user.password + "\n" + 
+              "Make sure to change your password and set your name when you first log in.\n"+
+              "Login at: https://cs61a-hintr.herokuapp.com"
+      end
+      
+    end
+    
+    mail.deliver!
+  end
 end
