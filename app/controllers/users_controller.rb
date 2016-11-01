@@ -12,8 +12,6 @@ class UsersController < ApplicationController
     end
     
     def destroy
-        byebug
-    redirect_to display_users_path and return
         if current_user.admin?
             emails = params[:delete_emails]
             if emails

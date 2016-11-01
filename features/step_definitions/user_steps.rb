@@ -30,5 +30,5 @@ Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
 end
 
 Then /^the checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
-    expect(page.find('#' + checkbox_id)[:disabled]).to be true
+    expect(page.find_by_id(checkbox_id).disabled?).to be true
 end

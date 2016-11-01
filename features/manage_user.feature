@@ -30,19 +30,15 @@ Scenario: Admin should be able to add a new user email
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
-  When I check "delete_test1@gmail.com"
-  And I check "delete_test2@gmail.com"
-  And I press "delete_button"
+  When I check "delete_test2@gmail.com"
+  And I check "delete_test3@gmail.com"
+  And I press "Delete Emails"
   Then I should see "Are you sure you want to delete"
   When I press "confirm_delete"
   Then I should not see "test3@gmail.com"
   And I should not see "test2@gmail.com"
-
-Scenario: Admins should not be able to delete other admins
-  Then the checkbox for "delete_testadmin@gmail.com" should be disabled
-  Then the checkbox for "delete_testadmin2@gmail.com" should be disabled
-
-Scenario: Admin should not be able to remove admin privilege from himself/herself
+  
+Scenario: Admin should not be able to remove admin privelege from himself/herself
   When I press "admin_testadmin@gmail.com"
   Then I should see "Cannot remove admin priveleges from self"
   And "testadmin@gmail.com" should be an admin
@@ -55,7 +51,7 @@ Scenario: Admin should be able to assign a user admin privileges
   
 Scenario: Admin should be able to remove admin privileges
   When I press "admin_testadmin2@gmail.com"
-  Then I should see "Are you sure remove admin privileges for testadmin2?"
+  Then I should see "Are you sure remove admin priveleges for testadmin2?"
   When I press "Confirm"
   Then "testadmin2@gmail.com" should not be an admin
   
@@ -66,4 +62,5 @@ Scenario: Users should not be able to add or delete user
   Then I should see all users
   But I should not see "Add"
   And I should not see "Add New User"
-  And I should not see "delete testuser@gmail.com"
+  And the checkbox for "delete_testadmin@gmail.com" should be disabled
+  And the checkbox for "delete_test2@gmail.com" should be disabled
