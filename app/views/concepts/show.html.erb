@@ -20,15 +20,18 @@
           </div>
           <div class="row" id="downvotes">
             <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
-              <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id} btn btn-default", :method => :post %>
+              <%= link_to "Downvote-#{message.id}", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id} btn btn-default", :method => :post %>
             </div>
             <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
               <%= message.downvotes %>
             </div>
           </div>
         </div>
-        <div class="col-md-10" id="message">
+        <div class="col-md-8" id="message">
           <%= message.content %>
+        </div>
+        <div class="col-md-2" id="delete-message">
+          
         </div>
       </div>
     </li>

@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     
     def downvote
         message = Message.find(params[:id])
-        message.vote(current_user.id, 1)
+        message.vote(current_user.id, -1)
         redirect_to concept_path(params[:concept_id])
     end
     

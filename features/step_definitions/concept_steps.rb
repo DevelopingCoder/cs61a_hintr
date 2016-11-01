@@ -19,7 +19,8 @@ And /^I upvote "(.*)"$/ do |message|
 end
 
 And /^I downvote "(.*)"$/ do |message|
-    step %Q{I follow "Downvote-#{message_to_upvote.id}"}
+    message_to_downvote = Message.find_by_content(message)
+    step %Q{I follow "Downvote-#{message_to_downvote.id}"}
 end
 
 Then /"(.*)" should have (\d) upvotes?$/ do |message, upvotes|
