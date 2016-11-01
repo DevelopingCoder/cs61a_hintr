@@ -5,11 +5,12 @@ Given /^the following accounts exist:$/ do |users_table|
     end
 end
 
-Given /^I log in with email: "(.*)" and password: "(.*)"$/ do |email, password|
+Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, password|
     step %Q{I am on the sign-in page}
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
     step %Q{I press "Log in"}
+    puts("hello")
 end
 
 Then /^I should see all users$/ do 
@@ -18,13 +19,16 @@ Then /^I should see all users$/ do
     end
 end
 
-# Given /^I am on (.*)$/ do |page|
-#     visit path_to(page)
-# end
-
 And /^I logout$/ do
-  current_driver = Capybara.current_driver
-  Capybara.current_driver = :rack_test
-  page.driver.submit :delete, path_to("the logout page"), {}
-  Capybara.current_driver = current_driver 
+  step %Q{I follow "Logout"}
+end
+
+Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
+    truth_value = (not_admin != "not ")
+    user = User.find_by_email(email)
+    expect(user.admin).to be truth_value
+end
+
+Then /^the checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
+    expect(page.find_by_id(checkbox_id).disabled?).to be true
 end

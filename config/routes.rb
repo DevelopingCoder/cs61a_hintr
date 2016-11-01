@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   devise_for :users
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   # The priority is based upon order of creation: first created -> highest priority.
@@ -8,9 +9,9 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root to: 'pages#index'
   
-  match '/display_users', to: 'pages#display_users', via: :get
-  match '/display_users', to: 'pages#add_user', via: :post
-  match '/display_users', to: 'pages#delete_user', via: :put
+  match '/display_users', to: 'users#index', via: :get
+  match '/display_users', to: 'users#create', via: :post
+  match '/display_users', to: 'users#destroy', via: :put
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -41,8 +42,7 @@ Rails.application.routes.draw do
 
   # Example resource route with more complex sub-resources:
   #   resources :products do
-  #     resources :comments
-  #     resources :sales do
+  #     #     resources :sales do
   #       get 'recent', on: :collection
   #     end
   #   end
