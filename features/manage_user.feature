@@ -24,16 +24,8 @@ Background: An admin and a nonadmin account exist
 Scenario: Admin should be able to add a new user email
   And I fill in "add_email" with "testuser1@gmail.com"
   And I press "Add"
-  Then I should see "Email invite(s) have been sent"
+  Then I should see "Email invite has been sent"
   And I should see "testuser1@gmail.com"
-
-Scenario: Admin should be able to add batch user emails
-  And I fill in "add_email" with "testuser1@gmail.com, testuser2@gmail.com, testuser3@gmail.com"
-  And I press "Add"
-  Then I should see "Email invite(s) have been sent"
-  And I should see "testuser1@gmail.com"
-  And I should see "testuser2@gmail.com"
-  And I should see "testuser3@gmail.com"
   
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
@@ -50,7 +42,7 @@ Scenario: Admins should not be able to delete other admins
   Then the checkbox for "delete_testadmin@gmail.com" should be disabled
   Then the checkbox for "delete_testadmin2@gmail.com" should be disabled
 
-Scenario: Admin should not be able to remove admin privelege from himself/herself
+Scenario: Admin should not be able to remove admin privilege from himself/herself
   When I press "admin_testadmin@gmail.com"
   Then I should see "Cannot remove admin priveleges from self"
   And "testadmin@gmail.com" should be an admin
@@ -63,7 +55,7 @@ Scenario: Admin should be able to assign a user admin privileges
   
 Scenario: Admin should be able to remove admin privileges
   When I press "admin_testadmin2@gmail.com"
-  Then I should see "Are you sure remove admin priveleges for testadmin2?"
+  Then I should see "Are you sure remove admin privileges for testadmin2?"
   When I press "Confirm"
   Then "testadmin2@gmail.com" should not be an admin
   
