@@ -6,17 +6,15 @@ Background: A user account exists
 
     Given the following accounts exist:
     | name       | email                     | password          | admin |
-    | testadmin  | testadmin@gmail.com       | password          | false |
+    | testadmin  | testadmin@gmail.com       | password          | true |
     
-    Given I log in with email: "testuser@gmail.com" and password: "password"
+    Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
 
   
 Scenario: I can upload a Concepts file
-    Given I press "choose_concepts"
-    And I choose "concepts.csv"
+    Given I choose to upload a "Concepts" file with "concepts.csv"
     When I press "Upload"
-    Then I should see "Successfully uploaded concepts.csv"
     
     When I am on the concepts page
     Then I should see "test concept"
@@ -27,10 +25,8 @@ Scenario: I can upload a Concepts file
     And I should see "test_concept_description"
 
 Scenario: I can upload a Users file
-    Given I press "choose_users"
-    And I choose "users.csv"
+    Given I choose to upload a "Users" file with "users.csv"
     Then I press "Upload"
-    Then I should see "Successfully uploaded users.csv"
     
     When I am on the users page
     Then I should see "example1@gmail.com"
@@ -39,12 +35,9 @@ Scenario: I can upload a Users file
     And I should see "Example Dos"
 
 Scenario: I can upload multiple files
-    Given I press "choose_concepts"
-    And I choose "concepts.csv"
-    Given I press "choose_users"
-    And I choose "users.csv"
+    Given I choose to upload a "Concepts" file with "concepts.csv"
+    Given I choose to upload a "Users" file with "users.csv"
     Then I press "Upload"
-    Then I should see "Successfully uploaded concepts.csv, users.csv"
     
     When I am on the users page
     Then I should see "example1@gmail.com"

@@ -13,4 +13,19 @@ class ApplicationController < ActionController::Base
       u.permit(:password, :password_confirmation, :current_password, :name) 
     }
   end
+  
+  def get_file_types
+    types = Set.new
+    params.keys.each do |key|
+      if key.match(/^.*_file$/)
+        types.add(key)
+      end
+    end
+    return types
+  end
+  
+  def capture_type(file)
+    return file.match(/(.*)_file/)[1]
+  end
+  
 end

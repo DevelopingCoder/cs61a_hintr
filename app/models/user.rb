@@ -9,6 +9,22 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :messages, :through => :votes
 
+  validates :name, presence: true
+  
+  def self.import(file)
+    users_created = []
+    File.open(file.tempfile).each do |line|
+      name, email = line.split(",")
+      name = name.strip
+      email = email.strip
+      byebug
+      if User.create({:name => name, :email => email}).id
+        users_created += [email]
+      end
+    end
+    return "Users Created: " + users_created.join(", ")
+  end
+  
   def send_email()
     # assuming the user has been created,
     # sends an email to the user's email with username and password

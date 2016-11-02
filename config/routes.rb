@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   match '/display_users', to: 'pages#add_user', via: :post
   match '/display_users', to: 'pages#delete_user', via: :put
   match '/upload', to: 'uploads#index', via: :get
+  match '/upload', to: 'uploads#create', via: :post
+  
 end
