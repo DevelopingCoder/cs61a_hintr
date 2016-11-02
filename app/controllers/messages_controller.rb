@@ -5,7 +5,11 @@ class MessagesController < ApplicationController
     end
     
     def create
-        message = Message.create({:concept_id => params[:concept_id], :content => params[:add_message], :author => current_user.id}) 
+        message = Message.create({:concept_id => params[:concept_id], :content => params[:add_message], :author => current_user.id})
+        concept = Concept.find(params[:concept_id])
+        if concept.msg_status == 'no messages'
+            concept.update_attribute(:msg_status, 'in progress')
+        end
         redirect_to concept_path(params[:concept_id])
     end
     

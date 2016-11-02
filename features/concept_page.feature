@@ -14,7 +14,7 @@ Background: A user and concept exists
   # | printing   | no messages     | none, strings                   |
   And the following messages exist:
   | concept    | content                              |
-  | printing   | print statements evaluate to None    | 
+  | printing   | print statements evaluate to None    |
   | printing   | print takes in strings as arguments  |
   And I am logged in
   And I follow "Concepts"
