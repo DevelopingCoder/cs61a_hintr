@@ -8,14 +8,14 @@ class User < ActiveRecord::Base
   has_many :messages, :through => :votes
   validates :name, presence: true
   
-  def self.import(file)
+  def self.import(current_user, file)
     users_created = []
     File.open(file.tempfile).each do |line|
       name, email = line.split(",")
       name = name.strip
       email = email.strip
       byebug
-      if User.create({:name => name, :email => email}).id
+      if current_user.add_email(email, name) == "Email invite has been sent"
         users_created += [email]
       end
     end

@@ -9,7 +9,7 @@ class UploadsController < ApplicationController
             file_types.each do |file|
                 uploaded_file = params[file]
                 type = capture_type(file)
-                flash[:notice] << type.classify.constantize.send(:import, uploaded_file)
+                flash[:notice] << type.classify.constantize.send(:import, current_user, uploaded_file)
             end
         end
         redirect_to upload_path
