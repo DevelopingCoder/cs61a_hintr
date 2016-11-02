@@ -26,9 +26,26 @@ end
 Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
     truth_value = (not_admin != "not ")
     user = User.find_by_email(email)
+    byebug
     expect(user.admin).to be truth_value
 end
 
-Then /^the checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
+Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
     expect(page.find_by_id(checkbox_id).disabled?).to be true
+end
+
+
+Then /^the admin checkbox for "([^"]*)" should be disabled$/ do |email|
+    user = User.find_by_email(email)
+    expect(page.find_by_id("admin_checkbox_#{user.id}").disabled?).to be true
+end
+
+When /^I (un)?check the admin checkbox for "([^"]*)"$/ do |uncheck, email|
+    is_check = uncheck != "un"
+    id = "admin_checkbox_" + User.find_by_email(email).id.to_s
+    if is_check
+        check(id)
+    else
+        uncheck(id)
+    end
 end

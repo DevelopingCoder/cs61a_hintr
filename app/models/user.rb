@@ -84,21 +84,25 @@ class User < ActiveRecord::Base
     return notice
   end
   
-  def toggle_admin(email)
-    if email == self.email
+  def toggle_admin(id, status)
+    if id == self.id
       return "Cannot unadmin yourself"
     else
-      user = find_by_email(email)
-      if user
-        new_admin_status = !user.admin
-        if User.update(user, :admin => new_admin_status)
-          return email + " admin status: " + new_admin_status.to_s
+      other_user = User.find_by_id(id)
+      if other_user
+        if other_user.update_attributes(:admin => status)
+          if status == true
+            return other_user.name + " is now an admin"
+          else
+            return other_user.name+ " is no longer an admin. Lol"
+          end
         else
           return "Toggle failed"
         end
       else #Could not find the user
-        return email + " does not exist"
+        return "Invalid id"
       end
     end
   end
+  
 end

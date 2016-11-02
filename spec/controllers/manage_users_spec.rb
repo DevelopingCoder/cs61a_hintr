@@ -39,4 +39,12 @@ RSpec.describe UsersController, type: :controller do
         end
     end
     
+    # describe ".edit_user" do
+    #     it "takes in request.body and id param and edits the field in the body of the id" do
+    #         user = FactoryGirl.create(:user, email: "testuser@gmail.com")
+    #         params = {"{\"field\":\"admin\",\"value\":false}"=>nil, "id"=>user.id}
+    #         expect_any_instance_of(User).to receive(:toggle_admin)
+    #         post :edit, params.to_json
+    #     end
+    # end
 end

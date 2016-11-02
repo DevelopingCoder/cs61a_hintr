@@ -32,16 +32,15 @@ class UsersController < ApplicationController
     end
     
     def edit 
-        #Used for admin purposes
-        email = request.body.read[:admin_email]
-        byebug
-        if current_user.admin? and email
-            message = toggle_admin()
-            respond_to do |format|
-                format.json { 
-                    render json: {:message => message}
-                }
+        #Used for admin purposes to edit users
+        id = params[:id]
+        json = JSON.parse(request.body.read)
+        if current_user.admin?
+            case json["field"]
+            when "admin"
+                message = current_user.toggle_admin(id, json["value"])
             end
+            render :json => message
         end 
     end
 end

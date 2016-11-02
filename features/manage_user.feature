@@ -33,26 +33,26 @@ Scenario: Admin should be able to delete users
   When I check "delete_test2@gmail.com"
   And I check "delete_test3@gmail.com"
   And I press "Delete Emails"
-  Then I should see "Are you sure you want to delete"
-  When I press "confirm_delete"
-  Then I should not see "test3@gmail.com"
-  And I should not see "test2@gmail.com"
+  # Then I should see "Are you sure you want to delete"
+  # When I press "confirm_delete"
+  Then I should not see "testuser3"
+  And I should not see "testuser2"
   
 Scenario: Admin should not be able to remove admin privelege from himself/herself
-  When I press "admin_testadmin@gmail.com"
-  Then I should see "Cannot remove admin priveleges from self"
-  And "testadmin@gmail.com" should be an admin
+  Then the admin checkbox for "testadmin@gmail.com" should be disabled
  
 Scenario: Admin should be able to assign a user admin privileges
-  When I press "admin_test2@gmail.com"
-  Then I should see "Are you sure you want to make testuser2 an admin?"
-  When I press "Confirm"
+  When I check the admin checkbox for "test2@gmail.com"
+  # Then I should see "Are you sure you want to make testuser2 an admin?"
+  # When I press "Confirm"
+  Then I should see "test2@gmail.com is now an admin"
   Then "test2@gmail.com" should be an admin
   
 Scenario: Admin should be able to remove admin privileges
-  When I press "admin_testadmin2@gmail.com"
-  Then I should see "Are you sure remove admin priveleges for testadmin2?"
-  When I press "Confirm"
+  When I uncheck the admin checkbox for "testadmin2@gmail.com"
+  # Then I should see "Are you sure remove admin priveleges for testadmin2?"
+  # When I press "Confirm"
+  # Then I should see "testadmin2@gmail.com is no longer an admin"
   Then "testadmin2@gmail.com" should not be an admin
   
 Scenario: Users should not be able to add or delete user
@@ -62,5 +62,5 @@ Scenario: Users should not be able to add or delete user
   Then I should see all users
   But I should not see "Add"
   And I should not see "Add New User"
-  And the checkbox for "delete_testadmin@gmail.com" should be disabled
-  And the checkbox for "delete_test2@gmail.com" should be disabled
+  And the delete checkbox for "delete_testadmin@gmail.com" should be disabled
+  And the delete checkbox for "delete_test2@gmail.com" should be disabled
