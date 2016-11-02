@@ -1,6 +1,6 @@
 class Message < ActiveRecord::Base
     validates :content, presence: true
-    has_many :votes
+    has_many :votes, dependent: :destroy
     has_many :users, :through => :votes
     
     def vote(user_id, vote_type)
@@ -20,4 +20,5 @@ class Message < ActiveRecord::Base
     def downvotes
         return self.votes.where(:vote_type => -1).size
     end
+    
 end

@@ -31,9 +31,19 @@
           <%= message.content %>
         </div>
         <div class="col-md-2" id="delete-message">
-          
+          <%= link_to "Delete-#{message.id}", concept_message_path(:concept_id => @concept.id, :id => message.id), :method => :delete %>
+          <!--, :confirm => "Are you sure?" -->
         </div>
       </div>
     </li>
   <% end %>
 </ul>
+<div class='Post Message'>
+  <%=form_tag(concept_messages_path(:concept_id => @concept.id), :method => :post) do %>
+    <%= text_field_tag("add_message", :required => true, :size => 40) %>
+    <%= label_tag("New Message") %>
+    <!--size: 40-->
+    <!--Need to increase size of form field-->
+    <%= submit_tag("Post Message") %>
+  <% end %>
+</div>

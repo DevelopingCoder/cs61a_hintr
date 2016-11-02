@@ -8,18 +8,18 @@ Background: A user and concept exists
   
   Given I am logged in
   And the following concepts exist:
-  | name       | status          | tags                            |
-  | printing   | no messages     | none, strings                   |
-  And I follow "concepts"
+  | name       | msg_status       | description         |
+  | printing   | assigned         | print method        |
+  # | name       | status          | tags                            |
+  # | printing   | no messages     | none, strings                   |
+  And I follow "Concepts"
   And I follow "printing"
  
 Scenario: Create a valid message 
-  Given I press "new message"
-  And I fill in "message input" with "print statements evaluate to None"
-  And I press "submit"
+  Given I fill in "add_message" with "print statements evaluate to None"
+  And I press "Post Message"
   Then I should see "print statements evaluate to None"
   
 Scenario: Create an invalid message
-  Given I press "new message"
-  And I press "submit"
+  And I press "Post Message"
   Then I should see "message must have body"

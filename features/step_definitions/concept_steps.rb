@@ -33,6 +33,12 @@ Then /"(.*)" should have (\d) downvotes?$/ do |message, downvotes|
     page.find("#num-downvotes-#{message.id}").should have_content(downvotes)
 end
 
+Given /^I delete "(.*)"$/ do |message| 
+    message_to_delete = Message.find_by_content(message)
+    # step %Q{I follow "Delete-#{message_to_delete.id}"}
+    step %Q{I follow "Delete-#{message_to_delete.id}"}
+end
+
 Then /^I should see all the concepts$/ do
    expected_num_rows = Concept.all.size + 1 # counting the row that says what each column has
    page.should have_css("table#Concepts tr", :count => expected_num_rows)
