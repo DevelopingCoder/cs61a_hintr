@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :comments
+  resources :concepts do
+    resources :messages
+  end
   devise_for :users
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   # The priority is based upon order of creation: first created -> highest priority.
@@ -12,7 +14,11 @@ Rails.application.routes.draw do
   match '/display_users', to: 'pages#display_users', via: :get
   match '/display_users', to: 'pages#add_user', via: :post
   match '/display_users', to: 'pages#delete_user', via: :put
+  
   match '/upload', to: 'uploads#index', via: :get
   match '/upload', to: 'uploads#create', via: :post
   
+  match '/concepts/:concept_id/messages/:id/upvote', to: 'messages#upvote', as: "upvote", via: :post
+  match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post
+
 end

@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20161030190453) do
+=======
+ActiveRecord::Schema.define(version: 20161027035223) do
+>>>>>>> message-voting
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
@@ -22,6 +26,7 @@ ActiveRecord::Schema.define(version: 20161030190453) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "content"
+    t.string   "author"
     t.integer  "concept_id"
     t.boolean  "finalized"
     t.datetime "created_at"

@@ -54,7 +54,6 @@ class User < ActiveRecord::Base
               "Make sure to change your password and set your name when you first log in.\n"+
               "Login at: https://cs61a-hintr.herokuapp.com"
       end
-      
     end
     mail.deliver!
   end

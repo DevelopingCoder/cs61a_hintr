@@ -2,38 +2,55 @@ Feature: Concept page
   
   As a hintr user 
   So that I can see information on a concept
-  I want to be able to view comments and tags for a concept
-  And I want to be able to vote on comments
+  I want to be able to view messages and tags for a concept
+  And I want to be able to vote on messages
   
 Background: A user and concept exists
   Given the following concepts exist:
-  | name       | status          | tags                            |
-  | printing   | no comments     | none, strings                   |
-  And the following comments exist:
-  | concept    | body                                 |
-  | printing   | print statements evaluate to None    | 
+  | name       | msg_status       | description         |
+  | printing   | assigned         | print method        |
+  # add tags back when implemented
+  # | name       | status          | tags                            |
+  # | printing   | no messages     | none, strings                   |
+  And the following messages exist:
+  | concept    | content                              |
+  | printing   | print statements evaluate to None    |
   | printing   | print takes in strings as arguments  |
-  And I am logged in 
-  And I follow "concepts"
+  And I am logged in
+  And I follow "Concepts"
+  And I follow "printing"
   
-Scenario: The concept page shows associated comments and tags 
-  Given I follow "printing"
-  Then I should see "print statements evaluate to none"
+Scenario: The concept page shows associated messages and tags 
+  Then I should see "print statements evaluate to None"
   And I should see "print takes in strings as arguments"
-  And I should see "none"
-  And I should see "strings"
+  And "print takes in strings as arguments" should have 0 downvote
+  And "print takes in strings as arguments" should have 0 upvote
+  # check that you can see tags: 
+  # And I should see "none"
+  # And I should see "strings"
   
-Scenario: A user can upvote a comment
-  Given I follow "printing"
-  And I upvote "print takes in strings as arguments"
+Scenario: A user can upvote a message
+  Given I upvote "print takes in strings as arguments"
   Then "print takes in strings as arguments" should have 1 upvote
+   And "print takes in strings as arguments" should have 0 downvotes
   
-Scenario: A user can downvote a comment
-  Given I follow "printing"
+Scenario: A user can downvote a message
+  Given I downvote "print takes in strings as arguments"
+  Then "print takes in strings as arguments" should have 1 downvote
+  And "print takes in strings as arguments" should have 0 upvotes
+  
+Scenario: A user cannot downvote on a message twice
+  Given I downvote "print takes in strings as arguments"
   And I downvote "print takes in strings as arguments"
   Then "print takes in strings as arguments" should have 1 downvote
+  And "print takes in strings as arguments" should have 0 upvotes
+  
+Scenario: A user can change their vote from up to downvote 
+  Given I downvote "print takes in strings as arguments"
+  And I upvote "print takes in strings as arguments"
+  Then "print takes in strings as arguments" should have 1 upvote
+  And "print takes in strings as arguments" should have 0 downvotes
 
-Scenario: A user can delete a comment
-  Given I follow "printing"
-  And I delete "print statements evaluate to None"
+Scenario: A user can delete a message
+  Given I delete "print statements evaluate to None"
   Then I should not see "print statements evaluate to None"

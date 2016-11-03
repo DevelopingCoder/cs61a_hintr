@@ -1,0 +1,19 @@
+<h1>
+    Concepts
+</h1>
+<table id="Concepts">
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @concepts.each do |concept| %>
+      <tr>
+        <td><%= link_to concept.name, concept_path(concept.id) %></td>
+        <td><%= concept.msg_status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
