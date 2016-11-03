@@ -42,14 +42,14 @@ class User < ActiveRecord::Base
     
     mail = Mail.new do
       from     'do-not-reply@hintr.app.com'
-      to       user.email
+      to       email
       # to       'jaysid95@berkeley.edu'
       subject  'Welcome to cs61a Hintr!'
       
       text_part do
         body  "Welcome to hintr!\n" + 
-              "Your login is: " + user.email + "\n" + 
-              "Your password is: " + user.password + "\n" + 
+              "Your login is: " + email + "\n" + 
+              "Your password is: " + password + "\n" + 
               "Make sure to change your password and set your name when you first log in.\n"+
               "Login at: https://cs61a-hintr.herokuapp.com"
       end

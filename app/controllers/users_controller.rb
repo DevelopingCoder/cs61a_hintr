@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     end
     
     def index
-        @users = User.all
+        @users = User.all.order("admin DESC")
         # If @users is nil, then log it b/c users should never be nil
         if @users == nil
             logger.fatal "There are no users in the db"

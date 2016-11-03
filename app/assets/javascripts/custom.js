@@ -5,7 +5,7 @@ function toggle_admin(id){
     }
     $.ajax({
         url: '/display_users/' + id,
-        type: 'POST',
+        type: 'PUT',
         dataType: "application/json",
         data: JSON.stringify(data),
         error: function(response){
