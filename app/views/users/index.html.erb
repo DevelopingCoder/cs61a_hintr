@@ -1,6 +1,6 @@
 <h1>All Users</h1>
 <div class="form-group">
-  <%=form_tag(display_users_path, :method => :put) do %>
+  <%=form_tag(display_users_path, :method => :put, :id => "delete_user_form") do %>
     <table id="Users">
       <thead>
         <tr>
@@ -30,7 +30,7 @@
         <% end %>
       </tbody>
     </table>
-    <%= submit_tag("Delete Emails") %>
+    <button type="button", id="delete_form_button", onclick= "verify_delete()">Delete Emails</button>
   <% end %>
 </div>
 
