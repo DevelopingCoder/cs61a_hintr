@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :messages, :through => :votes
 
-  validates :name, presence: true
-  
   def self.import(current_user, file)
     users_created = []
     File.open(file.tempfile).each do |line|
@@ -41,7 +39,6 @@ class User < ActiveRecord::Base
     mail = Mail.new do
       from     'do-not-reply@hintr.app.com'
       to       email
-      # to       'jaysid95@berkeley.edu'
       subject  'Welcome to cs61a Hintr!'
       
       text_part do

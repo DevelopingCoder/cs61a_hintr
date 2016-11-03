@@ -14,9 +14,9 @@ Background: An admin and a nonadmin account exist
   Given the following accounts exist:
   | name       | email                     | password          | admin |
   | testadmin  | testadmin@gmail.com       | password          | true  |
-  | testuser   | test2@gmail.com           | password          | false |
-  | testuser   | test3@gmail.com           | password          | false |
-  | testuser   | testadmin2@gmail.com      | password          | true  |
+  | testuser2  | test2@gmail.com           | password          | false |
+  | testuser3  | test3@gmail.com           | password          | false |
+  | testadmin2 | testadmin2@gmail.com      | password          | true  |
   
   Given I log in with email: "testadmin@gmail.com" and password: "password"
   And I follow "Users"
@@ -25,19 +25,19 @@ Scenario: Admin should be able to add a new user email
 
   And I fill in "add_email" with "testuser1@gmail.com"
   And I press "Add"
-  Then I should see "Email invite(s) have been sent"
+  Then I should see "Email invite has been sent"
   And I should see "testuser1@gmail.com"
   
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
-  When I check "delete_test1@gmail.com"
-  And I check "delete_test2@gmail.com"
-  And I press "delete_button"
+  When I check "delete_test2@gmail.com"
+  And I check "delete_test3@gmail.com"
+  And I press "Delete Emails"
   Then I should see "Are you sure you want to delete"
   When I press "confirm_delete"
-  Then I should not see "test3@gmail.com"
-  And I should not see "test2@gmail.com"
+  Then I should not see "testuser2"
+  And I should not see "testuser3"
 
 Scenario: Admins should not be able to delete other admins
   Then the checkbox for "delete_testadmin@gmail.com" should be disabled
