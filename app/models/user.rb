@@ -11,7 +11,13 @@ class User < ActiveRecord::Base
 
   def self.import(current_user, file)
     users_created = []
+    read_first_line = false
     File.open(file.tempfile).each do |line|
+      if not read_first_line
+        read_first_line = true
+        next
+      end
+      
       name, email = line.split(",")
       name = name.strip
       email = email.strip

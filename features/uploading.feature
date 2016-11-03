@@ -20,8 +20,8 @@ Scenario: I can upload a Concepts file
     Then I should see "test concept"
     And I should see "test concept 2"
     When I follow "test concept"
-    Then I should see "test tag 1"
-    And I should see "test tag 2"
+    # Then I should see "test tag 1"
+    # And I should see "test tag 2"
     And I should see "test_concept_description"
 
 Scenario: I can upload a Users file
@@ -49,6 +49,6 @@ Scenario: I can upload multiple files
     Then I should see "test concept"
     And I should see "test concept 2"
     When I follow "test concept"
-    Then I should see "test tag 1"
-    And I should see "test tag 2"
+    # Then I should see "test tag 1"
+    # And I should see "test tag 2"
     And I should see "test_concept_description"

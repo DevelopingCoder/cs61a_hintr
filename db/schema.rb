@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20161030190453) do
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
-    t.string  "msg_status"
+    t.string  "msg_status",         default: "no messages"
     t.integer "lab_first_appeared"
   end
 
