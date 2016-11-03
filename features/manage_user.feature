@@ -28,7 +28,6 @@ Scenario: Admin should be able to add a new user email
   Then I should see "Email invite has been sent"
   And I should see "testuser1@gmail.com"
 
-@javascript  
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
