@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root to: 'pages#index'
-
+  
   match '/display_users', to: 'users#index', via: :get
   match '/display_users', to: 'users#create', via: :post
   match '/display_users', to: 'users#destroy', via: :put

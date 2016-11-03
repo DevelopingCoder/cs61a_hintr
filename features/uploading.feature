@@ -52,4 +52,3 @@ Scenario: I can upload multiple files
     Then I should see "test tag 1"
     And I should see "test tag 2"
     And I should see "test_concept_description"
-    

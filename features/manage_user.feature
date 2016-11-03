@@ -27,15 +27,6 @@ Scenario: Admin should be able to add a new user email
   And I press "Add"
   Then I should see "Email invite(s) have been sent"
   And I should see "testuser1@gmail.com"
-
-Scenario: Admin should be able to add batch user emails
-
-  And I fill in "add_email" with "testuser1@gmail.com, testuser2@gmail.com, testuser3@gmail.com"
-  And I press "Add"
-  Then I should see "Email invite(s) have been sent"
-  And I should see "testuser1@gmail.com"
-  And I should see "testuser2@gmail.com"
-  And I should see "testuser3@gmail.com"
   
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"

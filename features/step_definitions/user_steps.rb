@@ -10,7 +10,6 @@ Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, pass
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
     step %Q{I press "Log in"}
-    puts("hello")
 end
 
 Given /^I am logged in$/ do
