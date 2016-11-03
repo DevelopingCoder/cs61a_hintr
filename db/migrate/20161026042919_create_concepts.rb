@@ -3,7 +3,7 @@ class CreateConcepts < ActiveRecord::Migration
     create_table :concepts do |t|
       t.string :name
       t.string :description
-      t.string :msg_status
+      t.string :msg_status, default: "no messages"
       t.integer :lab_first_appeared
     end
     
