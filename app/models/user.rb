@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  def send_email()
+  def send_email(email, password)
     # assuming the user has been created,
     # sends an email to the user's email with username and password
     require 'mail'
@@ -24,14 +24,14 @@ class User < ActiveRecord::Base
     user = self
     mail = Mail.new do
       from     'do-not-reply@hintr.app.com'
-      to       user.email
+      to       email
       # to       'jaysid95@berkeley.edu'
       subject  'Welcome to cs61a Hintr!'
       
       text_part do
         body  "Welcome to hintr!\n" + 
-              "Your login is: " + user.email + "\n" + 
-              "Your password is: " + user.password + "\n" + 
+              "Your login is: " + email + "\n" + 
+              "Your password is: " + password + "\n" + 
               "Make sure to change your password and set your name when you first log in.\n"+
               "Login at: https://cs61a-hintr.herokuapp.com"
       end
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
     # Check if email is already being used
     user = User.create({:name=>name, :email => email, :password => password})
     if user.id
-      #send the email
+      send_email(email, password)
       return "Email invite has been sent"
     else
       return "User creation was not successful"
