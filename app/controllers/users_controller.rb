@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, :except => [:forgot_password]
     
     def create
         if current_user.admin?
@@ -9,6 +9,21 @@ class UsersController < ApplicationController
             flash[:notice] = "You do not have the permissions to add a user"
         end
         redirect_to display_users_path
+    end
+    
+    def forgot_password
+        email = params[:email]
+        user = User.find_by_email(email)
+        if not user
+            flash[:notice] = "User does not exist"
+        else
+            flash[:notice] = "An email with a temporary password has been sent"
+        end
+        password = SecureRandom.urlsafe_base64(6)
+        user.password = password
+        user.save
+        user.send_email(email, password)
+        redirect_to root_path
     end
     
     def destroy
