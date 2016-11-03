@@ -8,41 +8,43 @@
   <%= "Status: " + @concept.msg_status %>
 </h4>
 <!--display tags when implemented-->
-<% @messages.each do |message| %>
+<div class="container">
   <div class="row">
-    <div class="col-md-2" id="votes">
-      <div class="row" id="upvotes">
-        <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
-          <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post %>
+    <% @messages.each do |message| %>
+      <div class="row col-md-6">
+        <div class="col-md-2" id="votes">
+          <div class="row" id="upvotes">
+            <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
+              <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
+              <%= message.upvotes %>
+            </div>
+          </div>
+          <div class="row" id="downvotes">
+            <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
+              <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
+              <%= message.downvotes %>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
-          <%= message.upvotes %>
+        <div class="col-md-8" id="message">
+          <%= message.content %>
+        </div>
+        <div class="col-md-2" id="delete-message">
+          <%= link_to "Delete", concept_message_path(:concept_id => @concept.id, :id => message.id), id: "delete-#{message.id}", :method => :delete, data: { confirm: "Are you sure?" } %>
+          <!--, :confirm => "Are you sure?" -->
         </div>
       </div>
-      <div class="row" id="downvotes">
-        <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
-          <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post %>
-        </div>
-        <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
-          <%= message.downvotes %>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8" id="message">
-      <%= message.content %>
-    </div>
-    <div class="col-md-2" id="delete-message">
-      <%= link_to "Delete", concept_message_path(:concept_id => @concept.id, :id => message.id), id: "delete-#{message.id}", :method => :delete, data: { confirm: "Are you sure?" } %>
-      <!--, :confirm => "Are you sure?" -->
+    <% end %>
+    <div class='Post Message col-md-6'>
+      <%=form_tag(concept_messages_path(:concept_id => @concept.id), :method => :post) do %>
+        <%= text_area_tag("add_message", nil, :placeholder => "New Message", :required => true) %>
+        <%= submit_tag("Post Message") %>
+      <% end %>
     </div>
   </div>
-<% end %>
-<div class='Post Message'>
-  <%=form_tag(concept_messages_path(:concept_id => @concept.id), :method => :post) do %>
-    <%= text_field_tag("add_message", nil, :placeholder => "New Message", :required => true) %>
-    
-    <!--size: 40-->
-    <!--Need to increase size of form field-->
-    <%= submit_tag("Post Message") %>
-  <% end %>
 </div>
+
