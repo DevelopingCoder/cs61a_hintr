@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   
   match '/display_users', to: 'users#index', via: :get
   match '/display_users', to: 'users#create', via: :post
-  match '/display_users', to: 'users#destroy', via: :put
-  match '/display_users/:id', to: 'users#edit', via: :post
+  match '/display_users', to: 'users#destroy', via: :delete
+  match '/display_users/:id', to: 'users#edit', via: :put
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

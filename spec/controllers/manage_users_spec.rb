@@ -10,7 +10,7 @@ RSpec.describe UsersController, type: :controller do
             params = {:field => "admin", :value => false}
             request.env['RAW_POST_DATA'] = params.to_json
             expect_any_instance_of(User).to receive(:toggle_admin)
-            get :edit, :id => user.id
+            put :edit, :id => user.id
         end
     end
     describe ".add_users" do
@@ -35,7 +35,7 @@ RSpec.describe UsersController, type: :controller do
         it "doesn't allow because you're not admin" do
             user = FactoryGirl.create(:user)
             sign_in(user)
-            put :destroy, {:delete_email => "testuser2@gmail.com"}
+            delete :destroy, {:delete_email => "testuser2@gmail.com"}
             get :index
             expect(response.body).to include "You do not have the permissions to delete users" 
         end
@@ -45,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
             FactoryGirl.create(:user, email: "testuser@gmail.com")
             expect(User.find_by_email("testuser@gmail.com")).not_to be_nil  
             expect_any_instance_of(User).to receive(:delete_email).with("testuser@gmail.com")
-            put :destroy, {:delete_emails => ["testuser@gmail.com"]}
+            delete :destroy, {:delete_emails => ["testuser@gmail.com"]}
         end
     end
 end
