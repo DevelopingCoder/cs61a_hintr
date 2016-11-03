@@ -24,13 +24,15 @@
             </td>
             <td>
               <%= check_box_tag("delete_emails[]", user.email, false, :disabled => 
-                    (!current_user.admin or current_user.id == user.id), :id => "delete_" + user.email) %>
+                    (!current_user.admin or user.admin?), :id => "delete_" + user.email) %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <button type="button", id="delete_form_button", onclick= "verify_delete()">Delete Emails</button>
+    <% if current_user.admin? %>
+      <button type="button", id="delete_form_button", onclick= "verify_delete()">Delete Users</button>
+    <% end %>
   <% end %>
 </div>
 

@@ -12,11 +12,6 @@ Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, pass
     step %Q{I press "Log in"}
 end
 
-Given /^I am logged in$/ do
-    User.create!(:name => "testuser", :email => "testuser@gmail.com", :password => "password", :admin => false)
-    step %Q{I log in with email: "testuser@gmail.com" and password: "password"}
-end
-
 Then /^I should see all users$/ do 
     User.all.each do |user|
         page.should have_content(user.email)
@@ -30,12 +25,11 @@ end
 Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
     truth_value = (not_admin != "not ")
     user = User.find_by_email(email)
-    byebug
     expect(user.admin).to be truth_value
 end
 
-Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
-    expect(page.find_by_id(checkbox_id).disabled?).to be true
+Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |email|
+    expect(page.find_by_id("delete_#{email}").disabled?).to be true
 end
 
 
