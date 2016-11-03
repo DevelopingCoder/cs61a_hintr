@@ -22,7 +22,3 @@ Scenario: Create a valid message
   And I press "Post Message"
   Then I should see "in progress"
   Then I should see "print statements evaluate to None"
-  
-Scenario: Create an invalid message
-  And I press "Post Message"
-  Then I should see "message must have body"
