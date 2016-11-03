@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     end
     
     def destroy
+        byebug
         if current_user.admin?
             emails = params[:delete_emails]
             if emails

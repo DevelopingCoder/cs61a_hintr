@@ -8,9 +8,9 @@ function toggle_admin(id){
         type: 'POST',
         dataType: "application/json",
         data: JSON.stringify(data),
-        complete: function(response){
+        error: function(response){
             console.log(response)
-            alert(response.responseText)
+            alertify.message(response.responseText)
         }
     });
 }

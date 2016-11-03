@@ -16,7 +16,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'bootstrap/theme';
-
+@import 'alertify';
 .alert-alert {
   @extend .alert-warning;
 }
