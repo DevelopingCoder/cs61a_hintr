@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root to: 'pages#index'
   
+  match '/forgot_password', to: 'users#forgot_password', as: "forgot_password", via: :post
+  
   match '/display_users', to: 'users#index', via: :get
   match '/display_users', to: 'users#create', via: :post
   match '/display_users', to: 'users#destroy', via: :delete
