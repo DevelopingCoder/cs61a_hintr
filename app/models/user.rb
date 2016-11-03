@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     return "Users Created: " + users_created.join(", ")
   end
   
-  def send_email()
+  def self.send_email(user)
     # assuming the user has been created,
     # sends an email to the user's email with username and password
     require 'mail'
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
         :enable_starttls_auto => true
       } 
     end
-    user = self
+    
     mail = Mail.new do
       from     'do-not-reply@hintr.app.com'
       to       user.email
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
               "Login at: https://cs61a-hintr.herokuapp.com"
       end
     end
-    mail.deliver!
+    mail.deliver
   end
   
   def add_email(email, name = '')
@@ -69,7 +69,10 @@ class User < ActiveRecord::Base
     user = User.create({:name=>name, :email => email, :password => password})
     if user.id
       #send the email
-      return "Email invite has been sent"
+      if User.send_email(user)
+        return "Email invite has been sent"
+      else
+        return "Email invite not sucessfully sent"
     else
       return "User creation was not successful"
     end
