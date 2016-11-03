@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20161030190453) do
-=======
-ActiveRecord::Schema.define(version: 20161027035223) do
->>>>>>> message-voting
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"

@@ -11,9 +11,10 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root to: 'pages#index'
 
-  match '/display_users', to: 'pages#display_users', via: :get
-  match '/display_users', to: 'pages#add_user', via: :post
-  match '/display_users', to: 'pages#delete_user', via: :put
+  match '/display_users', to: 'users#index', via: :get
+  match '/display_users', to: 'users#create', via: :post
+  match '/display_users', to: 'users#destroy', via: :put
+  match '/display_users/:id', to: 'users#edit', via: :post
   
   match '/upload', to: 'uploads#index', via: :get
   match '/upload', to: 'uploads#create', via: :post
