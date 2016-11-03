@@ -8,9 +8,18 @@ function toggle_admin(id){
         type: 'POST',
         dataType: "application/json",
         data: JSON.stringify(data),
-        complete: function(response){
+        error: function(response){
             console.log(response)
-            alert(response.responseText)
+            alertify.message(response.responseText)
         }
+    });
+}
+
+function verify_delete(){
+    alertify.confirm("Are you sure you want to delete? There is no undo because that's a lot of work.",
+    function(){
+        $("#delete_user_form").submit()
+    },
+    function(){
     });
 }

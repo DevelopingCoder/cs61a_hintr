@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
       name, email = line.split(",")
       name = name.strip
       email = email.strip
-      byebug
       if current_user.add_email(email, name) == "Email invite has been sent"
         users_created += [email]
       end
