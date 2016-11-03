@@ -24,9 +24,7 @@ class User < ActiveRecord::Base
     return "Users Created: " + users_created.join(", ")
   end
   
-  def self.send_email(user)
-    # assuming the user has been created,
-    # sends an email to the user's email with username and password
+  def self.send_email(email, password)
     require 'mail'
     
     Mail.defaults do
@@ -69,10 +67,11 @@ class User < ActiveRecord::Base
     user = User.create({:name=>name, :email => email, :password => password})
     if user.id
       #send the email
-      if User.send_email(user)
+      if User.send_email(email, password)
         return "Email invite has been sent"
       else
         return "Email invite not sucessfully sent"
+      end
     else
       return "User creation was not successful"
     end
@@ -124,4 +123,5 @@ class User < ActiveRecord::Base
       end
     end
   end
+  
 end
