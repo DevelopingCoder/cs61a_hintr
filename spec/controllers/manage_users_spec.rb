@@ -13,6 +13,7 @@ RSpec.describe UsersController, type: :controller do
             put :edit, :id => user.id
         end
     end
+
     describe ".add_users" do
         it "doesn't allow because you're not admin" do
             user = FactoryGirl.create(:user)
@@ -26,7 +27,7 @@ RSpec.describe UsersController, type: :controller do
         it "calls invite method in model" do
             admin = FactoryGirl.create(:admin)
             sign_in(admin)
-            expect_any_instance_of(User).to receive(:add_email).with("testuser@gmail.com")
+            expect_any_instance_of(User).to receive(:add_email).with("testuser@gmail.com", nil)
             post :create, {:add_email => "testuser@gmail.com"}
         end
     end

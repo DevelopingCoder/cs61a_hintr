@@ -69,11 +69,11 @@ class User < ActiveRecord::Base
     # takes in an email and optional name param
     # returns success of user creation
     
+    # Check if email is already being used
     password = SecureRandom.urlsafe_base64(6)
     if User.find_by_email(email)
       return "Email already exists in database"
     end
-    # Check if email is already being used
     user = User.create({:name=>name, :email => email, :password => password})
     if user.id
       #send the email
@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
         return @@successful_add
       end
     end
-    return @@invalid_action
+    # return @@invalid_action
   end
   
   def delete_email(email)
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   def delete_emails(emails)
     notice = "Successfully deleted:"
     emails.each do |email|
-      if delete_email(email) == "User successfully deleted"
+      if delete_email(email) == @@successful_del
         notice += " " + email
       end
     end
