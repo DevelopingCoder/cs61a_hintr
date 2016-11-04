@@ -21,4 +21,30 @@ class Message < ActiveRecord::Base
         return self.votes.where(:vote_type => -1).size
     end
     
+    def finalizable
+        if (self.upvotes.to_i >= MessagesController.threshold.to_i) and not self.finalized
+            return true
+        else
+            return false
+        end
+    end
+    
+    def finalize
+        concept = Concept.find(self.concept_id)
+        last_assigned_message = concept.assigned_message
+        if last_assigned_message
+            last_assigned_message.update_attribute(:finalized, false)
+        end
+        self.update_attribute(:finalized, true)
+        concept.update_attribute(:msg_status, "assigned")
+    end
+    
+    def unfinalize
+        concept = Concept.find(self.concept_id)
+        if self.finalized
+            self.update_attribute(:finalized, false)
+        end
+        concept.update_status
+    end
+    
 end

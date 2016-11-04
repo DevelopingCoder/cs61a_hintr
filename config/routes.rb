@@ -23,4 +23,7 @@ Rails.application.routes.draw do
   
   match '/concepts/:concept_id/messages/:id/upvote', to: 'messages#upvote', as: "upvote", via: :post
   match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post
+  match '/messages/threshold', to: 'messages#edit_threshold', as: "edit_threshold", via: :post
+  match '/concepts/:concept_id/messages/:id/finalize', to: 'messages#finalize', as: 'finalize', via: :post
+  match '/concepts/:concept_id/messages/:id/finalize', to: 'message#unfinalize', as: 'unfinalize', via: :post
 end

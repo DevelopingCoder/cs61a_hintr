@@ -1,11 +1,18 @@
 class MessagesController < ApplicationController
+    cattr_accessor :threshold
+    @@threshold = @@threshold || 3
     
     def new
         
     end
     
+    def edit_threshold
+       @@threshold = params[:threshold].to_i
+       redirect_to concepts_path
+    end
+    
     def create
-        message = Message.create({:concept_id => params[:concept_id], :content => params[:add_message], :author => current_user.id})
+        message = Message.create({:concept_id => params[:concept_id], :content => params[:add_message], :author => current_user.id, :finalized => false})
         concept = Concept.find(params[:concept_id])
         if concept.msg_status == 'no messages'
             concept.update_attribute(:msg_status, 'in progress')
@@ -28,6 +35,18 @@ class MessagesController < ApplicationController
     def downvote
         message = Message.find(params[:id])
         message.vote(current_user.id, -1)
+        redirect_to concept_path(params[:concept_id])
+    end
+    
+    def finalize
+        message = Message.find(params[:id])
+        message.finalize
+        redirect_to concept_path(params[:concept_id])
+    end
+    
+    def unfinalize
+        message = Message.find(params[:id])
+        message.unfinalize
         redirect_to concept_path(params[:concept_id])
     end
     

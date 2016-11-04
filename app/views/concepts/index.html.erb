@@ -1,6 +1,14 @@
 <h1>
     Concepts
 </h1>
+<% if current_user.admin %>
+  <%= form_tag(edit_threshold_path, :method => :post) do %>
+    <%= "Current threshold: " + @threshold.to_s%>
+    <br/>
+    <%= text_field_tag("threshold", nil, :placeholder => "Edit threshold", :required => true)%>
+    <%= submit_tag("Change") %>
+  <% end %>
+<% end %>  
 <table id="Concepts">
   <thead>
     <tr>
