@@ -1,0 +1,49 @@
+<h1>All Users</h1>
+<div class="form-group">
+  <%=form_tag(display_users_path, :method => :delete, :id => "delete_user_form") do %>
+    <table class="table" id="Users">
+      <thead>
+        <tr>
+          <th>Admin</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td>
+              <%= check_box_tag "admin_checkbox " + user.id.to_s, user.admin?, user.admin?, {disabled: (!current_user.admin? or user.id == current_user.id), onclick: "toggle_admin(" + user.id.to_s + ")"}%>
+            </td>
+            <td>
+              <%= user.name  %>
+            </td>
+            <td>
+              <%= user.email %>
+            </td>
+            <td>
+              <%= check_box_tag("delete_emails[]", user.email, false, :disabled => 
+                    (!current_user.admin or user.admin?), :id => "delete_" + user.email) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if current_user.admin? %>
+      <button type="button", id="delete_form_button", onclick= "verify_delete()">Delete Users</button>
+    <% end %>
+  <% end %>
+</div>
+
+<%if current_user.admin? %>
+  <div class="form-group">
+    <%=form_tag(display_users_path, :method => :post) do %> 
+      <%= label_tag("Name") %>
+      <%= text_field_tag("add_name") %>
+      <%= label_tag("Email") %>
+      <%= email_field_tag("add_email") %>
+      <%= submit_tag("Add") %>
+    <% end %>
+  </div>
+<% end %>

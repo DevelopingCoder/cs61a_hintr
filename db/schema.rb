@@ -11,7 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019051717) do
+ActiveRecord::Schema.define(version: 20161030190453) do
+
+  create_table "concepts", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.string  "msg_status",         default: "no messages"
+    t.integer "lab_first_appeared"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "content"
+    t.string   "author"
+    t.integer  "concept_id"
+    t.boolean  "finalized"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tag2concept", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "concept_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "old_name"
+    t.string "name"
+    t.string "status"
+    t.string "description"
+    t.string "primary_concept"
+    t.string "example"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -32,5 +62,11 @@ ActiveRecord::Schema.define(version: 20161019051717) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "vote_type"
+    t.integer "user_id"
+    t.integer "message_id"
+  end
 
 end

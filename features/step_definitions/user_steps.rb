@@ -5,7 +5,7 @@ Given /^the following accounts exist:$/ do |users_table|
     end
 end
 
-Given /^I log in with email: "(.*)" and password: "(.*)"$/ do |email, password|
+Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, password|
     step %Q{I am on the sign-in page}
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
@@ -18,13 +18,37 @@ Then /^I should see all users$/ do
     end
 end
 
-# Given /^I am on (.*)$/ do |page|
-#     visit path_to(page)
-# end
-
 And /^I logout$/ do
-  current_driver = Capybara.current_driver
-  Capybara.current_driver = :rack_test
-  page.driver.submit :delete, path_to("the logout page"), {}
-  Capybara.current_driver = current_driver 
+  step %Q{I follow "Logout"}
 end
+
+Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
+    truth_value = (not_admin != "not ")
+    user = User.find_by_email(email)
+    expect(user.admin).to be truth_value
+end
+
+Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |email|
+    expect(page.find_by_id("delete_#{email}").disabled?).to be true
+end
+
+
+Then /^the admin checkbox for "([^"]*)" should be disabled$/ do |email|
+    user = User.find_by_email(email)
+    expect(page.find_by_id("admin_checkbox_#{user.id}").disabled?).to be true
+end
+
+When /^I (un)?check the admin checkbox for "([^"]*)"$/ do |uncheck, email|
+    is_check = uncheck != "un"
+    id = "admin_checkbox_" + User.find_by_email(email).id.to_s
+    if is_check
+        check(id)
+    else
+        uncheck(id)
+    end
+end
+
+When /^I am should see "Successfully deleted"$/ do
+    byebug
+end
+        

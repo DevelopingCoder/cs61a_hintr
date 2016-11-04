@@ -15,14 +15,23 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    
+    when /^the users page$/
+      display_users_path
     when /^the sign-in page$/
       '/users/sign_in'
+      
     when /^the login page$/
       new_user_session_path
+      
     when /^the logout page$/
       destroy_user_session_path
-
+      
+    when /^the users page$/
+      display_users_path
+      
+    when /^the concepts page$/
+      concepts_path
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

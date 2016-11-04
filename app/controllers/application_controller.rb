@@ -8,6 +8,24 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
-    devise_parameter_sanitizer.for(:account_update) << :name
+    # devise_parameter_sanitizer.for(:account_update) << :name
+    devise_parameter_sanitizer.for(:account_update) { |u| 
+      u.permit(:password, :password_confirmation, :current_password, :name) 
+    }
   end
+  
+  def get_file_types
+    types = Set.new
+    params.keys.each do |key|
+      if key.match(/^.*_file$/)
+        types.add(key)
+      end
+    end
+    return types
+  end
+  
+  def capture_type(file)
+    return file.match(/(.*)_file/)[1]
+  end
+  
 end
