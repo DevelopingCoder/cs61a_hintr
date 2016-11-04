@@ -7,7 +7,7 @@ class UsersController < ApplicationController
             name = params[:add_name]
             flash[:notice] = current_user.add_email(email, name)
         else
-            # flash[:notice] = "You do not have the permissions to add a user"
+            flash[:notice] = "You do not have the permissions to add a user"
         end
         redirect_to display_users_path
     end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
                 flash[:notice] = current_user.delete_emails(emails)
             end
         else
-            # flash[:notice] = "You do not have the permissions to delete users"
+            flash[:notice] = "You do not have the permissions to delete users"
         end
         redirect_to display_users_path
     end
