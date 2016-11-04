@@ -15,7 +15,8 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    
+    when /^the users page$/
+      display_users_path
     when /^the sign-in page$/
       '/users/sign_in'
       

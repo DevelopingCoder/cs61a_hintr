@@ -22,49 +22,45 @@ Background: An admin and a nonadmin account exist
   And I follow "Users"
 
 Scenario: Admin should be able to add a new user email
-  And I fill in "add_email" with "testuser1@gmail.com"
-  And I press "Add"
-  Then I should see "Email invite(s) have been sent"
-  And I should see "testuser1@gmail.com"
 
-Scenario: Admin should be able to add batch user emails
-  And I fill in "add_email" with "testuser1@gmail.com, testuser2@gmail.com, testuser3@gmail.com"
+  And I fill in "add_email" with "testuser1@gmail.com"
+  And I fill in "add_name" with "testuser1"
   And I press "Add"
-  Then I should see "Email invite(s) have been sent"
+  Then I should see "Email invite has been sent"
   And I should see "testuser1@gmail.com"
-  And I should see "testuser2@gmail.com"
-  And I should see "testuser3@gmail.com"
+  And I should see "testuser1"
   
+@javascript
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
-  When I check "delete_test1@gmail.com"
-  And I check "delete_test2@gmail.com"
-  And I press "delete_button"
-  Then I should see "Are you sure you want to delete"
-  When I press "confirm_delete"
-  Then I should not see "test3@gmail.com"
-  And I should not see "test2@gmail.com"
+  When I check "delete_test2@gmail.com"
+  And I check "delete_test3@gmail.com"
+  And I press "Delete Users"
+  Then I should see "Are you sure you want to delete?"
+  When I press "OK" within "ajs-footer"
+  # Then I should see "Successfully deleted"
+  # And I should not see "testuser2"
+  # And I should not see "testuser3"
 
 Scenario: Admins should not be able to delete other admins
-  Then the checkbox for "delete_testadmin@gmail.com" should be disabled
-  Then the checkbox for "delete_testadmin2@gmail.com" should be disabled
+  Then the delete checkbox for "testadmin@gmail.com" should be disabled
+  Then the delete checkbox for "testadmin2@gmail.com" should be disabled
 
-Scenario: Admin should not be able to remove admin privelege from himself/herself
-  When I press "admin_testadmin@gmail.com"
-  Then I should see "Cannot remove admin priveleges from self"
-  And "testadmin@gmail.com" should be an admin
- 
+@javascript
 Scenario: Admin should be able to assign a user admin privileges
-  When I press "admin_test2@gmail.com"
-  Then I should see "Are you sure you want to make testuser2 an admin?"
-  When I press "Confirm"
+  When I check the admin checkbox for "test2@gmail.com"
+  # Then I should see "Are you sure you want to make testuser2 an admin?"
+  # When I press "Confirm"
+  Then I should see "testuser2 is now an admin"
   Then "test2@gmail.com" should be an admin
-  
+
+@javascript  
 Scenario: Admin should be able to remove admin privileges
-  When I press "admin_testadmin2@gmail.com"
-  Then I should see "Are you sure remove admin priveleges for testadmin2?"
-  When I press "Confirm"
+  When I uncheck the admin checkbox for "testadmin2@gmail.com"
+  # Then I should see "Are you sure remove admin privileges for testadmin2?"
+  # When I press "Confirm"
+  Then I should see "testadmin2 is no longer an admin"
   Then "testadmin2@gmail.com" should not be an admin
   
 Scenario: Users should not be able to add or delete user
@@ -73,5 +69,4 @@ Scenario: Users should not be able to add or delete user
   And I follow "Users"
   Then I should see all users
   But I should not see "Add"
-  And I should not see "Add New User"
-  And I should not see "delete testuser@gmail.com"
+  And I should not see "Delete Users"

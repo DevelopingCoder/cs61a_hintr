@@ -12,7 +12,8 @@ Background: user already has an account
   | testuser   | testuser@gmail.com        | password          | false |
   
 Scenario: Not logged in user will get redirected to login page
-  When I go to the login page
+  When I go to the home page
+  Then I am on the login page
   And I fill in "user_email" with "testuser@gmail.com"
   And I fill in "user_password" with "password"
   And I press "Login"

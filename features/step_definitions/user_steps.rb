@@ -10,7 +10,6 @@ Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, pass
     step %Q{I fill in "Email" with "#{email}"}
     step %Q{I fill in "Password" with "#{password}"}
     step %Q{I press "Log in"}
-    puts("hello")
 end
 
 Then /^I should see all users$/ do 
@@ -29,6 +28,27 @@ Then /^"([^"]*)" should (not )?be an admin$/ do |email, not_admin|
     expect(user.admin).to be truth_value
 end
 
-Then /^the checkbox for "([^"]*)" should be disabled$/ do |checkbox_id|
-    expect(page.find('#' + checkbox_id)[:disabled]).to be true
+Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |email|
+    expect(page.find_by_id("delete_#{email}").disabled?).to be true
 end
+
+
+Then /^the admin checkbox for "([^"]*)" should be disabled$/ do |email|
+    user = User.find_by_email(email)
+    expect(page.find_by_id("admin_checkbox_#{user.id}").disabled?).to be true
+end
+
+When /^I (un)?check the admin checkbox for "([^"]*)"$/ do |uncheck, email|
+    is_check = uncheck != "un"
+    id = "admin_checkbox_" + User.find_by_email(email).id.to_s
+    if is_check
+        check(id)
+    else
+        uncheck(id)
+    end
+end
+
+When /^I am should see "Successfully deleted"$/ do
+    byebug
+end
+        

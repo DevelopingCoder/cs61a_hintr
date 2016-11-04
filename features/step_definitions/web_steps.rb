@@ -32,9 +32,9 @@ end
 World(WithinHelpers)
 
 # Single-line step scoper
-When /^(.*) within (.*[^:])$/ do |step, parent|
-  with_scope(parent) { When step }
-end
+# When /^(.*) within (.*[^:])$/ do |step, parent|
+#   with_scope(parent) { When step }
+# end
 
 # Multi-line step scoper
 When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
@@ -227,4 +227,10 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+When /^I press "([^"]*)" within "([^"]*)"$/ do |button,scope_selector|
+  within('div.' + scope_selector) do      
+    click_button(button)
+  end
 end
