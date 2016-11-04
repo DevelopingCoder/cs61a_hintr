@@ -12,6 +12,11 @@ Given /^I log in with email: "([^"]*)" and password: "([^"]*)"$/ do |email, pass
     step %Q{I press "Log in"}
 end
 
+Given /^I am logged in$/ do
+    User.create!(:name => "testuser", :email => "testuser@gmail.com", :password => "password", :admin => false)
+    step %Q{I log in with email: "testuser@gmail.com" and password: "password"}
+end
+
 Then /^I should see all users$/ do 
     User.all.each do |user|
         page.should have_content(user.email)

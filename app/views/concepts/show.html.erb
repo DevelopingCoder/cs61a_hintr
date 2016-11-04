@@ -8,45 +8,60 @@
   <%= "Status: " + @concept.msg_status %>
 </h4>
 <!--display tags when implemented-->
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <% @messages.each do |message| %>
-        <div class="row">
-          <div class="col-md-3" id="votes">
-            <div class="row" id="upvotes">
-              <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
-                <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post %>
-              </div>
-              <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
-                <%= message.upvotes %>
-              </div>
-            </div>
-            <div class="row" id="downvotes">
-              <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
-                <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post %>
-              </div>
-              <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
-                <%= message.downvotes %>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6" id="message">
-            <%= message.content %>
-          </div>
-          <div class="col-md-1" id="delete-message">
-            <%= link_to "Delete", concept_message_path(:concept_id => @concept.id, :id => message.id), id: "delete-#{message.id}", :method => :delete, data: { confirm: "Are you sure?" } %>
-            <!--, :confirm => "Are you sure?" -->
-          </div>
+<div class="row">
+  <div class="col-md-8" id="drafts">
+    <% @messages.each do |message| %>
+      <% if message.finalizable %>
+        <div class="row" id="threshold">
+          <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
         </div>
       <% end %>
-    </div>
-    <div class='Post Message col-md-4'>
+      <% if message.finalized %>
+        <div class="row" id="assigned-message-<%= message.id %>">
+          Assigned Message
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="col-md-2" id="votes">
+          <div class="row" id="upvotes">
+            <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
+              <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
+              <%= message.upvotes %>
+            </div>
+          </div>
+          <div class="row" id="downvotes">
+            <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
+              <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post %>
+            </div>
+            <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
+              <%= message.downvotes %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8" id="message">
+          <%= message.content %>
+        </div>
+        <% if not message.finalized %>
+          <div class="col-md-2" id="delete-message">
+            <%= link_to "Delete", concept_message_path(:concept_id => @concept.id, :id => message.id), id: "delete-#{message.id}", :method => :delete, data: { confirm: "Are you sure?" } %>
+          </div>
+        <% else %>
+          <div class="col-md-2" id="unfinalize-message">
+            <%= link_to "Unfinalize", unfinalize_path(:concept_id => @concept.id, :id => message.id), :id => "unfinalize-#{message.id}", :method => :post %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4" id="compose">
+    <div class='Post Message'>
       <%=form_tag(concept_messages_path(:concept_id => @concept.id), :method => :post) do %>
-        <%= text_area_tag("add_message", nil, :placeholder => "New Message", :required => true, :size => "30x10") %>
+        <%= text_area_tag("add_message", nil, :placeholder => "New Message", :required => true, :id => "compose-message-input", :cols => "10") %>
+        <br/>
         <%= submit_tag("Post Message") %>
       <% end %>
     </div>
   </div>
 </div>
-

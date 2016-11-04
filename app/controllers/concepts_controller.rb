@@ -2,6 +2,10 @@ class ConceptsController < ApplicationController
     
     def index
         @concepts = Concept.all
+        @concepts.each do |concept|
+            concept.update_status
+        end
+        @threshold = MessagesController.threshold
     end
     
     def show
