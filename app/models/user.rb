@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
         return @@successful_add
       end
     end
-    # return @@invalid_action
+    return @@invalid_action
   end
   
   def delete_email(email)
