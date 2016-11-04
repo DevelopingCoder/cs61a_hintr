@@ -13,6 +13,9 @@ describe User do
             User.create({:name => "Jigglypuff", :email => "testuser@gmail.com", :password => "password"})
             expect(@user.add_email("testuser@gmail.com", "Magikarp")).to eq "Email already exists in database"
         end
+        it 'complains if user creation unsuccessful' do
+            expect(@user.add_email("test@gmail.com", nil)).to eq "Something went wrong. You may have performed an invalid action"
+        end
     end
     
     describe 'delete email' do
