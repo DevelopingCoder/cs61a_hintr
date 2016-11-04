@@ -4,7 +4,8 @@ class UsersController < ApplicationController
     def create
         if current_user.admin?
             email = params[:add_email]
-            flash[:notice] = current_user.add_email(email)
+            name = params[:add_name]
+            flash[:notice] = current_user.add_email(email, name)
         else
             flash[:notice] = "You do not have the permissions to add a user"
         end
@@ -40,10 +41,6 @@ class UsersController < ApplicationController
     
     def index
         @users = User.all.order("admin DESC")
-        # If @users is nil, then log it b/c users should never be nil
-        if @users == nil
-            logger.fatal "There are no users in the db"
-        end
     end
     
     def edit 

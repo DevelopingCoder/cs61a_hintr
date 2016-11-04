@@ -39,7 +39,9 @@
 <%if current_user.admin? %>
   <div class="form-group">
     <%=form_tag(display_users_path, :method => :post) do %> 
-      <%= label_tag("User Email") %>
+      <%= label_tag("Name") %>
+      <%= text_field_tag("add_name") %>
+      <%= label_tag("Email") %>
       <%= email_field_tag("add_email") %>
       <%= submit_tag("Add") %>
     <% end %>

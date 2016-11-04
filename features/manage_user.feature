@@ -24,16 +24,18 @@ Background: An admin and a nonadmin account exist
 Scenario: Admin should be able to add a new user email
 
   And I fill in "add_email" with "testuser1@gmail.com"
+  And I fill in "add_name" with "testuser1"
   And I press "Add"
   Then I should see "Email invite has been sent"
   And I should see "testuser1@gmail.com"
+  And I should see "testuser1"
 
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
   When I check "delete_test2@gmail.com"
   And I check "delete_test3@gmail.com"
-  And I press "Delete Emails"
+  And I press "Delete Users"
   Then I should see "Are you sure you want to delete"
   When I press "OK"
   Then I should not see "testuser2"

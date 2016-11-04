@@ -5,9 +5,14 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
+  
+  validates :name, presence: :true
   has_many :votes
   has_many :messages, :through => :votes
+
+  @@successful_del = "User successfully deleted"
+  @@successful_add = "Email invite has been sent"
+  @@invalid_action = "Something went wrong. You may have performed an invalid action"
 
   def self.import(current_user, file)
     users_created = []
@@ -19,10 +24,12 @@ class User < ActiveRecord::Base
       end
       
       name, email = line.split(",")
-      name = name.strip
-      email = email.strip
-      if current_user.add_email(email, name) == "Email invite has been sent"
-        users_created += [email]
+      if name and email
+        name = name.strip
+        email = email.strip
+        if current_user.add_email(email, name) == "Email invite has been sent"
+          users_created += [email]
+        end
       end
     end
     return "Users Created: " + users_created.join(", ")
@@ -58,7 +65,7 @@ class User < ActiveRecord::Base
     mail.deliver
   end
   
-  def add_email(email, name = '')
+  def add_email(email, name)
     # takes in an email and optional name param
     # returns success of user creation
     
@@ -71,13 +78,10 @@ class User < ActiveRecord::Base
     if user.id
       #send the email
       if User.send_email(email, password)
-        return "Email invite has been sent"
-      else
-        return "Email invite not sucessfully sent"
+        return @@successful_add
       end
-    else
-      return "User creation was not successful"
     end
+    return @@invalid_action
   end
   
   def delete_email(email)
@@ -87,13 +91,10 @@ class User < ActiveRecord::Base
     user = User.find_by_email(email)
     if user
       if User.destroy(user) 
-        return "User successfully deleted"
-      else
-        return "User failed to be deleted"
+        return @@successful_del
       end
-    else
-      return "User never existed"
     end
+    return @@invalid_action
   end
   
   def delete_emails(emails)
@@ -118,12 +119,9 @@ class User < ActiveRecord::Base
           else
             return other_user.name+ " is no longer an admin. Lol"
           end
-        else
-          return "Toggle failed"
         end
-      else #Could not find the user
-        return "Invalid id"
       end
+      return @@invalid_action
     end
   end
   
