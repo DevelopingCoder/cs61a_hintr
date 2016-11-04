@@ -38,3 +38,6 @@ ratings:
 exclude_paths:
 - "coverage/"
 - "Gemfile.lock"
+- "spec/**/*"
+- "feature/**/*"
+- "db/**/*"
