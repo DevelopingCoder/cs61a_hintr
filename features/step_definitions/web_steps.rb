@@ -50,7 +50,9 @@ When /^(?:|I )go to (.+)$/ do |page_name|
 end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
+  puts page.has_content?("OK")
   click_button(button)
+  puts "pressed button"
 end
 
 When /^(?:|I )follow "([^"]*)"$/ do |link|

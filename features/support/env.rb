@@ -1,4 +1,5 @@
 require "simplecov"
+
 SimpleCov.start do
   add_filter "/step_definitions/"
   add_filter "/support/"
@@ -11,6 +12,13 @@ end
 # files.
 
 require 'cucumber/rails'
+require 'capybara/poltergeist'
+require 'phantomjs'
+
+Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
+end
+Capybara.javascript_driver = :poltergeist
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any

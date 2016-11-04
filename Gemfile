@@ -61,6 +61,8 @@ end
 
 # setup Cucumber, RSpec, autotest support
 group :test do
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'rspec-rails', '3.4.2'
   gem 'simplecov', :require => false
   gem 'cucumber-rails', :require => false

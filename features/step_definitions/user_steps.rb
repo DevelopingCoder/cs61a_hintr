@@ -47,3 +47,8 @@ When /^I (un)?check the admin checkbox for "([^"]*)"$/ do |uncheck, email|
         uncheck(id)
     end
 end
+
+When /^I am should see "Successfully deleted"$/ do
+    byebug
+end
+        

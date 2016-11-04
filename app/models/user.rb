@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
     end
     user = User.find_by_email(email)
     if user
-      if User.destroy(user) 
+      if User.destroy(user.id) 
         return @@successful_del
       end
     end
