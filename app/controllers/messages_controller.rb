@@ -27,13 +27,21 @@ class MessagesController < ApplicationController
     def upvote
         message = Message.find(params[:id])
         message.vote(current_user.id, 1)
-        redirect_to concept_path(params[:concept_id])
+        if request.xhr?
+            render :json => { upvotes: message.upvotes, downvotes: message.downvotes, message_id: params[:id], action: "upvote"}
+        else
+            redirect_to concept_path(params[:concept_id])
+        end
     end
     
     def downvote
         message = Message.find(params[:id])
         message.vote(current_user.id, -1)
-        redirect_to concept_path(params[:concept_id])
+        if request.xhr?
+            render :json => { upvotes: message.upvotes, downvotes: message.downvotes, message_id: params[:id], action: "downvote"}
+        else
+            redirect_to concept_path(params[:concept_id])
+        end
     end
     
     def finalize
