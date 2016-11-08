@@ -37,15 +37,24 @@ Then /^the delete checkbox for "([^"]*)" should be disabled$/ do |email|
     expect(page.find_by_id("delete_#{email}").disabled?).to be true
 end
 
+When /^I (un)?check the delete checkbox for "([^"]*)"$/ do |uncheck, email|
+    is_check = uncheck != "un"
+    id = "delete_checkbox_" + User.find_by_email(email).id.to_s
+    if is_check
+        check(id)
+    else
+        uncheck(id)
+    end
+end
 
 Then /^the admin checkbox for "([^"]*)" should be disabled$/ do |email|
     user = User.find_by_email(email)
-    expect(page.find_by_id("admin_checkbox_#{user.id}").disabled?).to be true
+    expect(page.find_by_id("admin_checkbox_#{user.name}").disabled?).to be true
 end
 
 When /^I (un)?check the admin checkbox for "([^"]*)"$/ do |uncheck, email|
     is_check = uncheck != "un"
-    id = "admin_checkbox_" + User.find_by_email(email).id.to_s
+    id = "admin_checkbox_" + User.find_by_email(email).name
     if is_check
         check(id)
     else

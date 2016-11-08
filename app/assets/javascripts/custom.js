@@ -6,7 +6,7 @@ $(document).ready(function(){
         if (this.checked){
             var prompt = "Are you sure you want to give admin privileges to " + this.name.substring(15);
         } else {
-            var prompt = "Are you sure you remove to give admin privileges to " + this.name.substring(15);
+            var prompt = "Are you sure you want to remove admin privileges to " + this.name.substring(15);
         }
         var data = {
             field: "admin",

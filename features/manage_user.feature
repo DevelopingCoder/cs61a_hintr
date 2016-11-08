@@ -34,8 +34,8 @@ Scenario: Admin should be able to add a new user email
 Scenario: Admin should be able to delete users
   Given I should see "test3@gmail.com"
   And I should see "test2@gmail.com"
-  When I check "delete_test2@gmail.com"
-  And I check "delete_test3@gmail.com"
+  When I check the delete checkbox for "test2@gmail.com"
+  And I check the delete checkbox for "test3@gmail.com"
   And I press "Delete Users"
   Then I should see "Are you sure you want to delete?"
   When I press "OK" within "ajs-footer"
@@ -43,25 +43,21 @@ Scenario: Admin should be able to delete users
   # And I should not see "testuser2"
   # And I should not see "testuser3"
 
-Scenario: Admins should not be able to delete other admins
-  Then the delete checkbox for "testadmin@gmail.com" should be disabled
-  Then the delete checkbox for "testadmin2@gmail.com" should be disabled
-
 @javascript
 Scenario: Admin should be able to assign a user admin privileges
   When I check the admin checkbox for "test2@gmail.com"
-  # Then I should see "Are you sure you want to make testuser2 an admin?"
-  # When I press "Confirm"
-  Then I should see "testuser2 is now an admin"
-  Then "test2@gmail.com" should be an admin
+  Then I should see "Are you sure you want to give admin privileges to testuser2?"
+  When I press "OK" within "ajs-footer"
+#  Then I should see "testuser2 is now an admin"
+#  Then "test2@gmail.com" should be an admin
 
 @javascript  
 Scenario: Admin should be able to remove admin privileges
   When I uncheck the admin checkbox for "testadmin2@gmail.com"
-  # Then I should see "Are you sure remove admin privileges for testadmin2?"
-  # When I press "Confirm"
-  Then I should see "testadmin2 is no longer an admin"
-  Then "testadmin2@gmail.com" should not be an admin
+  Then I should see "Are you sure you want to remove admin privileges for testadmin2?"
+  When I press "OK" within "ajs-footer"
+#  Then I should see "testadmin2 is no longer an admin"
+#  Then "testadmin2@gmail.com" should not be an admin
   
 Scenario: Users should not be able to add or delete user
   Given I logout
