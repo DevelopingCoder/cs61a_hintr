@@ -7,7 +7,9 @@
 <h4>
   <%= "Status: " + @concept.msg_status %>
 </h4>
-<!--display tags when implemented-->
+<h4>
+  <%= "Tags: " + @concept.display_tags_string %>
+</h4>
 <div class="row">
   <div class="col-md-8" id="drafts">
     <% @messages.each do |message| %>

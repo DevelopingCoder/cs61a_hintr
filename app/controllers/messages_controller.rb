@@ -1,13 +1,11 @@
 class MessagesController < ApplicationController
-    cattr_accessor :threshold
-    @@threshold = @@threshold || 3
     
     def new
         
     end
     
     def edit_threshold
-       @@threshold = params[:threshold].to_i
+       Rails.application.config.threshold = params[:threshold].to_i
        redirect_to concepts_path
     end
     
