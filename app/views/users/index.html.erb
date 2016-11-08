@@ -14,7 +14,7 @@
         <% @users.each do |user| %>
           <tr>
             <td>
-              <%= check_box_tag "admin_checkbox " + user.id.to_s, user.admin?, user.admin?, {disabled: (!current_user.admin? or user.id == current_user.id), onclick: "toggle_admin(" + user.id.to_s + ")"}%>
+              <%= check_box_tag "admin_checkbox " + user.name, user.id, user.admin?, {disabled: (!current_user.admin? or user.id == current_user.id), class: "admin_checkbox"}%>
             </td>
             <td>
               <%= user.name  %>
@@ -24,14 +24,14 @@
             </td>
             <td>
               <%= check_box_tag("delete_emails[]", user.email, false, :disabled => 
-                    (!current_user.admin or user.admin?), :id => "delete_" + user.email) %>
+                    (user == current_user), :class => "delete_checkbox", :id => "delete_checkbox_" + user.id.to_s) %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <% if current_user.admin? %>
-      <button type="button", id="delete_form_button", onclick= "verify_delete()">Delete Users</button>
+      <button type="button", id="delete_form_button">Delete Users</button>
     <% end %>
   <% end %>
 </div>

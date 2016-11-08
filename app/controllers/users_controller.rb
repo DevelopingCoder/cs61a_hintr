@@ -46,13 +46,12 @@ class UsersController < ApplicationController
     def edit 
         #Used for admin purposes to edit users
         id = params[:id]
-        json = JSON.parse(request.body.read)
         if current_user.admin?
-            case json["field"]
+            case params[:field]
             when "admin"
-                message = current_user.toggle_admin(id, json["value"])
+                message = current_user.toggle_admin(id, params[:value])
             end
-            render :json => message
+            render :text => message
         end 
     end
 end
