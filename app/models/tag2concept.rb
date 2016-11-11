@@ -1,4 +1,4 @@
-class Tag2Concept < ActiveRecord::Base
+class Tag2concept < ActiveRecord::Base
    validates :tag, presence: true
    validates :concept, presence: true
    belongs_to :tag

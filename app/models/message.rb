@@ -22,7 +22,7 @@ class Message < ActiveRecord::Base
     end
     
     def finalizable
-        if (self.upvotes.to_i >= MessagesController.threshold.to_i) and not self.finalized
+        if (self.upvotes.to_i >= Rails.application.config.threshold.to_i) and not self.finalized
             return true
         else
             return false

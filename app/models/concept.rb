@@ -46,5 +46,14 @@ class Concept < ActiveRecord::Base
             return nil
         end
     end
+    
+     def display_tags_string
+        display_string = ''
+        self.tags.each do |tag|
+            display_string += tag.name + ", "
+        end
+        # remove trailing comma
+        return display_string[0...-2]
+    end
   
 end

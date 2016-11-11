@@ -5,7 +5,7 @@ class ConceptsController < ApplicationController
         @concepts.each do |concept|
             concept.update_status
         end
-        @threshold = MessagesController.threshold
+        @threshold = Rails.application.config.threshold
     end
     
     def show

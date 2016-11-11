@@ -32,7 +32,7 @@ Then /"(.*)" should have (\d) downvotes?$/ do |message, downvotes|
 end
 
 Given /^the threshold is (\d)$/ do |threshold|
-    MessagesController.threshold = threshold
+    Rails.application.config.threshold = threshold
 end
 
 Then /^I should be able to finalize "(.*)"$/ do |message|
