@@ -45,6 +45,7 @@ function downvote(message_id, concept_id) {
     $.ajax({
         url: '/concepts/' + concept_id.to_s + '/messages' + message_id.to_s + '/downvote',
         type: 'POST',
+        dataType: "application/json",
         data: JSON.stringify(data)
     })
 }

@@ -15,7 +15,7 @@
     <% @messages.each do |message| %>
       <% if message.finalizable %>
         <div class="row" id="threshold">
-          <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post, :visibility => :none %>
+          <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
         </div>
       <% end %>
       <% if message.finalized %>
@@ -23,8 +23,8 @@
           Assigned Message
         </div>
       <% end %>
-      <div class="row">
-        <div class="col-md-2" id="votes">
+      <div class="row" id="message-row-<%= message.id %>">
+        <div class="col-md-3" id="votes">
           <div class="row" id="upvotes">
             <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
               <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post, :remote => true %>
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8" id="message">
+        <div class="col-md-7" id="message">
           <%= message.content %>
         </div>
         <% if not message.finalized %>
