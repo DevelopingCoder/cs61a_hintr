@@ -2,9 +2,10 @@
     Concepts
 </h1>
 <% if current_user.admin %>
-  <%= form_tag(edit_threshold_path, :method => :post) do %>
+  <div id="threshold-display">
     <%= "Current threshold: " + @threshold.to_s%>
-    <br/>
+  </div>
+  <%= form_tag(edit_threshold_path, :method => :post) do %>
     <%= text_field_tag("threshold", nil, :placeholder => "Edit threshold", :required => true)%>
     <%= submit_tag("Change") %>
   <% end %>

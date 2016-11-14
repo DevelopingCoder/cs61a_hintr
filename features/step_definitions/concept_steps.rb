@@ -35,6 +35,11 @@ Given /^the threshold is (\d)$/ do |threshold|
     Rails.application.config.threshold = threshold
 end
 
+Then /^the threshold should be (\d)$/ do |threshold|
+    expect(Rails.application.config.threshold.to_s).to eq(threshold)
+    find('#threshold-display').should have_content(threshold)
+end
+
 Then /^I should be able to finalize "(.*)"$/ do |message|
     message = Message.find_by_content(message)
     expect(page).to have_selector("#finalize-#{message.id}")

@@ -14,7 +14,7 @@
   <div class="col-md-8" id="drafts">
     <% @messages.each do |message| %>
       <% if message.finalizable %>
-        <div class="row" id="threshold">
+        <div class="row" id="finalize-<%= message.id %>">
           <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
         </div>
       <% end %>
