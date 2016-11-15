@@ -17,6 +17,11 @@ Given /^I am logged in$/ do
     step %Q{I log in with email: "testuser@gmail.com" and password: "password"}
 end
 
+Given /^I am logged in as an admin$/ do
+    User.create!(:name => "testadmin", :email => "testadmin@gmail.com", :password => "password", :admin => true)
+    step %Q{I log in with email: "testadmin@gmail.com" and password: "password"}
+end
+
 Then /^I should see all users$/ do 
     User.all.each do |user|
         page.should have_content(user.email)
