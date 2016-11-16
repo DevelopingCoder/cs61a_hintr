@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  resources :question_sets
   resources :concepts do
     resources :messages
+  end
+  resources :tag2wronganswers do
+    resources :hints
   end
   devise_for :users
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
