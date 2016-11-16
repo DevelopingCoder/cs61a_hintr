@@ -1,7 +1,7 @@
 class UploadsController < ApplicationController
     before_action :authenticate_user!
     
-    def create
+    def new
         #Based on file being uploaded, call their Import function
         file_types = get_file_types
         flash[:notice] = []

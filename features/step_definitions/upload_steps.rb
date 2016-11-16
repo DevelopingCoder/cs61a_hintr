@@ -10,8 +10,25 @@ Given /^the following tag to concept relations exist:$/ do |tag2concepts_table|
    pending 
 end
 
-Given /^the following concepts csv "([^"]*)" exists:$/ do |concepts_table|
-   pending 
+Given /^the following "([^"]*)" exists:$/ do |filename, concepts_table|
+    file_info = ""
+    concepts_table.hashes.each do |concept|
+        titles = []
+        if file_info.blank?
+            concept.each do |value|
+                titles << value[0]
+            end
+            titles = titles.join(',')
+            file_info += titles + "\n"
+        end
+        curr_concept = []
+        concept.each do |value|
+            curr_concept << value[1]
+        end
+        curr_concept = curr_concept.join(',')
+        file_info+= curr_concept + "\n"
+    end
+    File.write('upload_files/'+filename, file_info)
 end
 
 Given /^the following tags csv "([^"]*)" exists:$/ do |tags_table|

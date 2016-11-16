@@ -15,7 +15,7 @@ Background: A user account exists
     | test_concept 3 | test_concept_description3 |
     | test_concept 4 | test_concept_description4 |
     
-    Given the following concepts csv "concepts.csv" exists:
+    Given the following "concepts.csv" exists:
     | Concept        | Description                   | Message                |
     | test_concept 1 | new_test_concept_description  | concept msg_example_1  |
     | test_concept 2 | new_test_concept_description2 |                        |
@@ -23,7 +23,7 @@ Background: A user account exists
     | test_concept 4 | test_concept_description4     |                        |
     
     Given I log in with email: "testadmin@gmail.com" and password: "password"
-    And I follow "Uploads
+    And I follow "Uploads"
     
 Scenario: I can upload a Concepts file and confirm all actions
     Given I choose to upload a "Concepts" file with "concepts.csv"

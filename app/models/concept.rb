@@ -7,6 +7,8 @@ class Concept < ActiveRecord::Base
     
   def self.import(current_user, file)
     concepts_created = []
+    concepts_deleted = []
+    concepts_edited = []
     read_first_line = false
     File.open(file.tempfile).each do |line|
       if not read_first_line
