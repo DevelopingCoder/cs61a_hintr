@@ -11,13 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108014108) do
+ActiveRecord::Schema.define(version: 20161116011324) do
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
     t.string  "msg_status",         default: "no messages"
     t.integer "lab_first_appeared"
+  end
+
+  create_table "hint_votes", force: :cascade do |t|
+    t.integer "vote_type"
+    t.integer "user_id"
+    t.integer "hint_id"
+  end
+
+  create_table "hints", force: :cascade do |t|
+    t.string   "content"
+    t.boolean  "finalized"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tag2wronganswer_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -29,9 +43,24 @@ ActiveRecord::Schema.define(version: 20161108014108) do
     t.datetime "updated_at"
   end
 
+  create_table "question_sets", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string  "text"
+    t.string  "case_string"
+    t.integer "question_set_id"
+  end
+
   create_table "tag2concepts", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
+  end
+
+  create_table "tag2wronganswers", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "wrong_answer_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -67,6 +96,11 @@ ActiveRecord::Schema.define(version: 20161108014108) do
     t.integer "vote_type"
     t.integer "user_id"
     t.integer "message_id"
+  end
+
+  create_table "wrong_answers", force: :cascade do |t|
+    t.string  "text"
+    t.integer "question_id"
   end
 
 end
