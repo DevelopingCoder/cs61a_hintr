@@ -1,5 +1,5 @@
 <h3>Import a CSV File</h3>
-  <%= form_tag upload_path, multipart: true do %>
+  <%= form_tag upload_confirmation_path, multipart: true do %>
     <%= label_tag "Concepts File" %>
     <%= file_field_tag :concepts_file %>
     <%= label_tag "Users File" %>

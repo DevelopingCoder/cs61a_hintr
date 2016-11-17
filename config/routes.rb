@@ -19,10 +19,10 @@ Rails.application.routes.draw do
   match '/display_users/:id', to: 'users#edit', via: :put
   
   match '/upload', to: 'uploads#index', via: :get
-  match '/upload', to: 'uploads#new', via: :post
-  match '/upload/confirmation', to: 'uploads#show', via: :get
+  match '/upload/confirmation', to: 'uploads#new', via: :post
   match '/upload/confirmation', to: 'uploads#confirm', via: :put
-
+  match '/upload/confirmation', to: 'uploads#show', via: :get
+  
   match '/concepts/:concept_id/messages/:id/upvote', to: 'messages#upvote', as: "upvote", via: :post
   match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post
   match '/messages/threshold', to: 'messages#edit_threshold', as: "edit_threshold", via: :post

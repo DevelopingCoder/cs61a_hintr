@@ -9,7 +9,6 @@ RSpec.describe UploadsController, type: :controller do
     end
     
     describe ".upload a concepts file" do
-        #http://stackoverflow.com/questions/7260394/test-a-file-upload-using-rspec-rails
         it "calls the import function in Concepts" do
             expect(Concept).to receive(:import) 
             post upload_path, :concepts_file => @file #Doesn't really matter
