@@ -9,7 +9,7 @@ Background: A user account exists
     | testadmin  | testadmin@gmail.com       | password          | true  |
     
     Given I log in with email: "testadmin@gmail.com" and password: "password"
-    And I follow "Uploads
+    And I follow "Uploads"
     
 Scenario: I can upload a Users file
     Given I choose to upload a "Users" file with "users.csv"

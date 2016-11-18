@@ -1,4 +1,4 @@
-Given /^I choose to upload a "([^"]*)" file with "([^"]*)"$/ do |type, filename|
+Given /^I choose to upload a file with "([^"]*)"$/ do |filename|
     page.attach_file("file", Rails.root + "upload_files" + filename)
 end
 

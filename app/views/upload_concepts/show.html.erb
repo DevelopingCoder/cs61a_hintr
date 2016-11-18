@@ -24,7 +24,7 @@
               <%= message %>
             </td>
             <td>
-              <%= check_box_tag("confirmed_additions[]", [addition, message].to_s, false, 
+              <%= check_box_tag("confirmed_additions[]", [addition, message].to_s, true, 
                     :id => "add_" + addition[:name]) %>
             </td>
           </tr>

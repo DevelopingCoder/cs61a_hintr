@@ -27,7 +27,7 @@ Background: A user account exists
     
 Scenario: I can upload a Concepts file and confirm all actions
     Given I select "Concepts (csv)"
-    Given I choose to upload a "Concepts" file with "concepts.csv"
+    Given I choose to upload a file with "concepts.csv"
     When I press "Upload"
 
     And I should see id "add_test_concept_9" 
@@ -54,8 +54,9 @@ Scenario: I can upload a Concepts file and confirm all actions
     
 Scenario: I can upload a Concepts file and don't confirm all actions
     Given I select "Concepts (csv)"
-    Given I choose to upload a "Concepts" file with "concepts.csv"
+    Given I choose to upload a file with "concepts.csv"
     When I press "Upload"
+    And I uncheck "add_test_concept_9"
     Then I press "Confirm Upload"
 
     When I am on the concepts page
@@ -66,7 +67,7 @@ Scenario: I can upload a Concepts file and don't confirm all actions
     
 Scenario: Not pressing confirm when uploading Concepts doesn't make changes
     Given I select "Concepts (csv)"
-    Given I choose to upload a "Concepts" file with "concepts.csv"
+    Given I choose to upload a file with "concepts.csv"
     When I press "Upload"
 
     When I am on the concepts page
@@ -74,10 +75,16 @@ Scenario: Not pressing confirm when uploading Concepts doesn't make changes
     
 Scenario: Pressing cancel when uploading Concepts doesn't make changes
     Given I select "Concepts (csv)"
-    Given I choose to upload a "Concepts" file with "concepts.csv"
+    Given I choose to upload a file with "concepts.csv"
     When I press "Upload"
     When I follow "Cancel"
     Then I should be on the upload page
   
     When I am on the concepts page
     Then I should not see "test_concept_9"
+
+Scenario: I should not be able to upload an incorrectly formatted file 
+    Given I select "Concepts (csv)"
+    Given I choose to upload a file with "users.csv"
+    And I press "Upload"
+    Then I should see "Concept File not correctly formatted correctly. First 3 columns must be Name, Description, Message"
