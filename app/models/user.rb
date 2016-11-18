@@ -14,15 +14,25 @@ class User < ActiveRecord::Base
   @@successful_add = "Email invite has been sent"
   @@invalid_action = "Something went wrong. You may have performed an invalid action"
 
+  def self.verify_first_line(first_line)
+    #Check format: concept, description, message
+    first_line = first_line.split(",")
+    if first_line.length < 2
+      return false
+    end
+    name_matches = first_line[0].downcase.include?("name")
+    email_matches = first_line[1].downcase.include?("email")
+    return name_matches && email_matches 
+  end
+    
   def self.import(current_user, file)
+    
+    first_line = file.readline
+    if not self.verify_first_line(first_line)
+        return "Users file not correctly formatted correctly. First 2 columns must be Name, Email"
+    end
     users_created = []
-    read_first_line = false
-    File.open(file.tempfile).each do |line|
-      if not read_first_line
-        read_first_line = true
-        next
-      end
-      
+    file.each do |line|
       name, email = line.split(",")
       if name and email
         name = name.strip

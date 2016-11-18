@@ -12,7 +12,8 @@ Background: A user account exists
     And I follow "Uploads"
     
 Scenario: I can upload a Users file
-    Given I choose to upload a "Users" file with "users.csv"
+    Given I select "Users (csv)"
+    Given I choose to upload a file with "users.csv"
     Then I press "Upload"
     Then I should be on the upload page
     When I am on the users page
