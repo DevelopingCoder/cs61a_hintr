@@ -3,8 +3,8 @@ class UploadQuestionSetsController < ApplicationController
     
     def show
         #uploads the file - calls model method to get additions, deletions and edits
-        uploaded_file = File.open(params["path"])
-        changes = QuestionSet.import(uploaded_file)
+        uploaded_file = File.open(params[:path])
+        changes = QuestionSet.import(uploaded_file.read)
         @additions = changes[:additions]
         @edits = changes[:edits]
         @deletions = changes[:deletions]

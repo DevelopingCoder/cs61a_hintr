@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :question_sets
+  resources :question_sets do
+    resources :questions do
+      resources :wrong_answers
+    end
+  end
   resources :concepts do
     resources :messages
   end
@@ -26,6 +30,9 @@ Rails.application.routes.draw do
   match '/upload', to: 'uploads#new', via: :post
   match '/upload/concepts/confirmation', to: 'upload_concepts#show', via: :get
   match '/upload/concepts/confirmation', to: 'upload_concepts#confirm', via: :put
+  
+  match 'upload/questionsets/confirmation', to: 'upload_question_sets#show', via: :get
+  match 'upload/questionsets/confirmation', to: 'upload_question_sets#confirm', via: :put
   
   match '/concepts/:concept_id/messages/:id/upvote', to: 'messages#upvote', as: "upvote", via: :post
   match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post
