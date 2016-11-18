@@ -11,10 +11,12 @@ class Question < ActiveRecord::Base
         
         db_wrong_answer_list = self.wrong_answers
         ##find deletions
-        db_wrong_answer_list.each do |wrong_answer|
-            if not wrong_answer_list.key?(wrong_answer.text)
-                #deletions
-                db_display_list[wrong_answer.text] = wrong_answer.get_tags
+        if db_wrong_answer_list
+            db_wrong_answer_list.each do |wrong_answer|
+                if not wrong_answer_list.key?(wrong_answer.text)
+                    #deletions
+                    db_display_list[wrong_answer.text] = wrong_answer.get_tags
+                end
             end
         end
         
@@ -22,7 +24,7 @@ class Question < ActiveRecord::Base
             wrong_answer = WrongAnswer.find_by_text(wrong_answer_text)
             if wrong_answer
                 #wrong answer exists in db - check for edits
-                if wrong_answer.is_edited
+                if wrong_answer.is_edited(wrong_answer.get_tags)
                     db_display_list[wrong_answer_text] = wrong_answer.get_tags
                     upload_display_list[wrong_answer_text] = wrong_answer_list[wrong_answer_text]
                 end
