@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-    belongs_to :question_set
+    belongs_to :question_set, :dependent => :destroy
     has_many :wrong_answers
     has_many :tag2wronganswers
     has_many :tags, :through => :tag2wronganswers
@@ -12,7 +12,7 @@ class Question < ActiveRecord::Base
         db_wrong_answer_list = self.wrong_answers
         ##find deletions
         db_wrong_answer_list.each do |wrong_answer|
-            if wrong_answer.text not in wrong_answer_list
+            if not wrong_answer_list.key?(wrong_answer.text)
                 #deletions
                 db_display_list[wrong_answer.text] = wrong_answer.get_tags
             end
@@ -25,9 +25,11 @@ class Question < ActiveRecord::Base
                 if wrong_answer.is_edited
                     db_display_list[wrong_answer_text] = wrong_answer.get_tags
                     upload_display_list[wrong_answer_text] = wrong_answer_list[wrong_answer_text]
+                end
             else
                 #wrong answer is an addtion
                 upload_display_list[wrong_answer_text] = wrong_answer_list[wrong_answer_text]
+            end
         end
         return [db_display_list, upload_display_list]
     end

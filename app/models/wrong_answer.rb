@@ -1,7 +1,7 @@
 class WrongAnswer < ActiveRecord::Base
     has_many :tags2wronganswers
     has_many :tags, :through => :tags2wronganswers
-    belongs_to :question
+    belongs_to :question, :dependent => :destroy
     
     # takes in list of tags
     # returns idk
@@ -30,5 +30,12 @@ class WrongAnswer < ActiveRecord::Base
             tag_list.push(tag.name)
         end
         return tag_list
+    end
+    
+    def associate_tags(tag_list)
+        tag_list.each do |tag_name|
+            tag = Tag.find_by_name(tag_name)
+            self.tags << tag
+        end
     end
 end

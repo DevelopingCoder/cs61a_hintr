@@ -12,7 +12,7 @@ class QuestionSet < ActiveRecord::Base
         qsets.each do |qset|
             file_qsets[qset] = qsets[qset]
         end
-        
+        return cross_check_diffs(file_qsets)
         
     end
     
@@ -24,7 +24,7 @@ class QuestionSet < ActiveRecord::Base
         deletions = []
         QuestionSet.all.each do |exist_qset|
             if !file_qsets.key?(exist_qset.name)
-                deletions += [exist_qset.name]
+                deletions += [exist_qset]
             end
         end
         
@@ -42,8 +42,9 @@ class QuestionSet < ActiveRecord::Base
                 db_question_list = existing_qset.questions
                 #find deletions
                 db_question_list.each do |question|
-                    if question.text not in question_list
+                    if not question_list.key?(question.text)
                         db_display_list[question_text] = question.get_wrong_answers
+                    end
                 end
                 
                 #find additions/edits
@@ -62,40 +63,82 @@ class QuestionSet < ActiveRecord::Base
                     end
                 end
                 
+                edits[qset_name] = [db_display_list, upload_display_list]
                 
                 
-                
-                # check for edits 
+                 
                 
             end
         end
         return {:additions => additions, :deletions => deletions, :edits => edits}
     end
     
-#     def make_edit(exist_qset, upload_qset)
-#         #Check if there's an edit. If so, change it but don't save
-#         #Otherwise return False
-#         edited_questions = []
-#         change_discovered = false
-#         #Check if description changed
-#         if exist_concept.description != new_description
-#             exist_concept.description = new_description
-#             change_discovered = true
-#         end
+    def save_changes(changes)
         
-#         #Check if message should be added
-#         if new_message.length > 0
-#             if exist_concept.messages.find_by_content(new_message) == nil
-#                 #Message doesn't exist
-#                 edit[1] = new_message
-#                 change_discovered = true
-#             end
-#         end
+        qset_additions = changes[:qset_additions]
+        qset_deletions = changes[:qset_deletions]
         
-#         if change_discovered
-#             return edit
-#         else
-#             return false
-#         end
-#     end
-# end
+        qset_deletions.each do |qset_deletion|
+            QuestionSet.find_by_name(qset_deletion).destroy
+        end
+        
+        qset_additions.each do |qset_name, qset_hash|
+            qset = QuestionSet.create(:name => qset_name)
+            qset_hash.each do |question_text, wa_hash|
+                question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
+                wa_hash.each do |wa_text, tag_list|
+                    if wa_text != "CASE_STR"
+                        wrong_answer = WrongAnswer.create(:text => wa_text)
+                        wrong_answer.associate_tags(tag_list)
+                        question << wrong_answer
+                    end
+                end
+                qset << question
+            end
+        end
+        
+        question_additions = changes[:question_additions]
+        question_additions.each do |qset_name, question_text, wa_hash|
+            qset = QuestionSet.find_by_name(qset_name)
+            question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
+            wa_hash.each do |wa_text, tag_list|
+                if wa_text != "CASE_STR"
+                    wrong_answer = WrongAnswer.create(:text => wa_text)
+                    wrong_answer.associate_tags(tag_list)
+                    question << wrong_answer
+                end
+            end
+            qset << question
+        end
+        
+        question_edits = changes[:question_edits]
+        question_edits.each do |qset_name, question_text, wa_hash|
+            qset = QuestionSet.find_by_name(qset_name)
+            question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
+            wa_hash.each do |wa_text, tag_list|
+                if wa_text != "CASE_STR"
+                    wrong_answer = WrongAnswer.create(:text => wa_text)
+                    wrong_answer.associate_tags(tag_list)
+                    question << wrong_answer
+                end
+            end
+            qset << question
+        end
+        
+        
+        question_deletions = changes[:question_deletions]
+        question_deletions.each do |qset_name, question_text|
+            qset = QuestionSet.find_by_name(qset_name)
+            qset.questions.each do |question|
+                if question.text == question_text
+                    question.destroy
+                end
+            end
+        end
+        
+        
+    end
+    
+    
+end
+    
