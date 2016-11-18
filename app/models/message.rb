@@ -1,7 +1,20 @@
 class Message < ActiveRecord::Base
     validates :content, presence: true
+    validate :concept_uniqueness
+
     has_many :votes, dependent: :destroy
     has_many :users, :through => :votes
+    
+    def concept_uniqueness
+        if self.concept_id
+            concept = Concept.find_by_id(self.concept_id)
+            concept.messages.each do |message|
+                if message.content == self.content
+                    errors.add(:message, "already exists for the concept")
+                end
+            end
+        end
+    end
     
     def vote(user_id, vote_type)
         current_vote = self.votes.where(:user_id => user_id)
