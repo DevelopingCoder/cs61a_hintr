@@ -86,7 +86,7 @@
             </td>
             <td>
               <%= check_box_tag("confirmed_edits[]", [edit, message].to_s, false, 
-                    :id => "edits_" + edit[:name]) %>
+                    :id => "edit_" + edit[:name]) %>
             </td>
           </tr>
         <% end %>
@@ -94,4 +94,5 @@
     </table>
       <%= submit_tag "Confirm Upload" %>
   <% end %>
+  <%= link_to "Cancel", upload_path %>
 </div>

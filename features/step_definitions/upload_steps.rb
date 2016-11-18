@@ -1,5 +1,5 @@
 Given /^I choose to upload a "([^"]*)" file with "([^"]*)"$/ do |type, filename|
-    page.attach_file(type.downcase + "_file", Rails.root + "upload_files" + filename)
+    page.attach_file("file", Rails.root + "upload_files" + filename)
 end
 
 Given /^the following tags exist:$/ do |tags_table|
@@ -10,6 +10,9 @@ Given /^the following tag to concept relations exist:$/ do |tag2concepts_table|
    pending 
 end
 
+Given /^I select "([^"]*)"$/ do |selection|
+    page.select(selection)
+end
 Given /^the following "([^"]*)" exists:$/ do |filename, concepts_table|
     file_info = ""
     concepts_table.hashes.each do |concept|

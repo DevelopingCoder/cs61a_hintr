@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20161030190453) do
     t.datetime "updated_at"
   end
 
-  create_table "tag2concept", force: :cascade do |t|
+  create_table "tag2concepts", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
   end

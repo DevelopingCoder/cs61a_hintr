@@ -9,7 +9,7 @@ class CreateTags < ActiveRecord::Migration
       t.string :example
     end
     
-    create_table :tag2concept do |t|
+    create_table :tag2concepts do |t|
       t.references :tag
       t.references :concept
     end

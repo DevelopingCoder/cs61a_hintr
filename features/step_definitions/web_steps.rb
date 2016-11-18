@@ -108,6 +108,12 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
   end
 end
 
+Then /^(?:|I )should see id "([^"]*)"$/ do |text|
+  text = '#' + text
+  expect(page.find(text)) != nil
+end
+
+
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
 
