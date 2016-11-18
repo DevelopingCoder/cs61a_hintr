@@ -29,7 +29,7 @@ Scenario: I can upload a questions file successfully
     
     And I should see "Add the question 'test_question 1'"
     And I should see "Add the question 'test_question 2'"
-    And I should see ".Edit the question 'test_question 3'"
+    And I should see "Edit the question 'test_question 3'"
     
     When I confirm the change for question "test_question 3"
     And I press "Confirm Update"

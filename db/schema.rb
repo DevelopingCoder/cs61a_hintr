@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20161116011324) do
   end
 >>>>>>> set up dbs for questions and wrong answers
 
-  create_table "tag2concepts", force: :cascade do |t|
+  create_table "tag2concept", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
   end
