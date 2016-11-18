@@ -1,8 +1,14 @@
-<h3>Import a CSV File</h3>
-  <%= form_tag upload_confirmation_path, multipart: true do %>
-    <%= label_tag "Concepts File" %>
-    <%= file_field_tag :concepts_file %>
-    <%= label_tag "Users File" %>
-    <%= file_field_tag :users_file %>
+<h3>Upload a File</h3>
+  <%= form_tag upload_path, multipart: true do %>
+    <div class="form-group">
+      <label for="sel1">Select list:</label>
+      <select class="form-control" id="sel1" name="file_type">
+        <option>Concepts (csv)</option>
+        <option>Tags (csv)</option>
+        <option>Tag2Concept (csv)</option>
+        <option>Questions (json)</option>
+      </select>
+    </div>
+    <%= file_field_tag :file %>
     <%= submit_tag "Upload files" %>
   <% end %>
