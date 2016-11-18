@@ -1,17 +1,9 @@
 class UploadsController < ApplicationController
     before_action :authenticate_user!
     
-    def create
-        #Based on file being uploaded, call their Import function
-        file_types = get_file_types
-        flash[:notice] = []
-        if !!file_types
-            file_types.each do |file|
-                uploaded_file = params[file]
-                type = capture_type(file)
-                flash[:notice] << type.classify.constantize.send(:import, current_user, uploaded_file)
-            end
-        end
-        redirect_to upload_path
+    def new
+        #Based on file being uploaded, redirect to its upload controller
+        file_type = params[:file_type].split()[0].downcase #(ie Concept, Tag)
+        redirect_to(controller: "upload_" + file_type, action: :show, path: params[:file].path)
     end
 end
