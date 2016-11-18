@@ -6,12 +6,3 @@
     <%= file_field_tag :users_file %>
     <%= submit_tag "Upload files" %>
   <% end %>
-<h3>Import a JSON Question Set File</h3>
-  <%= form_tag upload_path, multipart: true do %>
-    <%= label_tag "Concepts File" %>
-    <%= file_field_tag :concepts_file %>
-    <%= label_tag "Users File" %>
-    <%= file_field_tag :users_file %>
-    <%= submit_tag "Upload files" %>
-  <% end %>
-  
