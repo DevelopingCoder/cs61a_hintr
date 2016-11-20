@@ -1,5 +1,4 @@
 class UploadsController < ApplicationController
-    before_action :authenticate_user!
     
     def new
         #Based on file being uploaded, redirect to its upload controller

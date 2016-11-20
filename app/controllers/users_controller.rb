@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, :except => [:forgot_password]
-    
+    skip_before_action :authenticate_user, only: [:forgot_password]
+
     def create
         if current_user.admin?
             email = params[:add_email]
