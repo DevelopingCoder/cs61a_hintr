@@ -8,7 +8,7 @@ class UploadConceptsController < ApplicationController
         uploaded_file = File.open(params[:path])
         changes = Concept.import(uploaded_file)
         if not changes
-            flash[:notice] = "Concept file not correctly formatted correctly. First 3 columns must be
+            flash[:notice] = "Concept file not correctly formatted. First 3 columns must be
                                 Name, Description, Message"
             redirect_to upload_path and return
         end

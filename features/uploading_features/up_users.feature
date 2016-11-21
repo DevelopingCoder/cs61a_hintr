@@ -21,3 +21,9 @@ Scenario: I can upload a Users file
     And I should see "Example Uno"
     And I should see "example2@gmail.com"
     And I should see "Example Dos"
+
+Scenario: I should not be able to upload an incorrectly formatted file 
+    Given I select "Users (csv)"
+    Given I choose to upload a file with "concepts.csv"
+    And I press "Upload"
+    Then I should see "Users file not correctly formatted. First 2 columns must be Name, Email"

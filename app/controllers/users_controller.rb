@@ -22,8 +22,8 @@ class UsersController < ApplicationController
         end
         password = SecureRandom.urlsafe_base64(6)
         user.password = password
-        user.save
-        user.send_email(email, password)
+        user.save!
+        User.send_email(email, password)
         redirect_to root_path
     end
     

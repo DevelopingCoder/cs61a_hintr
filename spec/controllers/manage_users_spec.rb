@@ -49,4 +49,16 @@ RSpec.describe UsersController, type: :controller do
             delete :destroy, {:delete_emails => ["testuser@gmail.com"]}
         end
     end
+    
+    describe ".forgot password" do
+        before (:each) do 
+            @user = FactoryGirl.create(:user)
+        end
+        it "successfully changes the password" do
+            prev_password = @user.encrypted_password
+            post :forgot_password, {:email => @user.email}
+            @user = User.find_by_email(@user.email)
+            expect(@user.encrypted_password).to_not equal(prev_password) 
+        end
+    end
 end

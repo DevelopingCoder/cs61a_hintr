@@ -87,4 +87,12 @@ Scenario: I should not be able to upload an incorrectly formatted file
     Given I select "Concepts (csv)"
     Given I choose to upload a file with "users.csv"
     And I press "Upload"
-    Then I should see "Concept file not correctly formatted correctly. First 3 columns must be Name, Description, Message"
+    Then I should see "Concept file not correctly formatted. First 3 columns must be Name, Description, Message"
+    
+Scenario: I lose my state when I refresh the page
+    Given I select "Concepts (csv)"
+    Then I choose to upload a file with "concepts.csv"
+    And I press "Upload"
+    When I refresh the page
+    Then I should not see "test_concept_9"
+    And I should see "Oops we lost your state. Please upload again"
