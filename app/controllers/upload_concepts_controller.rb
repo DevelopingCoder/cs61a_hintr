@@ -1,5 +1,4 @@
 class UploadConceptsController < ApplicationController
-    before_action :authenticate_user!
     
     def show
         if not params.keys.include?("path")
