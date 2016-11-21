@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     
     first_line = file.readline
     if not self.verify_first_line(first_line)
-        return "Users file not correctly formatted correctly. First 2 columns must be Name, Email"
+        return "Users file not correctly formatted. First 2 columns must be Name, Email"
     end
     users_created = []
     file.each do |line|
