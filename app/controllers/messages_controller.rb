@@ -11,6 +11,9 @@ class MessagesController < ApplicationController
     
     def create
         Message.create({:concept_id => params[:concept_id], :content => params[:add_message], :author => current_user.id, :finalized => false})
+        #Update the concept 
+        concept = Concept.find_by_id(params[:concept_id])
+        concept.update_status
         redirect_to concept_path(params[:concept_id])
     end
     
