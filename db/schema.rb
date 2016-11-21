@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030190453) do
+ActiveRecord::Schema.define(version: 20161121014353) do
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20161030190453) do
     t.string  "msg_status",         default: "no messages"
     t.integer "lab_first_appeared"
   end
+
+  add_index "concepts", ["name"], name: "index_concepts_on_name"
 
   create_table "messages", force: :cascade do |t|
     t.string   "content"
@@ -28,6 +30,8 @@ ActiveRecord::Schema.define(version: 20161030190453) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "messages", ["content"], name: "index_messages_on_content"
 
   create_table "tag2concepts", force: :cascade do |t|
     t.integer "tag_id"
@@ -42,6 +46,8 @@ ActiveRecord::Schema.define(version: 20161030190453) do
     t.string "primary_concept"
     t.string "example"
   end
+
+  add_index "tags", ["name"], name: "index_tags_on_name"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
