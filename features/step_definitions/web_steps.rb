@@ -235,6 +235,11 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
+Then /^I refresh the page$/ do
+  path = page.current_path
+  visit path
+end
+
 When /^I press "([^"]*)" within "([^"]*)"$/ do |button,scope_selector|
   within('div.' + scope_selector) do      
     click_button(button)
