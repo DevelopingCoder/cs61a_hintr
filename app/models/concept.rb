@@ -124,7 +124,7 @@ class Concept < ActiveRecord::Base
     def update_status
         if self.messages.length == 0
            self.update_attribute(:msg_status, "no messages")
-        elsif Message.where(:concept_id => self.id).where(:finalized => true).exists?
+        elsif self.messages.where(:finalized => true).exists?
             self.update_attribute(:msg_status, "assigned")
         else
             self.update_attribute(:msg_status, "in progress")
