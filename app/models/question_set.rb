@@ -68,6 +68,7 @@ class QuestionSet < ActiveRecord::Base
                 
             end
         end
+        byebug
         return {:additions => additions, :deletions => deletions, :edits => edits}
     end
     
@@ -83,6 +84,7 @@ class QuestionSet < ActiveRecord::Base
         qset_additions.each do |qset_hash|
             byebug
             qset_hash.each do |qset_name, question_hash|
+                byebug
                 qset = QuestionSet.create(:name => qset_name)
                 question_hash.each do |question_text, wa_hash|
                     question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
@@ -90,10 +92,10 @@ class QuestionSet < ActiveRecord::Base
                         if wa_text != "CASE_STR"
                             wrong_answer = WrongAnswer.create(:text => wa_text)
                             wrong_answer.associate_tags(tag_list)
-                            question << wrong_answer
+                            question.wrong_answers << wrong_answer
                         end
                     end
-                    qset << question
+                    qset.questions << question
                 end
             end
         end
@@ -106,10 +108,10 @@ class QuestionSet < ActiveRecord::Base
                 if wa_text != "CASE_STR"
                     wrong_answer = WrongAnswer.create(:text => wa_text)
                     wrong_answer.associate_tags(tag_list)
-                    question << wrong_answer
+                    question.wrong_answers << wrong_answer
                 end
             end
-            qset << question
+            qset.questions << question
         end
         
         question_edits = changes[:question_edits]

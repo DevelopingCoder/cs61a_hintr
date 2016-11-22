@@ -28,7 +28,7 @@ class UploadQuestionSetsController < ApplicationController
         qset_deletions = []
         if confirmed_qset_deletions
             confirmed_qset_deletions.each do |qset_deletion|
-                qset_deletions += [eval(qset_deletion)]
+                qset_deletions += [qset_deletion]
             end
         end
         changes[:qset_deletions] = qset_deletions

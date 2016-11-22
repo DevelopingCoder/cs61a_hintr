@@ -36,6 +36,7 @@
         <div class="row" id="deletions">
             <h3>Deletions</h3>
             <% @deletions.each do |qset| %>
+                <% byebug %>
                 <h4><%= qset.name %></h4>
                 <% qset.questions.each do |question| %>
                     <div class="row question">
