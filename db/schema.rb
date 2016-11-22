@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20161121014353) do
 
   add_index "messages", ["content"], name: "index_messages_on_content"
 
-  create_table "tag2concepts", force: :cascade do |t|
+  create_table "tag2concept", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
   end
