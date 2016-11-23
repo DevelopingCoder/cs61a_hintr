@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122070140) do
+ActiveRecord::Schema.define(version: 20161123033515) do
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20161122070140) do
     t.string "name"
     t.string "description"
     t.string "example"
+    t.string "topic"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name"

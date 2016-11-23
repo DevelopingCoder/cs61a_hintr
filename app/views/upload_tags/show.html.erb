@@ -8,6 +8,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Example</th>
+            <th>Topic</th>
             <th>Confirm</th>
         </tr>
       </thead>
@@ -24,6 +25,9 @@
               <%= addition[:example] %>
             </td>
             <td>
+              <%= addition[:topic] %>
+            </td>
+            <td>
               <%= check_box_tag("confirmed_additions[]", addition.to_s, true, 
                     :id => "add_" + addition[:name]) %>
             </td>
@@ -38,6 +42,7 @@
           <th>Name</th>
           <th>Description</th>
           <th>Example</th>
+          <th>Topic</th>
           <th>Confirm</th>
         </tr>
       </thead>
@@ -52,6 +57,9 @@
             </td>
             <td>
               <%= deletion[:example] %>
+            </td>
+            <td>
+              <%= deletion[:topic] %>
             </td>
             
             <td>
@@ -70,8 +78,10 @@
           <th>Name</th>
           <th>Old Description</th>
           <th>Old Example</th>
+          <th>Old Topic</th>
           <th>New Description</th>
           <th>New Example</th>
+          <th>New Topic</th>
           <th>Confirm</th>
         </tr>
       </thead>
@@ -88,10 +98,16 @@
                 <%= Tag.find_by_name(edit[:name]).example %>
             </td>
             <td>
+                <%= Tag.find_by_name(edit[:name]).topic %>
+            </td>
+            <td>
               <%= edit[:description] %>
             </td>
             <td>
               <%= edit[:example] %>
+            </td>
+            <td>
+              <%= edit[:topic] %>
             </td>
             <td>
               <%= check_box_tag("confirmed_edits[]", edit.to_s, false, 

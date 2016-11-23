@@ -9,7 +9,7 @@ class Tag < ActiveRecord::Base
     include ActiveModel::Serialization
     
     def attributes
-        {:name => name, :description => description, :example => example}    
+        {:name => name, :description => description, :example => example, :topic => topic}    
     end
     def self.verify_first_line(first_line)
         if first_line.length < 10
@@ -41,7 +41,8 @@ class Tag < ActiveRecord::Base
             tag_name = row[3].strip if row[3]
             description = row[4].strip if row[4]
             example = row[5].strip if row[5]
-            file_tags[tag_name] = [description, example]
+            topic = row[7].strip if row[7]
+            file_tags[tag_name] = [description, example, topic]
         end
         return cross_check_diffs(file_tags)
     end
@@ -49,7 +50,7 @@ class Tag < ActiveRecord::Base
     def self.make_edit(exist_tag, upload_tag)
         #Check if there's an edit. If so, change it but don't save
         #Otherwise return False
-        upload_description, upload_example = upload_tag
+        upload_description, upload_example, upload_topic = upload_tag
         change_discovered = false
         
         #Check if description changed
@@ -61,6 +62,12 @@ class Tag < ActiveRecord::Base
         if exist_tag.example != upload_example
             change_discovered = true
             exist_tag.example = upload_example
+        end
+        
+        #Check if topic changed
+        if exist_tag.topic != upload_topic
+            change_discovered = true
+            exist_tag.topic = upload_topic
         end
         
         if change_discovered
@@ -95,8 +102,8 @@ class Tag < ActiveRecord::Base
         file_tags.keys.each do |tag_name|
             #Check if not in tag not in db
             if not Tag.find_by_name(tag_name)
-                desc, example = file_tags[tag_name]
-                new_tag = Tag.new({:name => tag_name, :description => desc, :example => example})
+                desc, example, topic = file_tags[tag_name]
+                new_tag = Tag.new({:name => tag_name, :description => desc, :example => example, :topic => topic})
                 additions += [new_tag.serializable_hash]
             end
         end

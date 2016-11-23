@@ -18,7 +18,7 @@ Background: A user account exists
     
     Given the following "tags.csv" exists:
     |Old tag name|cp|Status|Tag Name|Description|Example|Primary Concept|Topic|Count in Tag to Concept Master|Concepts|
-    ||||test_tag_1|test_description_1|example|||||
+    ||||test_tag_1|test_description_1|example||topic_1|||
     ||||test_tag_2|new_test_description_2|example_2|||||
     ||||test_tag_3|test_description_3|new_example_3|||||
     ||||test_tag_4|new_test_description_4|new_example_4|||||
