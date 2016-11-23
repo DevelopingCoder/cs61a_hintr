@@ -11,7 +11,7 @@ RSpec.describe "UploadTags" do
         Tag.create!({:name => "test_tag 4", :description => "test_description_4", :example => "example_4"})
         Tag.create!({:name => "test_tag deletion", :description => "delete", :example => "example"})
         # open the tags.csv file
-        @file = File.open('spec/upload_files/tags.csv')
+        @file = 'spec/upload_files/tags.csv'
     end
     describe '.import tags' do
         before (:each) do

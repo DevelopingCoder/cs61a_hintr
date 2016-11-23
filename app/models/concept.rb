@@ -1,3 +1,4 @@
+require 'csv'
 class Concept < ActiveRecord::Base
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
@@ -12,7 +13,6 @@ class Concept < ActiveRecord::Base
     
     def self.verify_first_line(first_line)
         #Check format: concept, description, message
-        first_line = first_line.split(",")
         if first_line.length < 3
           return false
         end
@@ -22,15 +22,19 @@ class Concept < ActiveRecord::Base
         return concept_matches && desc_matches && message_matches
     end
   
-    def self.import(file)
-        first_line = file.readline
-        if not self.verify_first_line(first_line)
+    def self.import(csv_path)
+        rows = CSV.read(csv_path)
+        if not self.verify_first_line(rows[0])
             return false
         end
+        rows.shift
 
         file_concepts = {}
-        file.each do |line|
-            concept_name, description, message = line.split(",").map{|n| n.strip}
+        rows.each do |row|
+            concept_name, description, message = row.map{|n| n.strip if n}
+            if not message
+                message = ""
+            end
             file_concepts[concept_name] = [description, message]
         end
     

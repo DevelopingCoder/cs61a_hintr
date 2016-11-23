@@ -1,3 +1,4 @@
+require 'csv'
 class Tag < ActiveRecord::Base
     validates :name, presence: true
     validates :description, presence: true
@@ -11,23 +12,15 @@ class Tag < ActiveRecord::Base
         {:name => name, :description => description, :example => example}    
     end
     def self.verify_first_line(first_line)
-        first_line = first_line.split(",")
         if first_line.length < 10
           return false
         end
         
         verification = []
-        verification.append first_line[0].include?("Old tag name")
-        verification.append first_line[1].include?("cp")
-        verification.append first_line[2].include?("Status")
         verification.append first_line[3].include?("Tag Name")
         verification.append first_line[4].include?("Description")
         verification.append first_line[5].include?("Example")
-        verification.append first_line[6].include?("Primary Concept")
         verification.append first_line[7].include?("Topic")
-        verification.append first_line[8].include?("Count in Tag to Concept Master")
-        verification.append first_line[9].include?("Concepts")
-        
         verification.each do |ver|
             if not ver
                 return false
@@ -36,21 +29,20 @@ class Tag < ActiveRecord::Base
         return true
     end
     
-    def self.import(file)
-        first_line = file.readline
-        if not self.verify_first_line(first_line)
+    def self.import(csv_path)
+        rows = CSV.read(csv_path)
+        if not self.verify_first_line(rows[0])
             return false
         end
+        rows.shift
         
         file_tags = {}
-        file.each do |line|
-            columns = line.split(",")
-            tag_name = columns[3].strip
-            description = columns[4].strip
-            example = columns[5].strip
+        rows.each do |row|
+            tag_name = row[3].strip if row[3]
+            description = row[4].strip if row[4]
+            example = row[5].strip if row[5]
             file_tags[tag_name] = [description, example]
         end
-    
         return cross_check_diffs(file_tags)
     end
     

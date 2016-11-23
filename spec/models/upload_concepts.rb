@@ -11,7 +11,7 @@ RSpec.describe "UploadConcepts" do
         Concept.create!({:name => "test_concept 4", :description => "test_concept_description4"})
         
         # open the concepts.csv file
-        @file = File.open('spec/upload_files/concepts.csv')
+        @file = 'spec/upload_files/concepts.csv'
     end
     describe '.import concepts' do
         before (:each) do

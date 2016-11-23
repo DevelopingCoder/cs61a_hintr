@@ -5,8 +5,7 @@ class UploadConceptsController < ApplicationController
             flash[:notice] = "Oops we lost your state. Please upload again"
             redirect_to upload_path and return
         end
-        uploaded_file = File.open(params[:path])
-        changes = Concept.import(uploaded_file)
+        changes = Concept.import(params[:path])
         if not changes
             flash[:notice] = "Concept file not correctly formatted. First 3 columns must be
                                 Name, Description, Message"
