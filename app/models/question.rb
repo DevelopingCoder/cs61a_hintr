@@ -20,11 +20,20 @@ class Question < ActiveRecord::Base
             end
         end
         
-        wrong_answer_list.each do |wrong_answer_text|
+        wrong_answer_list.each do |wrong_answer_text, tag_list|
+            if wrong_answer_text == "CASE_STR"
+                # check if case str is different
+                uploaded_case_str = wrong_answer_list[wrong_answer_text]
+                if uploaded_case_str != self.case_string
+                    db_display_list[wrong_answer_text] = self.case_string
+                    upload_display_list[wrong_answer_text] = uploaded_case_str
+                end
+                next
+            end
             wrong_answer = WrongAnswer.find_by_text(wrong_answer_text)
             if wrong_answer
                 #wrong answer exists in db - check for edits
-                if wrong_answer.is_edited(wrong_answer.get_tags)
+                if wrong_answer.is_edited(tag_list)
                     db_display_list[wrong_answer_text] = wrong_answer.get_tags
                     upload_display_list[wrong_answer_text] = wrong_answer_list[wrong_answer_text]
                 end

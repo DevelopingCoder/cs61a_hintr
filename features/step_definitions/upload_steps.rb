@@ -1,9 +1,11 @@
-Given /^I choose to upload a "([^"]*)" file with "([^"]*)"$/ do |type, filename|
+Given /^I choose to upload a file with "([^"]*)"$/ do |filename|
     page.attach_file("file", Rails.root + "upload_files" + filename)
 end
 
 Given /^the following tags exist:$/ do |tags_table|
-   pending 
+    tags_table.hashes.each do |tag|
+        Tag.create!(tag)
+    end
 end
 
 Given /^the following tag to concept relations exist:$/ do |tag2concepts_table|
@@ -56,4 +58,36 @@ end
 
 When(/^I press confirm for tag "([^"]*)"$/) do |tag|
   pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given /^the data in "([^"]*)" exists$/ do |filename|
+    file_path = 'upload_files/' + filename
+    file = File.open(file_path)
+    json = JSON.parse(file.read)
+    seed_db(json)
+end
+
+Then /^the addition section should have "([^"]*)"$/ do |text|
+    expect(page.find("#additions")).to have_content(text)
+end
+
+Then /^the addition section should not have "([^"]*)"$/ do |text|
+    expect(page.find("#additions")).to have_no_content(text)
+end
+
+Then /^the edits section should have "([^"]*)"$/ do |text|
+    expect(page.find("#edits")).to have_content(text)
+end
+
+Then /^the edits section should not have "([^"]*)"$/ do |text|
+    expect(page.find("#edits")).to have_no_content(text)
+end
+
+
+Then /^the deletions section should have "([^"]*)"$/ do |text|
+    expect(page.find("#deletions")).to have_content(text)
+end
+
+Then /^the deletions section should not have "([^"]*)"$/ do |text|
+    expect(page.find("#deletions")).to have_no_content(text)
 end

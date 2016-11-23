@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20161116011324) do
     t.integer "question_set_id"
   end
 
-  create_table "tag2concept", force: :cascade do |t|
+  create_table "tag2concepts", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
   end

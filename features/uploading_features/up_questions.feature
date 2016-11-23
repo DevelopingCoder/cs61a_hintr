@@ -7,19 +7,17 @@ Background: A user account exists
     Given the following accounts exist:
     | name       | email                     | password          | admin |
     | testadmin  | testadmin@gmail.com       | password          | true  |
-     
-    Given "questionData.json" is used for data 
     # Given the following questions exist:
     # | Question        | Wrong Answer                      | Tag                               | case_str  |
     # | test_question 3 | wrong_answer 3                    | question tag_1                    | x3        |
     
-    # Given the following questions json "questionData.json" exists:
+    Given the following questions json "questionData.json" exists:
     # | Question        | Wrong Answer                      | Tag                               | case_str  |
     # | test_question 1 | wrong_answer 1, wrong_answer 2    | question tag_1                    | x1        | 
     # | test_question 2 | wrong_answer 2                    | question tag_1, question tag_2    | x2        | 
     # | test_question 3 | wrong_answer 3, wrong_answer 4    | question tag_2                    | x3        |
      
-    Given I log in with email: "testadmin@gmail.com" and password: "password"
+    And I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads
       
      
