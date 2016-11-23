@@ -60,15 +60,15 @@ class QuestionSet < ActiveRecord::Base
                         end
                     end
                 end
-                
-                edits[qset_name] = [db_display_list, upload_display_list]
+                if not (db_display_list.empty? and upload_display_list.empty?)
+                    edits[qset_name] = [db_display_list, upload_display_list]
+                end
                 
                 
                  
                 
             end
         end
-        byebug
         return {:additions => additions, :deletions => deletions, :edits => edits}
     end
     

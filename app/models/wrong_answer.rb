@@ -4,13 +4,13 @@ class WrongAnswer < ActiveRecord::Base
     belongs_to :question, :dependent => :destroy
     
     # takes in list of tags
-    # returns idk
+    # assumes this is the valid tag list for a wrong answer (not case string)
     def is_edited(tag_list)
         db_tag_list = self.tags
         
         #find deletions
         db_tag_list.each do |tag|
-            if tag_list.includes?(tag.name)
+            if not tag_list.include?(tag.name)
                 return true
             end
         end
