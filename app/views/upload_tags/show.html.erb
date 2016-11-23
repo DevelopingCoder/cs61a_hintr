@@ -1,0 +1,107 @@
+<h1>Confirmation Page</h1>
+<div class="form-group">
+  <%=form_tag(upload_tags_confirmation_path, :method => :put, :id => "confirm_form") do %>
+    <table class="table" id="Additions">
+      <h3>Additions</h3>
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Example</th>
+            <th>Confirm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @additions.each do |addition| %>
+          <tr>
+            <td>
+              <%= addition[:name]  %>
+            </td>
+            <td>
+              <%= addition[:description] %>
+            </td>
+            <td>
+              <%= addition[:example] %>
+            </td>
+            <td>
+              <%= check_box_tag("confirmed_additions[]", addition.to_s, true, 
+                    :id => "add_" + addition[:name]) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <table class="table" id="Deletions">
+      <h3>Deletions</h3>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Example</th>
+          <th>Confirm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @deletions.each do |deletion| %>
+          <tr>
+            <td>
+              <%= deletion[:name] %>
+            </td>
+            <td>
+              <%= deletion[:description] %>
+            </td>
+            <td>
+              <%= deletion[:example] %>
+            </td>
+            
+            <td>
+              <%= check_box_tag("confirmed_deletions[]", deletion.to_s, false, 
+                    :id => "delete_" + deletion[:name]) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <table class="table" id="Edits">
+      <h3>Edit</h3>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Old Description</th>
+          <th>Old Example</th>
+          <th>New Description</th>
+          <th>New Example</th>
+          <th>Confirm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @edits.each do |edit| %>
+          <tr>
+            <td>
+              <%= edit[:name] %>
+            </td>
+            <td>
+                <%= Tag.find_by_name(edit[:name]).description %>
+            </td>
+            <td>
+                <%= Tag.find_by_name(edit[:name]).example %>
+            </td>
+            <td>
+              <%= edit[:description] %>
+            </td>
+            <td>
+              <%= edit[:example] %>
+            </td>
+            <td>
+              <%= check_box_tag("confirmed_edits[]", edit.to_s, false, 
+                    :id => "edit_" + edit[:name]) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+      <%= submit_tag "Confirm Upload" %>
+  <% end %>
+  <%= link_to "Cancel", upload_path %>
+</div>
