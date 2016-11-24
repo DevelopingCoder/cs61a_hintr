@@ -73,7 +73,6 @@ class QuestionSet < ActiveRecord::Base
     end
     
     def self.save_changes(changes)
-        
         qset_additions = changes[:qset_additions]
         qset_deletions = changes[:qset_deletions]
         
@@ -81,10 +80,9 @@ class QuestionSet < ActiveRecord::Base
             QuestionSet.find_by_name(qset_deletion).destroy
         end
         
+        # sadly, qset_additions is a list of hashes, in which each hash has only one pair, a qset name mapping to a hash of questions
         qset_additions.each do |qset_hash|
-            byebug
             qset_hash.each do |qset_name, question_hash|
-                byebug
                 qset = QuestionSet.create(:name => qset_name)
                 question_hash.each do |question_text, wa_hash|
                     question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
@@ -139,7 +137,7 @@ class QuestionSet < ActiveRecord::Base
             end
         end
         
-        
+    byebug    
     end
     
     
