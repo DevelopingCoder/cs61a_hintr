@@ -1,7 +1,7 @@
 class WrongAnswer < ActiveRecord::Base
     has_many :tag2wronganswers
     has_many :tags, :through => :tag2wronganswers
-    belongs_to :question, :dependent => :destroy
+    belongs_to :question
     
     # takes in list of tags
     # assumes this is the valid tag list for a wrong answer (not case string)
