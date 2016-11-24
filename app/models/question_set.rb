@@ -41,7 +41,7 @@ class QuestionSet < ActiveRecord::Base
                 #find deletions
                 db_question_list.each do |question|
                     if not question_hash.key?(question.text)
-                        db_display_list[question_text] = question.get_wrong_answers
+                        db_display_list[question.text] = question.get_wrong_answers
                     end
                 end
                 
@@ -137,7 +137,6 @@ class QuestionSet < ActiveRecord::Base
             end
         end
         
-    byebug    
     end
     
     

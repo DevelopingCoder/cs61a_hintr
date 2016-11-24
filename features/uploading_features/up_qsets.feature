@@ -68,12 +68,58 @@ Scenario: Deletions are correctly detected
   And the deletions section should have "qset2"
   And the deletions section should not have "qset1"
   
+  Given I check "delete_qset2"
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "qsets1.json" should exist in the database
+  
+Scenario: Question additions are correctly detected
+  Given the data in "qsets2.json" exists
+  And I select "Question_Sets (json)"
+  And I choose to upload a file with "question.json"
+  When I press "Upload"
+  
+  Then the addition section should not have "qset1"
+  And the addition section should not have "qset2"
+  And the edits section should have "qset1"
+  And the edits section should not have "qset2"
+  And the deletions section should not have "qset1"
+  And the deletions section should not have "qset2"
+  
+  Given I check "edit_qset1_add_question2"
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "question.json" should exist in the database
+  
+Scenario: Question deletions are correctly detected
+  Given the data in "question.json" exists
+  And I select "Question_Sets (json)"
+  And I choose to upload a file with "qsets2.json"
+  When I press "Upload"
+  
+  Then the addition section should not have "qset1"
+  And the addition section should not have "qset2"
+  And the edits section should have "qset1"
+  And the edits section should not have "qset2"
+  And the deletions section should not have "qset1"
+  And the deletions section should not have "qset2"
+  
+  Given I check "edit_qset1_delete_question2"
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "qsets2.json" should exist in the database
+  
 # Convention for checkbox ids: 
 # "edit_"+ qset_name+"_delete_"+ question_text
 # "edit_"+ qset_name+"_edit_"+ question_text
 # "edit_"+qset_name+"_add_"+question_text
 # "delete_"+ qset.name
 # "add_"+ qset_name
+
+# Guide to the jsons
+# question.json is base
+# qsets1.json is question.json without qset2
+# qsets2.json is question.json without question2 of qset1
 
   
   
