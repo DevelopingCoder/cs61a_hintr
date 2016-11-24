@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   match '/upload/concepts/confirmation', to: 'upload_concepts#confirm', via: :put
   match '/upload/tags/confirmation', to: 'upload_tags#show', via: :get
   match '/upload/tags/confirmation', to: 'upload_tags#confirm', via: :put
+  match '/upload/tag2concepts/confirmation', to: 'upload_tag2concepts#show', via: :get
+  match '/upload/tag2concepts/confirmation', to: 'upload_tag2concepts#confirm', via: :put
   
   match '/concepts/:concept_id/messages/:id/upvote', to: 'messages#upvote', as: "upvote", via: :post
   match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post

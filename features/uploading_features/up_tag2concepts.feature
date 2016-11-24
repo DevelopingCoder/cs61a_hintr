@@ -31,3 +31,48 @@
 #     When I confirm the change for concept "Squirtle" and tag "test_concept 2"
 #     And I press "Confirm Upload"
 #     Then I should see "Success"
+
+Feature: Upload a Tags file
+  As a user, I can upload a tag2concepts csv file
+  And I can see new data as a result of the upload
+  
+Background: A user account exists
+
+    Given the following accounts exist:
+    | name       | email                     | password          | admin |
+    | testadmin  | testadmin@gmail.com       | password          | true  |
+    
+    Given the following tags exist:
+    | name        | description             | example   |
+    | test_tag_1  | test_description_1      | example   |
+    | test_tag_2  | test_description_2      | example_2 |
+    | test_tag_3  | test_description_3      | example_3 |
+    | test_tag_4  | new_test_description_4  | example_4 |
+    
+    Given the following concepts exist:
+    | name           | description               |
+    | test_concept_1 | test_concept_description1 |
+    | test_concept_2 | test_concept_description2 |
+    | test_concept_3 | test_concept_description3 |
+    | test_concept_4 | test_concept_description4 |
+
+    Given the following "tag2concepts.csv" exists:
+    | Tag        | Concept        |
+    | test_tag_1 | test_concept_1 |
+    | test_tag_3 | test_concept_1 |
+    | test_tag_1 | test_concept_3 |
+    
+    Given I log in with email: "testadmin@gmail.com" and password: "password"
+    And I follow "Uploads"
+
+Scenario: I can upload a tags file and confirm all actions
+    Given I select "Tag2concepts (csv)"
+    Given I choose to upload a file with "tag2concepts.csv"
+    And I press "Upload"
+  
+    Then I should see id "add_tag:test_tag_1_concept:test_concept_1" 
+ 
+    # When I check "delete_tag_deletion"
+    # And I check "add_test_tag_addition"
+    # When I press "Confirm Upload"
+    # Then I should see "Success"
