@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
-    belongs_to :question_set, :dependent => :destroy
-    has_many :wrong_answers
+    belongs_to :question_set
+    has_many :wrong_answers, dependent: :destroy
     has_many :tag2wronganswers
     has_many :tags, :through => :tag2wronganswers
     require 'json'

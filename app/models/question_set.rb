@@ -1,5 +1,5 @@
 class QuestionSet < ActiveRecord::Base
-    has_many :questions
+    has_many :questions, dependent: :destroy
     require 'json'
     
 
@@ -75,7 +75,6 @@ class QuestionSet < ActiveRecord::Base
     def self.save_changes(changes)
         qset_additions = changes[:qset_additions]
         qset_deletions = changes[:qset_deletions]
-        
         qset_deletions.each do |qset_deletion|
             QuestionSet.find_by_name(qset_deletion).destroy
         end
