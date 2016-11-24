@@ -5,17 +5,17 @@ Feature: Upload a Questions file
 Background: A user account exists
 
     Given the following tags exist:
-    | name   | description        |
-    | tag1   | description1       |
-    | tag2   | description2       |
-    | tag3   | description3       |
-    | tag4   | description4       |
-    | tag5   | description5       |
-    | tag6   | description6       |
-    | tag7   | description7       |
-    | tag8   | description8       |
-    | tag9   | description9       |
-    | tag10  | description10      |
+    | name   | description        | example |
+    | tag1   | description1       | ex1     |
+    | tag2   | description2       | ex2     |
+    | tag3   | description3       | ex3     |
+    | tag4   | description4       | ex4     |
+    | tag5   | description5       | ex5     |
+    | tag6   | description6       | ex6     |
+    | tag7   | description7       | ex7     |
+    | tag8   | description8       | ex8     |
+    | tag9   | description9       | ex9     |
+    | tag10  | description10      | ex10    |
     Given I am logged in as an admin
     And I follow "Uploads"
     
