@@ -1,14 +1,14 @@
-class UploadConceptsController < ApplicationController
+class UploadTagsController < ApplicationController
     
     def show
         if not params.keys.include?("path")
             flash[:notice] = "Oops we lost your state. Please upload again"
             redirect_to upload_path and return
         end
-        changes = Concept.import(params[:path])
+        changes = Tag.import(params[:path])
         if not changes
-            flash[:notice] = "Concept file not correctly formatted. First 3 columns must be
-                                Name, Description, Message"
+            flash[:notice] = "Tag file not correctly formatted. First 10 columns must be 
+                Old tag name,cp,Status,Tag Name,Description,Example,Primary Concept,Topic,Count in Tag to Concept Master,Concepts"
             redirect_to upload_path and return
         end
         @additions = changes[:additions]
@@ -46,7 +46,7 @@ class UploadConceptsController < ApplicationController
         end
         changes[:edits] = edits
         
-        Concept.save_changes(changes)        
+        Tag.save_changes(changes)        
         #get additions deletions and editions from params
         #for each of these arrays, do proper action in model
         flash[:notice] = "Success"

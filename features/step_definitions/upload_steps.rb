@@ -3,7 +3,9 @@ Given /^I choose to upload a file with "([^"]*)"$/ do |filename|
 end
 
 Given /^the following tags exist:$/ do |tags_table|
-   pending 
+   tags_table.hashes.each do |tag| 
+        Tag.create!(tag)
+    end
 end
 
 Given /^the following tag to concept relations exist:$/ do |tag2concepts_table|
