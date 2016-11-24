@@ -23,16 +23,3 @@ end
         concept.tags.create!({:name => 'tag- ' + j.to_s, :description => 'tag-description- ' + j.to_s})
     end
 end
-
-5.times do |i|
-    question_set = QuestionSet.create!({:name => "qset-" + i.to_s})
-    5.times do |j|
-        question = question_set.questions.create!({:text => "question-text-" + j.to_s, :case_string => "case-string-" + j.to_s})
-        5.times do |k|
-            wrong_answer = question.wrong_answers.create!({:text => 'wrong_answer-' + k.to_s})
-            # 3.times do |l|
-            #     wrong_answer.tags << Tag.find_by_name('tag-' + l.to_s)
-            # end
-        end
-    end
-end

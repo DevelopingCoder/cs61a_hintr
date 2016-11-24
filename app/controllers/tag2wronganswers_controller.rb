@@ -1,2 +1,0 @@
-class Tag2wronganswersController < ApplicationController
-end

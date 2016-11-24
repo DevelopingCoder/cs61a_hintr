@@ -4,9 +4,7 @@ class Tag < ActiveRecord::Base
     validates :description, presence: true
     validates :example, presence: true
     has_many :tag2concepts
-    has_many :tag2wronganswers
     has_many :concepts, :through => :tag2concepts
-    has_many :wrong_answers, :through => :tag2wronganswers
     
     include ActiveModel::Serialization
     
