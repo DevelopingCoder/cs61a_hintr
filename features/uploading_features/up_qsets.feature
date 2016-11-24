@@ -32,6 +32,12 @@ Scenario:  I can add new question set data
   And the edits section should not have "question1"
   And the deletions section should not have "qset1"
   
+  When I check "add_qset1"
+  And I check "add_qset2"
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "question.json" should exist in the database
+  
 Scenario:  If I add a json the same as db no changes show
   Given the data in "question.json" exists
   And I select "Question_Sets (json)"
@@ -39,8 +45,15 @@ Scenario:  If I add a json the same as db no changes show
   When I press "Upload"
   
   Then the addition section should not have "qset1"
-  Then the edits section should not have "qset1"
-  Then the deletions section should not have "qset1"
+  And the addition section should not have "qset2"
+  And the edits section should not have "qset1"
+  And the edits section should not have "qset2"
+  And the deletions section should not have "qset1"
+  And the deletions section should not have "qset2"
+  
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "question.json" should exist in the database
   
 Scenario: Deletions are correctly detected
   Given the data in "question.json" exists
@@ -55,6 +68,12 @@ Scenario: Deletions are correctly detected
   And the deletions section should have "qset2"
   And the deletions section should not have "qset1"
   
-  
+# Convention for checkbox ids: 
+# "edit_"+ qset_name+"_delete_"+ question_text
+# "edit_"+ qset_name+"_edit_"+ question_text
+# "edit_"+qset_name+"_add_"+question_text
+# "delete_"+ qset.name
+# "add_"+ qset_name
+
   
   

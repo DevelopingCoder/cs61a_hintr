@@ -26,11 +26,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1 confirmation-checkboxes">
-                            <%= check_box_tag("confirmed_qset_additions[]", @additions.to_s, true, :id => "add_"+qset_name) %>
-                        </div>
                     </div>
                 <% end %>
+                <div class="col-md-1 confirmation-checkboxes">
+                            <%= check_box_tag("confirmed_qset_additions[]", {qset_name => @additions[qset_name]}.to_s, true, :id => "add_"+ qset_name) %>
+                </div>
             <% end %>
         </div>
         <div class="row" id="deletions">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 confirmation-checkboxes">
-                        <%= check_box_tag("confirmed_qset_deletions[]", qset.name.to_s, true, :id => "delete_"+qset.name) %>
+                        <%= check_box_tag("confirmed_qset_deletions[]", qset.name.to_s, true, :id => "delete_"+ qset.name) %>
                     </div>
                 <% end %>
             <% end %>
@@ -133,9 +133,9 @@
                         <div class="col-md-1 confirmation-checkboxes">
                             <!--checkbox confirmation list has [name of qset, question text of q to add/-->
                             <% if deleted %>
-                                <%= check_box_tag("confirmed_question_deletions[]", [qset_name, question_text].to_s, false, :id => "edit_"+qset_name+"_delete_"+question_text) %>
+                                <%= check_box_tag("confirmed_question_deletions[]", [qset_name, question_text].to_s, false, :id => "edit_"+ qset_name+"_delete_"+ question_text) %>
                             <% else %>
-                                <%= check_box_tag("confirmed_question_edits[]", [qset_name, question_text, wa_hash].to_s, true, :id => "edit_"+qset_name+"_edit_"+question_text) %> 
+                                <%= check_box_tag("confirmed_question_edits[]", [qset_name, question_text, wa_hash].to_s, true, :id => "edit_"+ qset_name+"_edit_"+ question_text) %> 
                             <% end %>
                         </div>
                     </div>

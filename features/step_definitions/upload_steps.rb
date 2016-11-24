@@ -67,6 +67,13 @@ Given /^the data in "([^"]*)" exists$/ do |filename|
     seed_db(json)
 end
 
+And /^the data in "([^"]*)" should exist in the database$/ do |filename|
+    file_path = 'upload_files/' + filename
+    file = File.open(file_path)
+    json = JSON.parse(file.read)
+    expect(diff_db(json)).to be_empty
+end
+
 Then /^the addition section should have "([^"]*)"$/ do |text|
     expect(page.find("#additions")).to have_content(text)
 end
