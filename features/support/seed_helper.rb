@@ -12,6 +12,9 @@ module SeedHelper
                     wrong_answer = question.wrong_answers.create!(:text => wa_text)
                     tag_list.each do |tag_name|
                         tag = Tag.find_by_name(tag_name)
+                        if not tag
+                            tag = Tag.create!(:name => tag_name, :description => "test_tag_descript", :example => "test_tag_example") 
+                        end
                         wrong_answer.tags << tag
                     end
                 end
