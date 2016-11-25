@@ -109,6 +109,25 @@ Scenario: Question deletions are correctly detected
   Then I should see "Success"
   And the data in "qsets2.json" should exist in the database
   
+Scenario: Error is displayed if tag doesn't exist in db
+  Given I select "Question_Sets (json)"
+  And the tag "tag1" does not exist
+  Given I choose to upload a file with "question.json"
+  When I press "Upload"
+  
+  Then I should see "Tag tag1 does not exist. Please fix this and try again."
+  And I should not see "Success"
+  
+Scenario: Error is displayed if tags don't exist in db
+  Given I select "Question_Sets (json)"
+  And the tag "tag1" does not exist
+  And the tag "tag2" does not exist
+  Given I choose to upload a file with "question.json"
+  When I press "Upload"
+  
+  Then I should not see "Success"
+  And I should see "Tags tag1, tag2 do not exist. Please fix this and try again."
+
 # Convention for checkbox ids: 
 # "edit_"+ qset_name+"_delete_"+ question_text
 # "edit_"+ qset_name+"_edit_"+ question_text

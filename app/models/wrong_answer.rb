@@ -1,5 +1,5 @@
 class WrongAnswer < ActiveRecord::Base
-    has_many :tag2wronganswers
+    has_many :tag2wronganswers, :dependent => :destroy
     has_many :tags, :through => :tag2wronganswers
     belongs_to :question
     
@@ -40,4 +40,5 @@ class WrongAnswer < ActiveRecord::Base
             end
         end
     end
+    
 end

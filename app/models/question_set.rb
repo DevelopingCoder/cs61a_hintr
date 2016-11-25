@@ -10,8 +10,34 @@ class QuestionSet < ActiveRecord::Base
         qsets.each do |qset_name, qset_hash|
             file_qsets[qset_name] = qset_hash
         end
+        no_tag_error = check_tags_exist(file_qsets)
+        if no_tag_error.length != 0
+            return no_tag_error
+        end
         return cross_check_diffs(file_qsets)
         
+    end
+    
+    def self.check_tags_exist(file_qsets)
+        non_exist_tags = []
+        file_qsets.keys.each do |qset_name|
+            question_hash = file_qsets[qset_name]
+            question_hash.each do |question_text, wa_hash|
+                wrong_answer_list = question_hash[question_text]
+                wrong_answer_list.each do |wrong_answer_text, tag_list|
+                    if wrong_answer_text != "CASE_STR"
+                       wrong_answer_list[wrong_answer_text].each do |tag_name|
+                            if not Tag.find_by_name(tag_name)
+                                if not non_exist_tags.include?(tag_name)
+                                    non_exist_tags << tag_name
+                                end
+                            end
+                        end 
+                    end
+                end
+            end
+        end
+        return non_exist_tags
     end
     
     def self.cross_check_diffs(file_qsets)

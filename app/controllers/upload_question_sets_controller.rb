@@ -5,9 +5,20 @@ class UploadQuestionSetsController < ApplicationController
         #uploads the file - calls model method to get additions, deletions and edits
         uploaded_file = File.open(params[:path])
         changes = QuestionSet.import(uploaded_file.read)
-        @additions = changes[:additions]
-        @edits = changes[:edits]
-        @deletions = changes[:deletions]
+        if changes.kind_of?(Array)
+            error_msg = ""
+            if changes.length == 1
+                error_msg = "Tag " + changes[0] + " does not exist. Please fix this and try again."
+            else
+                error_msg = "Tags " + changes.join(", ") + " do not exist. Please fix this and try again."
+            end
+            flash[:notice] = error_msg
+            redirect_to upload_path
+        else
+            @additions = changes[:additions]
+            @edits = changes[:edits]
+            @deletions = changes[:deletions]
+        end
     end
     
     def confirm

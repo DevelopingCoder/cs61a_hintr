@@ -98,3 +98,13 @@ end
 Then /^the deletions section should not have "([^"]*)"$/ do |text|
     expect(page.find("#deletions")).to have_no_content(text)
 end
+
+
+#maybe instead of this, do it in seed_db, (if tag doesnt exist, create it) then scenario where we check if tag doesnt exist, delete the tag first
+And /^the tag "([^"]*)" does not exist$/ do |tag_name|
+    Tag.all.each do |tag|
+        if tag.name == tag_name
+            tag.destroy
+        end
+    end
+end
