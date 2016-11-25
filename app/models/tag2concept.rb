@@ -12,7 +12,7 @@ class Tag2concept < ActiveRecord::Base
     end
     
     def self.verify_first_line(first_line)
-        if first_line.length < 5
+        if first_line.length < 2
             return false
         end
         
@@ -76,6 +76,7 @@ class Tag2concept < ActiveRecord::Base
                end
             end
         end
+        byebug
         return {:additions => additions, :deletions => deletions}
     end
     

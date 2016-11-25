@@ -20,6 +20,6 @@ end
     concept = Concept.create!({:name => 'concept-' + i.to_s, :msg_status => 'no messages', :description => 'description for concept ' + i.to_s})
     10.times do |j|
         concept.messages.create!({:author => 'user' + j.to_s, :content => 'content ' + j.to_s, :finalized => false})
-        concept.tags.create!({:name => 'tag- ' + j.to_s, :description => 'tag-description- ' + j.to_s})
+        concept.tags.create!({:name => 'tag- ' + j.to_s, :description => 'tag-description- ' + j.to_s, :example => 'insert example'})
     end
 end
