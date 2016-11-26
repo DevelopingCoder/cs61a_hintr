@@ -20,7 +20,7 @@
             </td>
             <td>
               <%= check_box_tag("confirmed_additions[]", addition.to_s, true, 
-                    :id => "add_tag:" + addition[:tag_name] + "_concept:" + addition[:concept_name]) %>
+                    :id => "add_tag-" + addition[:tag_name] + "_concept-" + addition[:concept_name]) %>
             </td>
           </tr>
         <% end %>

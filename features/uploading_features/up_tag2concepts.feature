@@ -69,10 +69,7 @@ Scenario: I can upload a tags file and confirm all actions
     Given I select "Tag2concepts (csv)"
     Given I choose to upload a file with "tag2concepts.csv"
     And I press "Upload"
-  
-    Then I should see id "add_tag:test_tag_1_concept:test_concept_1" 
- 
-    # When I check "delete_tag_deletion"
-    # And I check "add_test_tag_addition"
-    # When I press "Confirm Upload"
-    # Then I should see "Success"
+    Then I should see id "add_tag-test_tag_1_concept-test_concept_1" 
+    When I uncheck "add_tag-test_tag_1_concept-test_concept_3"
+    And I press "Confirm Upload"
+    Then I should see "Success"

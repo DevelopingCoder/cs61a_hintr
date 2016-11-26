@@ -76,7 +76,6 @@ class Tag2concept < ActiveRecord::Base
                end
             end
         end
-        byebug
         return {:additions => additions, :deletions => deletions}
     end
     
