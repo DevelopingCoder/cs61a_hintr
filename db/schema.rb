@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 20161123033515) do
 
   add_index "concepts", ["name"], name: "index_concepts_on_name"
 
+  create_table "hint_votes", force: :cascade do |t|
+    t.integer "vote_type"
+    t.integer "user_id"
+    t.integer "hint_id"
+  end
+
+  create_table "hints", force: :cascade do |t|
+    t.string   "content"
+    t.boolean  "finalized"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tag2wronganswer_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string   "content"
     t.string   "author"
@@ -33,9 +47,24 @@ ActiveRecord::Schema.define(version: 20161123033515) do
 
   add_index "messages", ["content"], name: "index_messages_on_content"
 
+  create_table "question_sets", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string  "text"
+    t.string  "case_string"
+    t.integer "question_set_id"
+  end
+
   create_table "tag2concepts", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "concept_id"
+  end
+
+  create_table "tag2wronganswers", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "wrong_answer_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -71,6 +100,11 @@ ActiveRecord::Schema.define(version: 20161123033515) do
     t.integer "vote_type"
     t.integer "user_id"
     t.integer "message_id"
+  end
+
+  create_table "wrong_answers", force: :cascade do |t|
+    t.string  "text"
+    t.integer "question_id"
   end
 
 end

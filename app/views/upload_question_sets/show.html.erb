@@ -1,0 +1,178 @@
+<h2>Confirmation page for question sets</h2>
+<div class="form-group">
+    <%= form_tag(upload_questionsets_confirmation_path, :method => :put, :id => "confirm_form") do %>
+        <div class="row" id="additions">
+            <h3>Additions</h3>
+            <% @additions.each do |qset_name, qset_hash| %>
+                <h4><%= qset_name %></h4>
+                <% qset_hash.each do |question_text, wa_hash| %>
+                    <div class="row question">
+                        <div class="col-md-11 question-additions">
+                            <div class = "row question-text">
+                                <%= question_text %>
+                            </div>
+                            <div class="row wrong-answer-list">
+                                <div class="col-md-offset-1 col-md-11">
+                                    <%wa_hash.each do |wa_text, tag_list| %>
+                                        <div class="row wrong-answer-text">
+                                            <%= wa_text%>
+                                        </div>
+                                        <div class="row wrong-answer-tags">
+                                            <div class="col-md-offset-1 col-md-11">
+                                                <%= tag_list %>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+                <div class="col-md-1 confirmation-checkboxes">
+                            <%= check_box_tag("confirmed_qset_additions[]", {qset_name => @additions[qset_name]}.to_s, true, :id => "add_"+ qset_name) %>
+                </div>
+            <% end %>
+        </div>
+        <div class="row" id="deletions">
+            <h3>Deletions</h3>
+            <% @deletions.each do |qset| %>
+                <h4><%= qset.name %></h4>
+                <% qset.questions.each do |question| %>
+                    <div class="row question">
+                        <div class="col-md-11 question-deletions">
+                            <div class = "row question-text">
+                                <%= question.text %>
+                            </div>
+                            <div class="row wrong-answer-list">
+                                <div class="col-md-offset-1 col-md-11">
+                                    <% question.wrong_answers.each do |wrong_answer| %>
+                                        <div class="row wrong-answer-text">
+                                            <%= wrong_answer.text %>
+                                        </div>
+                                        <div class="row wrong-answer-tags">
+                                            <div class="col-md-offset-1 col-md-11">
+                                                wrong_answer.get_tags
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 confirmation-checkboxes">
+                        <%= check_box_tag("confirmed_qset_deletions[]", qset.name.to_s, true, :id => "delete_"+ qset.name) %>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <% if not @edits.empty? %>
+            <div class="row" id="edits-header">
+                Edits
+            </div>
+            <div class="row edit-header">
+                <div class="col-md-6">
+                    Current state of database
+                </div>
+                <div class="col-md-6">
+                    Uploaded database
+                </div>
+            </div>
+        <% end %>
+        <div class="row" id="edits">
+            <% @edits.each do |qset_name, display_lists| %>
+                <h4><%= qset_name %></h4>
+                <!--check db display list-->
+                <% display_lists[0].each do |question_text, wa_hash| %>
+                    <%deleted = true%>
+                    <div class="row question">
+                        <div class="col-md-11 question-diffs">
+                        <!--check if is a deleted question-->
+                            <div class="col-md-6 current-db-question">
+                                <div class="row question-text">
+                                    <%= question_text %>
+                                </div>
+                                <div class="row wrong-answer-list">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        <% wa_hash.each do |wa_text, tag_list| %>
+                                            <div class="row wrong-answer-text">
+                                                <%= wa_text %>
+                                            </div>
+                                            <div class="row wrong-answer-tags">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <%= tag_list %>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div> 
+                                </div>
+                            </div>
+                            <!--if it's an edit, show both-->
+                            <% if display_lists[1].key?(question_text) %>
+                                <%deleted = false%>
+                                <div class="col-md-6 uploaded-question">
+                                    <div class="row question-text">
+                                        <%= question_text %>
+                                    </div>
+                                    <div class="row wrong-answer-list">
+                                        <div class="col-md-offset-1 col-md-11">
+                                            <% display_lists[1][question_text].each do |wa_text, tag_list| %>
+                                                <div class="row wrong-answer-text">
+                                                    <%= wa_text %>
+                                                </div>
+                                                <div class="row wrong-answer-tags">
+                                                    <div class="col-md-offset-1 col-md-11">
+                                                        <%= tag_list %>
+                                                    </div>
+                                                </div>
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                        <div class="col-md-1 confirmation-checkboxes">
+                            <!--checkbox confirmation list has [name of qset, question text of q to add/-->
+                            <% if deleted %>
+                                <%= check_box_tag("confirmed_question_deletions[]", [qset_name, question_text].to_s, false, :id => "edit_"+ qset_name+"_delete_"+ question_text) %>
+                            <% else %>
+                                <%= check_box_tag("confirmed_question_edits[]", [qset_name, question_text, wa_hash].to_s, true, :id => "edit_"+ qset_name+"_edit_"+ question_text) %> 
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+                <% display_lists[1].each do |question_text, wa_hash| %>
+                    <div class = "row question">
+                        <% if not display_lists[0].key?(question_text) %>
+                            <div class="col-md-offset-6 col-md-6 new-db-question">
+                                <div class = "row question-text">
+                                    
+                                </div>
+                                
+                                <div class="row wrong_answer">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        <% wa_hash.each do |wa_text, tag_list| %>
+                                            <div class="row wrong-answer-text">
+                                                <%= wa_text%>
+                                            </div>
+                                            <div class="row wrong-answer-tags">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    tag_list
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-1 confirmation-checkboxes">
+                                <%= check_box_tag("confirmed_question_additions[]", [qset_name, question_text, wa_hash].to_s, true, :id => "edit_"+qset_name+"_add_"+question_text) %>
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <%= submit_tag "Confirm Upload"%>
+    <% end %>
+    <%= link_to "Cancel", upload_path %>
+</div>
