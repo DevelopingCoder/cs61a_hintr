@@ -47,12 +47,11 @@ class Tag2concept < ActiveRecord::Base
     end
     
     def self.cross_check_diffs(file_t2c)
-        #Returns a hash of answers, edits, deletions. Answers and edits contains 
-        #a message, which may be an empty string if we do not want to create a new message
+        #Returns a hash of additions and deletions.
         #Note the instances are in json form
         additions = []
         deletions = []
-        #First check edits and deletions
+        #First check deletions
         Tag2concept.all.each do |exist_t2c|
             exist_tag = Tag.find(exist_t2c.tag_id)
             exist_concept = Concept.find(exist_t2c.concept_id)
