@@ -59,16 +59,10 @@ RSpec.describe "UploadConcepts" do
     end
     describe 'import corrupt concepts.csv with missing fields' do
         it 'lets you know if concept name is missing' do
-            @failed_file = "spec/upload_files/failed_concept2.csv"
-            @changes = Concept.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "Concept name for one of the concepts is missing. Upload aborted"
+            expect(Concept.verify_row(nil, "")).to eq "Concept name for one of the concepts is missing. Upload aborted"
         end
         it 'lets you know if concept description is missing' do
-            @failed_file = "spec/upload_files/failed_concept1.csv"
-            @changes = Concept.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "Description for one of the concepts is missing. Upload aborted"
+            expect(Concept.verify_row("", nil)).to eq "Concept description for one of the concepts is missing. Upload aborted"
         end
     end
     describe '.save concept changes' do

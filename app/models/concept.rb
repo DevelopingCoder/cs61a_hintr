@@ -11,6 +11,15 @@ class Concept < ActiveRecord::Base
         {:name => name, :description => description}    
     end
     
+    def self.verify_row(name, description)
+        if name == nil
+            return "Concept name for one of the concepts is missing. Upload aborted"
+        elsif description == nil
+            return "Concept description for one of the concepts is missing. Upload aborted"
+        else
+           return nil 
+        end
+    end
     def self.verify_first_line(first_line)
         #Check format: concept, description, message
         if first_line.length < 3
@@ -34,6 +43,10 @@ class Concept < ActiveRecord::Base
             concept_name, description, message = row.map{|n| n.strip if n}
             if not message
                 message = ""
+            end
+            error = verify_row(concept_name, description)
+            if error
+                return {:error => error}
             end
             file_concepts[concept_name] = [description, message]
         end

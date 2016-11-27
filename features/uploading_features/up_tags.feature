@@ -57,3 +57,17 @@ Scenario: Uploading an invalid file will give an error
     And I press "Upload"
     
     Then I should see "Tag name doesn't exist for one of 'em. Upload aborted"
+    
+Scenario: I lose my state when I refresh the page
+    Given I select "Tags (csv)"
+    Then I choose to upload a file with "tags.csv"
+    And I press "Upload"
+    When I refresh the page
+    Then I should not see "test_concept_9"
+    And I should see "Oops we lost your state. Please upload again"
+    
+Scenario: I should not be able to upload an incorrectly formatted file 
+    Given I select "Tags (csv)"
+    Given I choose to upload a file with "users.csv"
+    And I press "Upload"
+    Then I should see "Tag file not correctly formatted." 

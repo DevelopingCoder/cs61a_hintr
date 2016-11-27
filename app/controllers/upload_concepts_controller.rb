@@ -10,6 +10,8 @@ class UploadConceptsController < ApplicationController
             flash[:notice] = "Concept file not correctly formatted. First 3 columns must be
                                 Name, Description, Message"
             redirect_to upload_path and return
+        elsif changes.key? :error
+            @error = changes[:error]
         end
         @additions = changes[:additions]
         @deletions = changes[:deletions]
