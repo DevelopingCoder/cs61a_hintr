@@ -24,6 +24,13 @@ Background: A user account exists
     ||||test_tag_4|new_test_description_4|new_example_4|||||
     ||||test_tag_addition|description|example addition|||||
 
+    Given the following "failed_tags.csv" exists:
+    |Old tag name|cp|Status|Tag Name|Description|Example|Primary Concept|Topic|Count in Tag to Concept Master|Concepts|
+    ||||test_tag_1|test_description_1|example||topic_1|||
+    ||||test_tag_2|new_test_description_2|example_2|||||
+    |||||test_description_3|new_example_3|||||
+    ||||test_tag_4|new_test_description_4|new_example_4|||||
+    ||||test_tag_addition|description|example addition|||||
     
     Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
@@ -43,3 +50,10 @@ Scenario: I can upload a tags file and confirm all actions
     And I check "add_test_tag_addition"
     When I press "Confirm Upload"
     Then I should see "Success"
+    
+Scenario: Uploading an invalid file will give an error
+    Given I select "Tags (csv)"
+    And I choose to upload a file with "failed_tags.csv"
+    And I press "Upload"
+    
+    Then I should see "Tag name doesn't exist for one of 'em. Upload aborted"

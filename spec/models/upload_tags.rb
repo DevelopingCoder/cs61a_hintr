@@ -101,22 +101,13 @@ RSpec.describe "UploadTags" do
     end
     describe 'import corrupt tag.csv with tag that doesnt exist' do
         it 'lets you know if tag name is missing' do
-            @failed_file = "spec/upload_files/failed_tags1.csv"
-            @changes = Tag.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "Tag name doesn't exist for one of 'em. Upload aborted"
+            expect(Tag.verify_row(nil, "", "")).to eq "Tag name doesn't exist for one of 'em. Upload aborted"
         end
         it 'lets you know if tag description is missing' do
-            @failed_file = "spec/upload_files/failed_tags1.csv"
-            @changes = Tag.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "Tag description doesn't exist for one of 'em. Upload aborted"
+            expect(Tag.verify_row("", nil, "")).to eq "Tag description doesn't exist for one of 'em. Upload aborted"
         end
         it 'lets you know if tag example is missing' do
-            @failed_file = "spec/upload_files/failed_tags1.csv"
-            @changes = Tag.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "Tag example doesn't exist for one of 'em. Upload aborted"
+            expect(Tag.verify_row("", "", nil)).to eq "Tag example doesn't exist for one of 'em. Upload aborted"
         end
     end
 end

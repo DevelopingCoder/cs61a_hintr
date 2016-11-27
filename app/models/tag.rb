@@ -44,9 +44,25 @@ class Tag < ActiveRecord::Base
             description = row[4].strip if row[4]
             example = row[5].strip if row[5]
             topic = row[7].strip if row[7]
+            error = verify_row(tag_name, description, example)
+            if error
+                return {:error => error}
+            end
             file_tags[tag_name] = [description, example, topic]
         end
         return cross_check_diffs(file_tags)
+    end
+    
+    def self.verify_row(tag_name, description, example)
+        if tag_name == nil
+            return "Tag name doesn't exist for one of 'em. Upload aborted"
+        elsif description == nil
+            return "Tag description doesn't exist for one of 'em. Upload aborted"
+        elsif example == nil
+            return "Tag example doesn't exist for one of 'em. Upload aborted"
+        else
+            return nil
+        end
     end
     
     def self.make_edit(exist_tag, upload_tag)
