@@ -98,4 +98,20 @@ RSpec.describe "UploadConcepts" do
             end
         end
     end
+    
+    describe "destroying concepts" do
+        before (:each) do
+            tag = Tag.create({:name => "test_tag 1", :description => "irrelephant", :example => "example"})
+            Concept.find_by_name("test_concept 1").tags << tag
+        end
+        it "destroys tag2concepts associated with them" do
+            concept = Concept.find_by_name("test_concept 1")
+            tag = Tag.find_by_name("test_tag 1")
+            tag_id = tag.id
+            expect(Tag2concept.find_by({:tag_id => tag_id,:concept_id => concept.id})).to be_truthy
+            byebug
+            tag.destroy
+            expect(Tag2concept.find_by({:tag_id => tag_id,:concept_id => concept.id})).to be_falsey
+        end
+    end
 end
