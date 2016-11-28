@@ -86,16 +86,10 @@ RSpec.describe "UploadT2C" do
     end
     describe 'import corrupt tag2concept.csv with tag that doesnt exist' do
         it 'lets you know if concept name is missing' do
-            @failed_file = "spec/upload_files/failed_tag2concepts2.csv"
-            @changes = Tag2concept.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "One of the tags doesn't exist. Upload aborted"
+            expect(Tag2concept.verify_row("test_tag 1","No")).to eq "One of the concepts doesn't exist. Upload aborted"
         end
         it 'import corrupt tag2concept.csv with concept that doesnt exist' do
-            @failed_file = "spec/upload_files/failed_tag2concepts1.csv"
-            @changes = Tag2concept.import(@failed_file)
-            @error = @changes[:error]
-            expect(@error).to eq "One of the concepts doesn't exist. Upload aborted"
+            expect(Tag2concept.verify_row("No","test_concept_1")).to eq "One of the tags doesn't exist. Upload aborted"
         end
     end
 end

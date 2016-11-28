@@ -9,6 +9,8 @@ class UploadTag2conceptsController < ApplicationController
             flash[:notice] = "Tag2concept file not correctly formatted. First 2 columns must be 
                 Tag,Concept"
             redirect_to upload_path and return
+        elsif changes.key? :error
+            @error = changes[:error]
         end
         @additions = changes[:additions]
         @deletions = changes[:deletions]

@@ -61,6 +61,12 @@ Background: A user account exists
     | test_tag_1 | test_concept_1 |
     | test_tag_3 | test_concept_1 |
     | test_tag_1 | test_concept_3 |
+     
+    Given the following "failed_tag2concepts.csv" exists:
+    | Tag        | Concept        |
+    | test_tag_1 | test_concept_1 |
+    | test_tag_3 | wtf1           |
+    | test_tag_1 | test_concept_3 |
     
     Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
@@ -73,3 +79,22 @@ Scenario: I can upload a tags file and confirm all actions
     When I uncheck "add_tag-test_tag_1_concept-test_concept_3"
     And I press "Confirm Upload"
     Then I should see "Success"
+    
+Scenario: Uploading an invalid file will give an error
+    Given I select "Tag2concepts (csv)"
+    And I choose to upload a file with "failed_tag2concepts.csv"
+    And I press "Upload"
+    Then I should see "One of the concepts doesn't exist. Upload aborted"
+    
+Scenario: I lose my state when I refresh the page
+    Given I select "Tag2concepts (csv)"
+    Then I choose to upload a file with "tag2concepts.csv"
+    And I press "Upload"
+    When I refresh the page
+    And I should see "Oops we lost your state. Please upload again"
+    
+Scenario: I should not be able to upload an incorrectly formatted file 
+    Given I select "Tag2concepts (csv)"
+    Given I choose to upload a file with "users.csv"
+    And I press "Upload"
+    Then I should see "Tag2concept file not correctly formatted" 

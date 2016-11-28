@@ -27,6 +27,15 @@ class Tag2concept < ActiveRecord::Base
         return true
     end
     
+    def self.verify_row(tag_name, concept_name)
+        if Tag.find_by_name(tag_name) == nil
+            return "One of the tags doesn't exist. Upload aborted"
+        elsif Concept.find_by_name(concept_name) == nil
+            return "One of the concepts doesn't exist. Upload aborted"
+        end
+        return nil
+    end
+    
     def self.import(csv_path)
         rows = CSV.read(csv_path)
         if not self.verify_first_line(rows[0])
@@ -37,6 +46,10 @@ class Tag2concept < ActiveRecord::Base
         rows.each do |row|
             tag_name = row[0].strip if row[0]
             concept_name = row[1].strip if row[1]
+            error = verify_row(tag_name, concept_name)
+            if error
+                return {:error => error}
+            end
             if file_t2c[tag_name]
                 file_t2c[tag_name] << concept_name   
             else
