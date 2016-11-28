@@ -85,4 +85,29 @@ RSpec.describe "UploadTags" do
             end
         end
     end
+    describe "destroying concepts" do
+        before (:each) do
+            concept = Concept.create({:name => "test_concept 1", :description => "irrelephant"})
+            Tag.find_by_name("test_tag 1").concepts << concept
+        end
+        it "destroys tag2concepts associated with them" do
+            concept = Concept.find_by_name("test_concept 1")
+            tag = Tag.find_by_name("test_tag 1")
+            concept_id = concept.id
+            expect(Tag2concept.find_by({:tag_id => tag.id,:concept_id => concept_id})).to be_truthy
+            concept.destroy
+            expect(Tag2concept.find_by({:tag_id => tag.id,:concept_id => concept_id})).to be_falsey
+        end
+    end
+    describe 'import corrupt tag.csv with tag that doesnt exist' do
+        it 'lets you know if tag name is missing' do
+            expect(Tag.verify_row(" ", "a", "b")).to eq "Tag name doesn't exist for one of 'em. Upload aborted"
+        end
+        it 'lets you know if tag description is missing' do
+            expect(Tag.verify_row("a", " ", "b")).to eq "Tag description doesn't exist for one of 'em. Upload aborted"
+        end
+        it 'lets you know if tag example is missing' do
+            expect(Tag.verify_row("e", "d", " ")).to eq "Tag example doesn't exist for one of 'em. Upload aborted"
+        end
+    end
 end
