@@ -2,7 +2,7 @@ require 'csv'
 class Concept < ActiveRecord::Base
     validates :name, presence: true, uniqueness: true
     validates :description, presence: true
-    has_many :messages
+    has_many :messages, :dependent => :destroy
     has_many :tag2concepts, :dependent => :destroy
     has_many :tags, :through => :tag2concepts
     include ActiveModel::Serialization
@@ -12,9 +12,10 @@ class Concept < ActiveRecord::Base
     end
     
     def self.verify_row(name, description)
-        if name == nil
+        unless name =~ /\S/
             return "Concept name for one of the concepts is missing. Upload aborted"
-        elsif description == nil
+        end
+        unless description =~ /\S/
             return "Concept description for one of the concepts is missing. Upload aborted"
         else
            return nil 

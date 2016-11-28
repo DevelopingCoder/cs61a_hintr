@@ -71,7 +71,7 @@ Background: A user account exists
     Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
 
-Scenario: I can upload a tags file and confirm all actions
+Scenario: I can upload a tag2concepts file and confirm all actions
     Given I select "Tag2concepts (csv)"
     Given I choose to upload a file with "tag2concepts.csv"
     And I press "Upload"
@@ -79,6 +79,10 @@ Scenario: I can upload a tags file and confirm all actions
     When I uncheck "add_tag-test_tag_1_concept-test_concept_3"
     And I press "Confirm Upload"
     Then I should see "Success"
+    
+    When I am on the concepts page
+    And I follow "test_concept_1"
+    Then I should see "test_tag_1"
     
 Scenario: Uploading an invalid file will give an error
     Given I select "Tag2concepts (csv)"

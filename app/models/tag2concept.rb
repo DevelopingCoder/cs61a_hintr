@@ -74,7 +74,7 @@ class Tag2concept < ActiveRecord::Base
                     deletions << exist_t2c.serializable_hash
                 end
             else
-                deletions += [exist_t2c.serializable_hash]
+                deletions << exist_t2c.serializable_hash
             end
         end
     

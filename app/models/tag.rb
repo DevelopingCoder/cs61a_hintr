@@ -54,11 +54,13 @@ class Tag < ActiveRecord::Base
     end
     
     def self.verify_row(tag_name, description, example)
-        if tag_name == nil
+        unless tag_name =~ /\S/
             return "Tag name doesn't exist for one of 'em. Upload aborted"
-        elsif description == nil
+        end
+        unless description =~ /\S/
             return "Tag description doesn't exist for one of 'em. Upload aborted"
-        elsif example == nil
+        end
+        unless example =~ /\S/
             return "Tag example doesn't exist for one of 'em. Upload aborted"
         else
             return nil
