@@ -15,7 +15,7 @@
     <% @messages.each do |message| %>
       <% if message.finalizable %>
         <div class="row" id="finalize-<%= message.id %>">
-          <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
+          <%= button_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
         </div>
       <% end %>
       <% if message.finalized %>
@@ -27,7 +27,7 @@
         <div class="col-md-3" id="votes">
           <div class="row" id="upvotes">
             <div class="col-sm-6" id="upvote-btn-<%= message.id %>">
-              <%= link_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post, :remote => true %>
+              <%= button_to "Upvote", upvote_path(:concept_id => @concept.id, :id => message.id), :id => "upvote-#{message.id}", :method => :post, :remote => true %>
             </div>
             <div class="col-sm-6" id="num-upvotes-<%= message.id %>">
               <%= message.upvotes %>
@@ -35,7 +35,7 @@
           </div>
           <div class="row" id="downvotes">
             <div class="col-sm-6" id="downvote-btn-<%= message.id %>">
-              <%= link_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post, :remote => true %>
+              <%= button_to "Downvote", downvote_path(:concept_id => @concept.id, :id => message.id), id: "downvote-#{message.id}", :method => :post, :remote => true %>
             </div>
             <div class="col-sm-6" id="num-downvotes-<%= message.id %>">
               <%= message.downvotes %>
@@ -51,7 +51,7 @@
           </div>
         <% else %>
           <div class="col-md-2" id="unfinalize-message">
-            <%= link_to "Unfinalize", unfinalize_path(:concept_id => @concept.id, :id => message.id), :id => "unfinalize-#{message.id}", :method => :post %>
+            <%= button_to "Unfinalize", unfinalize_path(:concept_id => @concept.id, :id => message.id), :id => "unfinalize-#{message.id}", :method => :post %>
           </div>
         <% end %>
       </div>

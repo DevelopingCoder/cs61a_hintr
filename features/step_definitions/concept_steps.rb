@@ -13,12 +13,12 @@ end
 
 And /^I upvote "(.*)"$/ do |message|
     message_to_upvote = Message.find_by_content(message)
-    step %Q{I follow "upvote-#{message_to_upvote.id}"}
+    step %Q{I press "upvote-#{message_to_upvote.id}"}
 end
 
 And /^I downvote "(.*)"$/ do |message|
     message_to_downvote = Message.find_by_content(message)
-    step %Q{I follow "downvote-#{message_to_downvote.id}"}
+    step %Q{I press "downvote-#{message_to_downvote.id}"}
 end
 
 Then /"(.*)" should have (\d) upvotes?$/ do |message, upvotes|
@@ -62,12 +62,12 @@ end
 
 Given /^I finalize "(.*)"$/ do |message|
     message = Message.find_by_content(message)
-    step %Q{I follow "finalize-#{message.id}"}
+    step %Q{I press "finalize-#{message.id}"}
 end
 
 Given /^I unfinalize "(.*)"$/ do |message|
     message = Message.find_by_content(message)
-    step %Q{I follow "unfinalize-#{message.id}"}
+    step %Q{I press "unfinalize-#{message.id}"}
 end
 
 Given /^"(.*)" is finalized$/ do |message|

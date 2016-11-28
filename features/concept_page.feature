@@ -39,11 +39,22 @@ Scenario: A user can downvote a message
   Then "print takes in strings as arguments" should have 1 downvote
   And "print takes in strings as arguments" should have 0 upvotes
   
-Scenario: A user cannot downvote on a message twice
+Scenario: A user can toggle a downvote
   Given I downvote "print takes in strings as arguments"
-  And I downvote "print takes in strings as arguments"
   Then "print takes in strings as arguments" should have 1 downvote
   And "print takes in strings as arguments" should have 0 upvotes
+  When I downvote "print takes in strings as arguments"
+  Then "print takes in strings as arguments" should have 0 downvotes
+  And "print takes in strings as arguments" should have 0 upvotes
+   
+Scenario: A user can toggle an upvote
+  Given I upvote "print takes in strings as arguments"
+  Then "print takes in strings as arguments" should have 0 downvote
+  And "print takes in strings as arguments" should have 1 upvotes
+  When I upvote "print takes in strings as arguments"
+  Then "print takes in strings as arguments" should have 0 downvotes
+   And "print takes in strings as arguments" should have 0 upvotes
+  
   
 Scenario: A user can change their vote from up to downvote 
   Given I downvote "print takes in strings as arguments"
