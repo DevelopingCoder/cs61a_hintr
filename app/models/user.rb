@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
   
   validates :name, presence: :true
   has_many :votes
+  has_many :hint_votes
   has_many :messages, :through => :votes
+  has_many :hints, :through => :hint_votes
 
   @@successful_del = "User successfully deleted"
   @@successful_add = "Email invite has been sent"

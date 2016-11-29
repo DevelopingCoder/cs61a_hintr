@@ -10,6 +10,8 @@ class UploadTagsController < ApplicationController
             flash[:notice] = "Tag file not correctly formatted. First 10 columns must be 
                 Old tag name,cp,Status,Tag Name,Description,Example,Primary Concept,Topic,Count in Tag to Concept Master,Concepts"
             redirect_to upload_path and return
+        elsif changes.key? :error
+            @error = changes[:error]
         end
         @additions = changes[:additions]
         @deletions = changes[:deletions]

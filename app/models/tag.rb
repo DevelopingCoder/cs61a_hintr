@@ -3,8 +3,10 @@ class Tag < ActiveRecord::Base
     validates :name, presence: true
     validates :description, presence: true
     validates :example, presence: true
-    has_many :tag2concepts
+    has_many :tag2concepts, :dependent => :destroy
+    has_many :tag2wronganswers, :dependent => :destroy
     has_many :concepts, :through => :tag2concepts
+    has_many :wrong_answers, :through => :tag2wronganswers
     
     include ActiveModel::Serialization
     
@@ -42,9 +44,27 @@ class Tag < ActiveRecord::Base
             description = row[4].strip if row[4]
             example = row[5].strip if row[5]
             topic = row[7].strip if row[7]
+            error = verify_row(tag_name, description, example)
+            if error
+                return {:error => error}
+            end
             file_tags[tag_name] = [description, example, topic]
         end
         return cross_check_diffs(file_tags)
+    end
+    
+    def self.verify_row(tag_name, description, example)
+        unless tag_name =~ /\S/
+            return "Tag name doesn't exist for one of 'em. Upload aborted"
+        end
+        unless description =~ /\S/
+            return "Tag description doesn't exist for one of 'em. Upload aborted"
+        end
+        unless example =~ /\S/
+            return "Tag example doesn't exist for one of 'em. Upload aborted"
+        else
+            return nil
+        end
     end
     
     def self.make_edit(exist_tag, upload_tag)

@@ -57,7 +57,7 @@ RSpec.describe "UploadConcepts" do
             end
         end
     end
-    
+
     describe '.save concept changes' do
         before (:each) do
             #Call import concepts
@@ -96,6 +96,30 @@ RSpec.describe "UploadConcepts" do
                     expect(same_desc).to be true
                 end
             end
+        end
+    end
+    
+    describe "destroying tags" do
+        before (:each) do
+            tag = Tag.create({:name => "test_tag 1", :description => "irrelephant", :example => "example"})
+            Concept.find_by_name("test_concept 1").tags << tag
+        end
+        it "destroys tag2concepts associated with them" do
+            concept = Concept.find_by_name("test_concept 1")
+            tag = Tag.find_by_name("test_tag 1")
+            tag_id = tag.id
+            expect(Tag2concept.find_by({:tag_id => tag_id,:concept_id => concept.id})).to be_truthy
+            tag.destroy
+            expect(Tag2concept.find_by({:tag_id => tag_id,:concept_id => concept.id})).to be_falsey
+        end
+    end
+    
+    describe 'import corrupt concepts.csv with missing fields' do
+        it 'lets you know if concept name is missing' do
+            expect(Concept.verify_row(" ", "d")).to eq "Concept name for one of the concepts is missing. Upload aborted"
+        end
+        it 'lets you know if concept description is missing' do
+            expect(Concept.verify_row("asdf", "   ")).to eq "Concept description for one of the concepts is missing. Upload aborted"
         end
     end
 end

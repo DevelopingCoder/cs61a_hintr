@@ -22,6 +22,13 @@ Background: A user account exists
     | test_concept_9 | new_test_concept_description9 | concept msg_example 9  |
     | test_concept_4 | test_concept_description4     |                        |
     
+    Given the following "failed_concepts.csv" exists:
+    | Concept        | Description                   | Message                |
+    | test_concept_1 | new_test_concept_description1 | concept msg_example 1  |
+    | test_concept_2 | new_test_concept_description2 |                        |
+    | test_concept_9 || concept msg_example 9  |
+    | test_concept_4 | test_concept_description4     |                        |
+      
     Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
     
@@ -96,3 +103,11 @@ Scenario: I lose my state when I refresh the page
     When I refresh the page
     Then I should not see "test_concept_9"
     And I should see "Oops we lost your state. Please upload again"
+    
+Scenario: Uploading an invalid file will give an error
+    Given I select "Concepts (csv)"
+    And I choose to upload a file with "failed_concepts.csv"
+    And I press "Upload"
+    
+    Then I should see "Concept description for one of the concepts is missing. Upload aborted"
+    
