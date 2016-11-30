@@ -1,6 +1,8 @@
 class Message < ActiveRecord::Base
     validates :content, presence: true
     validate :is_unique
+
+    belongs_to :concept
     
     has_many :votes, dependent: :destroy
     has_many :users, :through => :votes

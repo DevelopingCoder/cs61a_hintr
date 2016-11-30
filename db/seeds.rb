@@ -20,7 +20,7 @@ end
     concept = Concept.create!({:name => 'concept-' + i.to_s, :msg_status => 'no messages', :description => 'description for concept ' + i.to_s})
     10.times do |j|
         concept.messages.create!({:author => 'user' + j.to_s, :content => 'content ' + j.to_s, :finalized => false})
-        concept.tags.create!({:name => 'tag- ' + j.to_s, :description => 'tag-description- ' + j.to_s, :example => 'insert example'})
+        concept.tags.create!({:name => 'tag-' + j.to_s, :description => 'tag-description-' + j.to_s, :example => 'insert example'})
     end
 end
 
@@ -30,9 +30,15 @@ end
         question = question_set.questions.create!({:text => "question-text-" + j.to_s, :case_string => "case-string-" + j.to_s})
         5.times do |k|
             wrong_answer = question.wrong_answers.create!({:text => 'wrong_answer-' + k.to_s})
-            # 3.times do |l|
-            #     wrong_answer.tags << Tag.find_by_name('tag-' + l.to_s)
-            # end
+            3.times do |l|
+                tag = Tag.find_by_name('tag-' + l.to_s)
+                wrong_answer.tags << tag
+                tag2wronganswer = Tag2wronganswer.find(Tag2wronganswer.get_id(wrong_answer, tag))
+                10.times do |m|
+                    tag2wronganswer.hints.create!({:content => 'hint-content-' + m.to_s, :finalized => false})
+                end
+                tag2wronganswer.update_status
+            end
         end
     end
 end
