@@ -17,4 +17,5 @@ FactoryGirl.define do
         name "Example_concept"
         description "This is my example concept"
     end
+    
 end
