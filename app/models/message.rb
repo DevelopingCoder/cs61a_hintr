@@ -1,11 +1,11 @@
 class Message < ActiveRecord::Base
     validates :content, presence: true
-    validate :concept_uniqueness
-
+    validate :is_unique
+    
     has_many :votes, dependent: :destroy
     has_many :users, :through => :votes
     
-    def concept_uniqueness
+    def is_unique
         if self.concept_id
             concept = Concept.find_by_id(self.concept_id)
             concept.messages.each do |message|
@@ -21,8 +21,11 @@ class Message < ActiveRecord::Base
         if not current_vote.exists?
             current_vote = self.votes.create(:user_id => user_id, :vote_type => vote_type)
         elsif current_vote.first.vote_type != vote_type
-            # only change vote if it's different from your first vote
+            #Checks if we're changing our vote
             current_vote.first.update_attribute(:vote_type, vote_type)
+        else
+            #We're toggling the vote back to neutral
+            current_vote.first.update_attribute(:vote_type, 0)
         end
     end
     

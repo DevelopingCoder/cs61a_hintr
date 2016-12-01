@@ -5,22 +5,25 @@
   <%= @concept.description %>
 </h3>
 <h4>
-  <%= "Status: " + @concept.msg_status %>
-</h4>
+  <%= "Status: " + @concept.msg_status + "."%>
+  <% if @concept.msg_status == "assigned" %>
+    <%= "Message: " + @final_message %>
+  <% end %>
+<h4>
+
 <h4>
   <%= "Tags: " + @concept.display_tags_string %>
 </h4>
+
+Sort by <%= link_to "Upvotes", concept_path(@concept.id, :sort => "upvotes")%> 
+<%= link_to "Downvotes", concept_path(@concept.id, :sort => "downvotes")%>
 <div class="row">
   <div class="col-md-8" id="drafts">
     <% @messages.each do |message| %>
+      <br>
       <% if message.finalizable %>
         <div class="row" id="finalize-<%= message.id %>">
           <%= link_to "Finalize message", finalize_path(:concept_id => @concept.id, :id => message.id), :id => "finalize-#{message.id}", :method => :post %>
-        </div>
-      <% end %>
-      <% if message.finalized %>
-        <div class="row" id="assigned-message-<%= message.id %>">
-          Assigned Message
         </div>
       <% end %>
       <div class="row" id="message-row-<%= message.id %>">

@@ -10,7 +10,7 @@
     <%= submit_tag("Change") %>
   <% end %>
 <% end %>  
-<table id="Concepts">
+<table class="table" id="Concepts">
   <thead>
     <tr>
       <th>Concept</th>
@@ -20,7 +20,7 @@
   <tbody>
     <% @concepts.each do |concept| %>
       <tr>
-        <td><%= link_to concept.name, concept_path(concept.id) %></td>
+        <td><%= link_to concept.name, concept_path(concept.id), :class => "btn"%></td>
         <td><%= concept.msg_status %></td>
       </tr>
     <% end %>

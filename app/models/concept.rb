@@ -11,6 +11,15 @@ class Concept < ActiveRecord::Base
         {:name => name, :description => description}    
     end
     
+    def get_finalized_message
+        messages.each do |message|
+            if message.finalized
+                return message.content
+            end
+        end
+        return false
+    end
+    
     def self.verify_row(name, description)
         unless name =~ /\S/
             return "Concept name for one of the concepts is missing. Upload aborted"

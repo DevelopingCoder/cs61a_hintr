@@ -147,4 +147,23 @@ class Tag < ActiveRecord::Base
             tag.update(edit)
         end
     end
+    
+    def related_hints(current_wa_tag)
+        #Gets all hints associated with this partiuclar tag, but leaves out the hints 
+        #associated with current_wa_tag
+        valid_hints = Set.new
+        current_wa_tag_hints = Set.new
+        current_wa_tag.hints.each do |hint|
+            current_wa_tag_hints.add(hint.content)
+        end
+        tag2wronganswers.each do |t_wa|
+            t_wa.hints.each do |hint| 
+                if not current_wa_tag_hints.include?(hint.content)
+                    valid_hints.add(hint.content)
+                end
+            end
+        end
+        
+        return valid_hints
+    end
 end
