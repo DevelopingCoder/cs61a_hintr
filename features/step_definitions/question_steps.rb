@@ -84,19 +84,23 @@ Given /^I unfinalize the hint "(.*)"$/ do |hint|
     step %Q{I follow "unfinalize-#{hint.id}"}
 end
 
-Given /^"(.*)" is finalized$/ do |hint|
-    hint = hint.find_by_content(hint)
+Given /^the hint "(.*)" is finalized$/ do |hint|
+    hint = Hint.find_by_content(hint)
     hint.finalize
 end
 
-Given /^"(.*)" is not finalized$/ do |hint|
-    hint = hint.find_by_content(hint)
+Given /^the hint "(.*)" is not finalized$/ do |hint|
+    hint = Hint.find_by_content(hint)
     hint.unfinalize
 end
 
 Given /^I delete the hint "(.*)"$/ do |hint| 
     hint_to_delete = Hint.find_by_content(hint)
     step %Q{I follow "delete-#{hint_to_delete.id}"}
+end
+
+Given /^the hint threshold is (\d)$/ do |threshold|
+    Rails.application.config.hintthreshold = threshold
 end
 
 
