@@ -24,7 +24,7 @@
             </td>
             <td>
               <%= check_box_tag("delete_emails[]", user.email, false, :disabled => 
-                    (!current_user.admin or user.admin?), :id => "delete_" + user.email) %>
+                    (user == current_user), :id => "delete_" + user.email) %>
             </td>
           </tr>
         <% end %>

@@ -7,10 +7,9 @@ RSpec.describe UsersController, type: :controller do
             user = FactoryGirl.create(:user, email: "testuser@gmail.com")
             admin = FactoryGirl.create(:admin)
             sign_in(admin)
-            params = {:field => "admin", :value => false}
-            request.env['RAW_POST_DATA'] = params.to_json
+            params = {:id => user.id, :field => "admin", :value => false}
             expect_any_instance_of(User).to receive(:toggle_admin)
-            put :edit, :id => user.id
+            put :edit, params
         end
     end
 

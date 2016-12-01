@@ -43,10 +43,6 @@ Scenario: Admin should be able to delete users
   # And I should not see "testuser2"
   # And I should not see "testuser3"
 
-Scenario: Admins should not be able to delete other admins
-  Then the delete checkbox for "testadmin@gmail.com" should be disabled
-  Then the delete checkbox for "testadmin2@gmail.com" should be disabled
-
 @javascript
 Scenario: Admin should be able to assign a user admin privileges
   When I check the admin checkbox for "test2@gmail.com"

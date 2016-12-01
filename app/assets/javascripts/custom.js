@@ -7,7 +7,7 @@ function toggle_admin(id) {
         url: '/display_users/' + id,
         type: 'PUT',
         dataType: "application/json",
-        data: JSON.stringify(data),
+        data: data,
         error: function(response){
             console.log(response)
             alertify.message(response.responseText)

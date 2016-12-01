@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
       other_user = User.find_by_id(id)
       if other_user
         if other_user.update_attributes(:admin => status)
-          if status == true
+          if status == "true"
             return other_user.name + " is now an admin"
           else
             return other_user.name+ " is no longer an admin. Lol"
