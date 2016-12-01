@@ -89,3 +89,14 @@ Then /^I should see all the concepts$/ do
    expected_num_rows = Concept.all.size + 1 # counting the row that says what each column has
    page.should have_css("table#Concepts tr", :count => expected_num_rows)
 end
+
+When /^I sort by "(.*)"$/ do |sorter|
+    step %Q{I follow "#{sorter}"}
+end
+
+
+Then /^(?:|I )should see "([^"]*)" before "([^"]*)"$/ do |text1, text2|
+    index1 = page.body.index("#{text1}")
+    index2 = page.body.index("#{text2}")
+    expect(index1 < index2)
+end

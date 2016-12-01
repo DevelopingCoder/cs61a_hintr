@@ -61,6 +61,15 @@ Scenario: A user can change their vote from up to downvote
   And I upvote "print takes in strings as arguments"
   Then "print takes in strings as arguments" should have 1 upvote
   And "print takes in strings as arguments" should have 0 downvotes
+  
+Scenario: A user can sort their messages
+  Given I downvote "print takes in strings as arguments"
+  And I upvote "print statements evaluate to None"
+  When I sort by "Downvotes"
+  Then I should see "print takes in strings as arguments" before "print statements evaluate to None"
+  When I sort by "Upvotes"
+  Then I should see "print statements evaluate to None" before "print takes in strings as arguments" 
+  
 
 Scenario: A user can delete a message
   Given I delete "print statements evaluate to None"
