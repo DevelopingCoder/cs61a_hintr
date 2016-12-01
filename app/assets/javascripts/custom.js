@@ -49,3 +49,30 @@ function downvote(message_id, concept_id) {
         data: JSON.stringify(data)
     })
 }
+
+lastChecked = null
+$(document).ready(function(){
+    $(".shift_click_checkbox").click(function(e){
+        if(!lastChecked) {
+            lastChecked = this;
+            return;
+        }
+
+        if(e.shiftKey) {
+            var start = $(".shift_click_checkbox").index(this);
+            var end = $(".shift_click_checkbox").index(lastChecked);
+
+            for (var index = Math.min(start, end); index < Math.max(start, end) + 1; index++){
+                // Make sure the field is enabled if you change it
+                var id = $(".shift_click_checkbox")[index].id
+                var field = $("#" + id);
+                var disabled = $("#" + id).is(':disabled');
+                field.prop('checked', lastChecked.checked && !disabled);
+            }
+            
+        }
+
+        lastChecked = this;
+    })
+});
+    
