@@ -21,12 +21,12 @@ And /^I downvote "(.*)"$/ do |message|
     step %Q{I follow "downvote-#{message_to_downvote.id}"}
 end
 
-Then /"(.*)" should have (\d) upvotes?$/ do |message, upvotes|
+Then /^"(.*)" should have (\d) upvotes?$/ do |message, upvotes|
     message = Message.find_by_content(message)
     page.find("#num-upvotes-#{message.id}").should have_content(upvotes)
 end
 
-Then /"(.*)" should have (\d) downvotes?$/ do |message, downvotes|
+Then /^"(.*)" should have (\d) downvotes?$/ do |message, downvotes|
     message = Message.find_by_content(message)
     page.find("#num-downvotes-#{message.id}").should have_content(downvotes)
 end

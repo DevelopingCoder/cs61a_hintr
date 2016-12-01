@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123033515) do
+ActiveRecord::Schema.define(version: 20161130015858) do
 
   create_table "concepts", force: :cascade do |t|
     t.string  "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20161123033515) do
   create_table "tag2wronganswers", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "wrong_answer_id"
+    t.string  "hint_status",     default: "no hints"
   end
 
   create_table "tags", force: :cascade do |t|

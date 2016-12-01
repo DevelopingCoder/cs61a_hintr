@@ -42,5 +42,11 @@ Rails.application.routes.draw do
   match '/concepts/:concept_id/messages/:id/downvote', to: 'messages#downvote', as: "downvote", via: :post
   match '/messages/threshold', to: 'messages#edit_threshold', as: "edit_threshold", via: :post
   match '/concepts/:concept_id/messages/:id/finalize', to: 'messages#finalize', as: 'finalize', via: :post
-  match '/concepts/:concept_id/messages/:id/finalize', to: 'message#unfinalize', as: 'unfinalize', via: :post
+  match '/concepts/:concept_id/messages/:id/unfinalize', to: 'message#unfinalize', as: 'unfinalize', via: :post
+  
+  match '/tag2wronganswers/:tag2wronganswer_id/hints/:id/upvote', to: 'hints#upvote', as: 'upvote_hint', via: :post
+  match '/tag2wronganswers/:tag2wronganswer_id/hints/:id/downvote', to: 'hints#downvote', as: 'downvote_hint', via: :post
+  match '/hints/threshold', to: 'hints#edit_threshold', as: "edit_hint_threshold", via: :post
+  match '/tag2wronganswers/:tag2wronganswer_id/hints/:id/finalize', to: 'hints#finalize', as: 'finalize_hint', via: :post
+  match '/tag2wronganswers/:tag2wronganswer_id/hints/:id/unfinalize', to: 'hints#unfinalize', as: 'unfinalize_hint', via: :post
 end

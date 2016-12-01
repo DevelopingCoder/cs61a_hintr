@@ -1,11 +1,12 @@
 class QuestionSetsController < ApplicationController
-  before_action :set_question_set, only: [:show, :edit, :update, :destroy]
 
   def index
     @question_sets = QuestionSet.all
+    @hint_threshold = Rails.application.config.hintthreshold
   end
 
   def show
+    @question_set = QuestionSet.find(params[:id])
   end
 
 end

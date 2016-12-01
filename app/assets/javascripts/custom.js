@@ -49,3 +49,29 @@ function downvote(message_id, concept_id) {
         data: JSON.stringify(data)
     })
 }
+
+function upvote_hint(hint_id, tag2wronganswer_id) {
+    var data = {
+        field: "hint_id",
+        value: hint_id
+    }
+    $.ajax({
+        url: '/tag2wronganswers/' + tag2wronganswer_id.to_s + '/hints/' + hint_id.to_s + '/upvote',
+        type: 'POST',
+        dataType: "application/json",
+        data: JSON.stringify(data)
+    })
+}
+
+function downvote_hint(hint_id, tag2wronganswer_id) {
+    var data = {
+        field: "hint_id",
+        value: hint_id
+    }
+    $.ajax({
+        url: '/tag2wronganswers/' + tag2wronganswer_id.to_s + '/hints/' + hint_id.to_s + '/downvote',
+        type: 'POST',
+        dataType: "application/json",
+        data: JSON.stringify(data)
+    })
+}

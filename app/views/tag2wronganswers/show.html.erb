@@ -1,0 +1,68 @@
+<h1><%= "Question Set: " + @wrong_answer.question.question_set.name %></h1>
+<div class="row">
+    Question: <%= @wrong_answer.question.text %>
+</div>
+<div class="row">
+    Wrong Answer: <%= @wrong_answer.text %>
+</div>
+<div class="row">
+    Tag: <%= @tag2wronganswer.tag.name %>
+</div>
+
+<div class="row">
+  <div class="col-md-8" id="drafts">
+    <% @hints.each do |hint| %>
+      <% if hint.finalizable %>
+        <div class="row" id="finalize-<%= hint.id %>">
+          <%= link_to "Finalize hint", finalize_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), :id => "finalize-#{hint.id}", :method => :post %>
+        </div>
+      <% end %>
+      <% if hint.finalized %>
+        <div class="row" id="assigned-hint-<%= hint.id %>">
+          Assigned hint
+        </div>
+      <% end %>
+      <div class="row" id="hint-row-<%= hint.id %>">
+        <div class="col-md-3" id="votes">
+          <div class="row" id="upvotes">
+            <div class="col-sm-6" id="upvote-btn-<%= hint.id %>">
+              <%= link_to "Upvote", upvote_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), :id => "upvote-#{hint.id}", :method => :post, :remote => true %>
+            </div>
+            <div class="col-sm-6" id="num-upvotes-<%= hint.id %>">
+              <%= hint.upvotes %>
+            </div>
+          </div>
+          <div class="row" id="downvotes">
+            <div class="col-sm-6" id="downvote-btn-<%= hint.id %>">
+              <%= link_to "Downvote", downvote_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), id: "downvote-#{hint.id}", :method => :post, :remote => true %>
+            </div>
+            <div class="col-sm-6" id="num-downvotes-<%= hint.id %>">
+              <%= hint.downvotes %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7" id="hint">
+          <%= hint.content %>
+        </div>
+        <% if not hint.finalized %>
+          <div class="col-md-2" id="delete-hint">
+            <%= link_to "Delete", tag2wronganswer_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), id: "delete-#{hint.id}", :method => :delete, data: { confirm: "Are you sure?" } %>
+          </div>
+        <% else %>
+          <div class="col-md-2" id="unfinalize-hint">
+            <%= link_to "Unfinalize", unfinalize_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), :id => "unfinalize-#{hint.id}", :method => :post %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4" id="compose">
+    <div class='Post hint'>
+      <%=form_tag(tag2wronganswer_hints_path(:tag2wronganswer_id => @tag2wronganswer.id), :method => :post) do %>
+        <%= text_area_tag("add_hint", nil, :placeholder => "New hint", :required => true, :id => "compose-hint-input", :cols => "10") %>
+        <br/>
+        <%= submit_tag("Post hint") %>
+      <% end %>
+    </div>
+  </div>
+</div>
