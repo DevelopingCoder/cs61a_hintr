@@ -1,11 +1,11 @@
 class Message < ActiveRecord::Base
     validates :content, presence: true
-    validate :concept_uniqueness
-
+    validate :is_unique
+    
     has_many :votes, dependent: :destroy
     has_many :users, :through => :votes
     
-    def concept_uniqueness
+    def is_unique
         if self.concept_id
             concept = Concept.find_by_id(self.concept_id)
             concept.messages.each do |message|
