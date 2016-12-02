@@ -48,6 +48,7 @@ Scenario: I can upload a tags file and confirm all actions
   
     When I check "delete_tag_deletion"
     And I check "add_test_tag_addition"
+    And I check "edit_test_tag_2"
     When I press "Confirm Upload"
     Then I should see "Success"
     
