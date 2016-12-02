@@ -1,0 +1,35 @@
+{
+  "qset1": {
+    "question1": {
+      "wa1": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "wa2": [
+        "tag3",
+        "tag4",
+        "tag5"
+      ],
+      "CASE_STR": "new case string "
+    },
+    "question2": {
+      "wa3": [
+        "tag1",
+        "tag4",
+        "tag7"
+      ],
+      "CASE_STR": "whatever a case string is"
+    }
+  },
+  "qset2": {
+    "q3": {
+      "wa4": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+      "CASE_STR": "stuff curry"
+    }
+  }
+}
