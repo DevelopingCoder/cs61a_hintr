@@ -7,7 +7,7 @@ engines:
   csslint:
     enabled: true
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - ruby
@@ -18,6 +18,11 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+    checks:
+      Rubocop%2FLint%2FEval:
+        enabled: false
 ratings:
   paths:
   - "app/**/*"
+exclude_paths:
+- "app/assets/javascripts/custom.js"
