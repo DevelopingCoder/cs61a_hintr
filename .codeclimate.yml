@@ -7,7 +7,7 @@ engines:
   csslint:
     enabled: true
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - ruby
@@ -24,3 +24,5 @@ engines:
 ratings:
   paths:
   - "app/**/*"
+exclude_paths:
+- "app/assets/javascripts/custom.js"
