@@ -85,4 +85,23 @@ class ApplicationController < ActionController::Base
     return changes
   end
   
+  def show_changes(model, format_msg)
+    if not params.keys.include?("path")
+        flash[:notice] = "Oops we lost your state. Please upload again"
+        redirect_to upload_path and return
+    end
+    changes = model.import(params[:path])
+    if not changes
+        flash[:notice] = format_msg
+        redirect_to upload_path and return
+    elsif changes.key? :error
+        @error = changes[:error]
+    end
+    
+    #Otherwise Successful
+    @additions = changes[:additions]
+    @deletions = changes[:deletions]
+    @edits = changes[:edits]
+  end
+  
 end
