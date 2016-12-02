@@ -11,6 +11,10 @@ Background: A user account exists
     Given I log in with email: "testadmin@gmail.com" and password: "password"
     And I follow "Uploads"
     
+    Given the following "bad.csv" exists:
+    | Concept        |
+    | test_concept_1 |
+    
 Scenario: I can upload a Users file
     Given I select "Users (csv)"
     Given I choose to upload a file with "users.csv"
@@ -27,3 +31,10 @@ Scenario: I should not be able to upload an incorrectly formatted file
     Given I choose to upload a file with "concepts.csv"
     And I press "Upload"
     Then I should see "Users file not correctly formatted. First 2 columns must be Name, Email"
+    
+Scenario: I should not be able to upload an incorrectly formatted file 
+    Given I select "Users (csv)"
+    Given I choose to upload a file with "bad.csv"
+    And I press "Upload"
+    Then I should see "Users file not correctly formatted. First 2 columns must be Name, Email"
+    
