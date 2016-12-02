@@ -2,6 +2,10 @@ class UploadsController < ApplicationController
     
     def new
         #Based on file being uploaded, redirect to its upload controller
+        if not params.has_key?("file")
+            flash[:notice] = "Please attach a file"
+            render :index and return
+        end
         file_type = params[:file_type].split()[0].downcase #(ie Concepts, Tags)
         
         #No confirmation on Users

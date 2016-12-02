@@ -37,4 +37,8 @@ Scenario: I should not be able to upload an incorrectly formatted file
     Given I choose to upload a file with "bad.csv"
     And I press "Upload"
     Then I should see "Users file not correctly formatted. First 2 columns must be Name, Email"
-    
+
+Scenario: Uploading nothing will give me an error message
+    Given I select "Users (csv)"
+    And I press "Upload"
+    Then I should see "Please attach a file"
