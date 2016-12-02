@@ -71,8 +71,26 @@ Sort by <%= link_to "Upvotes", tag2wronganswer_path(@tag2wronganswer.id, :sort =
       <%=form_tag(tag2wronganswer_hints_path(:tag2wronganswer_id => @tag2wronganswer.id), :method => :post) do %>
         <%= text_area_tag("add_hint", nil, :placeholder => "New hint", :required => true, :id => "compose-hint-input", :cols => "10") %>
         <br/>
+        
         <%= submit_tag("Post hint") %>
+      <% end %>
+      <% if not @tag2wronganswer.tag.related_hints(@tag2wronganswer).empty? %>
+        <%=form_tag(tag2wronganswer_hints_path(:tag2wronganswer_id => @tag2wronganswer.id), :method => :post) do %>  
+          <%= select_tag("add_hint", options_for_select(@tag2wronganswer.tag.related_hints(@tag2wronganswer)),  {:include_blank => true}) %>
+          
+          <%= submit_tag("Use old hint") %>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+
+    $('#add_hint').on('change', function () {
+        var myValue = $(this).val();
+        $("#compose-hint-input").val(myValue);
+    });
+  });
+</script>
