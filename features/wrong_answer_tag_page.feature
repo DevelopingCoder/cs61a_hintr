@@ -41,10 +41,20 @@ Scenario: A user can downvote a hint
   Then the hint "print takes in strings as arguments" should have 1 downvote
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
-Scenario: A user cannot downvote on a hint twice
+Scenario: A user can toggle a downvote
   Given I downvote the hint "print takes in strings as arguments"
-  And I downvote the hint "print takes in strings as arguments"
   Then the hint "print takes in strings as arguments" should have 1 downvote
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+  When I downvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+   
+Scenario: A user can toggle an upvote
+  Given I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvote
+  And the hint "print takes in strings as arguments" should have 1 upvotes
+  When I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
 Scenario: A user can change their vote from up to downvote 
