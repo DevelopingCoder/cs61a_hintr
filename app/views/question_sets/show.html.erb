@@ -10,7 +10,7 @@
           <div class="row wrong-answer-text">
             <%= wrong_answer.text + ": " %>
             <% wrong_answer.tags.each do |tag| %>
-              <%= link_to (tag.name + " "), tag2wronganswer_path(Tag2wronganswer.get_id(wrong_answer, tag)) %>
+              <%= link_to (tag.name + " "), tag2wronganswer_path(Tag2wronganswer.get_id(wrong_answer, tag)), :id => tag.name+wrong_answer.text %>
             <% end %>
           </div>
         </div>
