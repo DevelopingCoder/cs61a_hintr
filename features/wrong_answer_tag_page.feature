@@ -41,10 +41,20 @@ Scenario: A user can downvote a hint
   Then the hint "print takes in strings as arguments" should have 1 downvote
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
-Scenario: A user cannot downvote on a hint twice
+Scenario: A user can toggle a downvote
   Given I downvote the hint "print takes in strings as arguments"
-  And I downvote the hint "print takes in strings as arguments"
   Then the hint "print takes in strings as arguments" should have 1 downvote
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+  When I downvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+   
+Scenario: A user can toggle an upvote
+  Given I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvote
+  And the hint "print takes in strings as arguments" should have 1 upvotes
+  When I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
 Scenario: A user can change their vote from up to downvote 
@@ -62,4 +72,12 @@ Scenario: A user can select to add other hints from same tag
   And I press "printing-wrong-answer-2"
   Given I upvote the hint "printing is not the same as return"
   Then the hint "printing is not the same as return" should have 1 upvote
+  
+Scenario: A user can sort their messages
+  Given I downvote the hint "print takes in strings as arguments"
+  And I upvote the hint "print statements evaluate to None"
+  When I sort by "Downvotes"
+  Then I should see "print takes in strings as arguments" before "print statements evaluate to None"
+  When I sort by "Upvotes"
+  Then I should see "print statements evaluate to None" before "print takes in strings as arguments" 
   

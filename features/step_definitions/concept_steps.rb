@@ -51,9 +51,8 @@ Then /^I should not be able to finalize "(.*)"$/ do |message|
 end
 
 Then /^"(.*)" should be finalized$/ do |message|
-    prefix = "Status: assigned. Message: "
-    full_message = prefix + message
-    step %Q{I should see "#{full_message}"}
+    message = Message.find_by_content(message)
+    expect(page).to have_selector("#assigned-message-#{message.id}")
 end
 
 Then /^"(.*)" should not be finalized$/ do |message|
