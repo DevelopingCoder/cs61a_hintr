@@ -18,6 +18,9 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+    checks:
+      Rubocop%2FLint%2FEval:
+        enabled: false
 ratings:
   paths:
   - "app/**/*"

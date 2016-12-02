@@ -17,26 +17,8 @@ class UploadTag2conceptsController < ApplicationController
     end
     
     def confirm
-        changes = {}
-        
-        confirmed_additions = params[:confirmed_additions]
-        additions = []
-        if confirmed_additions
-            confirmed_additions.each do |addition|
-                additions += [eval(addition)]
-            end
-        end
-        changes[:additions] = additions
-        
-        confirmed_deletions = params[:confirmed_deletions]
-        deletions = []
-        if confirmed_deletions
-            confirmed_deletions.each do |deletion|
-                deletions += [eval(deletion)]
-            end
-        end
-        changes[:deletions] = deletions
-        
+        params[:confirmed_edits] = [] #Do this just to maintain DRYness        
+        changes = aggregate_changes
         Tag2concept.save_changes(changes)        
         #get additions deletions and editions from params
         #for each of these arrays, do proper action in model
