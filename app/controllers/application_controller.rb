@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, unless: :is_devise?
   helper_method :sort_messages
   helper_method :aggregate_changes
+  helper_method :eval_confirmed_changes
   
   def is_devise?
     return params[:controller].include?("devise/")
@@ -50,7 +51,7 @@ class ApplicationController < ActionController::Base
         messages = message_downvotes.sort_by {|_k,v| v}.map{|k,_v| k}
     end
     
-  return messages
+    return messages
   end
   
   def aggregate_changes
@@ -102,6 +103,16 @@ class ApplicationController < ActionController::Base
     @additions = changes[:additions]
     @deletions = changes[:deletions]
     @edits = changes[:edits]
+  end
+  
+  def eval_confirmed_changes(confirmed_changes)
+    changes = []
+    if confirmed_changes
+      confirmed_changes.each do |change|
+        changes += [eval(change)]
+      end
+    end
+    return changes
   end
   
 end
