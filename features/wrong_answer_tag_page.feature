@@ -12,6 +12,7 @@ Background:
   And the following Wrong Answers exist:
     | wrong_answer_text | question                                     |
     | None              | what would python print? print 'hello world' |
+    | Some              | what would python print? print 'hello world' |
   And the following Tags exist:
     | name      | description         | example    |
     | printing  | printing in python  | print 'hi' |
@@ -20,10 +21,11 @@ Background:
     | printing   | print statements evaluate to None    | None              |
     | printing   | print takes in strings as arguments  | None              |
     | printing   | printing is not the same as return   | None              |
+    | printing   | print-wrong-answer-2                 | Some              |
   
   And I follow "Question Sets"
   And I follow "qset"
-  And I follow "printing"
+  And I follow "printingNone"
   
 Scenario: The Wrong Answer Tag Page shows Question Text, Wrong Answer Text, and Tag name
   Then I should see "what would python print? print 'hello world'"
@@ -41,10 +43,20 @@ Scenario: A user can downvote a hint
   Then the hint "print takes in strings as arguments" should have 1 downvote
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
-Scenario: A user cannot downvote on a hint twice
+Scenario: A user can toggle a downvote
   Given I downvote the hint "print takes in strings as arguments"
-  And I downvote the hint "print takes in strings as arguments"
   Then the hint "print takes in strings as arguments" should have 1 downvote
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+  When I downvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
+  And the hint "print takes in strings as arguments" should have 0 upvotes
+   
+Scenario: A user can toggle an upvote
+  Given I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvote
+  And the hint "print takes in strings as arguments" should have 1 upvotes
+  When I upvote the hint "print takes in strings as arguments"
+  Then the hint "print takes in strings as arguments" should have 0 downvotes
   And the hint "print takes in strings as arguments" should have 0 upvotes
   
 Scenario: A user can change their vote from up to downvote 
@@ -59,7 +71,17 @@ Scenario: A user can delete a hint
 
 Scenario: A user can select to add other hints from same tag
   Then I should see "printing is not the same as return"
-  And I press "printing-wrong-answer-2"
+  And I select "print-wrong-answer-2"
+  And I press "Post hint"
+  Then I should see "print-wrong-answer-2"
   Given I upvote the hint "printing is not the same as return"
   Then the hint "printing is not the same as return" should have 1 upvote
+  
+Scenario: A user can sort their messages
+  Given I downvote the hint "print takes in strings as arguments"
+  And I upvote the hint "print statements evaluate to None"
+  When I sort by "Downvotes"
+  Then I should see "print takes in strings as arguments" before "print statements evaluate to None"
+  When I sort by "Upvotes"
+  Then I should see "print statements evaluate to None" before "print takes in strings as arguments" 
   

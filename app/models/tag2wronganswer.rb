@@ -5,6 +5,15 @@ class Tag2wronganswer < ActiveRecord::Base
     belongs_to :wrong_answer
     has_many :hints
     
+    def get_finalized_hint
+        hints.each do |hint|
+            if hint.finalized
+                return hint.content
+            end
+        end
+        return false
+    end
+    
     def self.get_id(wrong_answer, tag)
         tag2wronganswer =  Tag2wronganswer.where(:wrong_answer_id => wrong_answer.id).where(:tag_id => tag.id).first
         if tag2wronganswer

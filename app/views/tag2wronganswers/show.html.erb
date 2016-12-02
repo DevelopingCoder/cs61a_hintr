@@ -1,17 +1,27 @@
 <h1><%= "Question Set: " + @wrong_answer.question.question_set.name %></h1>
-<div class="row">
+<h3>
     Question: <%= @wrong_answer.question.text %>
-</div>
-<div class="row">
+</h3>
+<h4>
     Wrong Answer: <%= @wrong_answer.text %>
-</div>
-<div class="row">
+</h4>
+<h4>
+    <%= "Status: " + @tag2wronganswer.hint_status + "."%>
+    <% if @tag2wronganswer.hint_status == "assigned" %>
+      <%= "Message: " + @final_message %>
+    <% end %>
+</h4>
+<h4>
     Tag: <%= @tag2wronganswer.tag.name %>
-</div>
+</h4>
+
+Sort by <%= link_to "Upvotes", tag2wronganswer_path(@tag2wronganswer.id, :sort => "upvotes")%> 
+<%= link_to "Downvotes", tag2wronganswer_path(@tag2wronganswer.id, :sort => "downvotes")%>
 
 <div class="row">
   <div class="col-md-8" id="drafts">
     <% @hints.each do |hint| %>
+      <br>
       <% if hint.finalizable %>
         <div class="row" id="finalize-<%= hint.id %>">
           <%= link_to "Finalize hint", finalize_hint_path(:tag2wronganswer_id => @tag2wronganswer.id, :id => hint.id), :id => "finalize-#{hint.id}", :method => :post %>
@@ -61,8 +71,26 @@
       <%=form_tag(tag2wronganswer_hints_path(:tag2wronganswer_id => @tag2wronganswer.id), :method => :post) do %>
         <%= text_area_tag("add_hint", nil, :placeholder => "New hint", :required => true, :id => "compose-hint-input", :cols => "10") %>
         <br/>
+        
         <%= submit_tag("Post hint") %>
+      <% end %>
+      <% if not @tag2wronganswer.tag.related_hints(@tag2wronganswer).empty? %>
+        <%=form_tag(tag2wronganswer_hints_path(:tag2wronganswer_id => @tag2wronganswer.id), :method => :post) do %>  
+          <%= select_tag("add_hint", options_for_select(@tag2wronganswer.tag.related_hints(@tag2wronganswer)),  {:include_blank => true}) %>
+          
+          <%= submit_tag("Use old hint") %>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+
+    $('#add_hint').on('change', function () {
+        var myValue = $(this).val();
+        $("#compose-hint-input").val(myValue);
+    });
+  });
+</script>

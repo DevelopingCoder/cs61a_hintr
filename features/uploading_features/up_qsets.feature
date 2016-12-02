@@ -91,6 +91,25 @@ Scenario: Question additions are correctly detected
   Then I should see "Success"
   And the data in "question.json" should exist in the database
   
+Scenario: Case String changes are correctly detected
+  Given the data in "question.json" exists
+  And I select "Question_Sets (json)"
+  And I choose to upload a file with "qset_diff_case_str.json"
+  When I press "Upload"
+  
+  Then the addition section should not have "qset1"
+  And the addition section should not have "qset2"
+  And the edits section should have "qset1"
+  And the edits section should have "qset2"
+  And the deletions section should not have "qset1"
+  And the deletions section should not have "qset2"
+  
+  Given I check "edit_qset2_edit_q3"
+  And I check "edit_qset1_edit_question1"
+  When I press "Confirm Upload"
+  Then I should see "Success"
+  And the data in "qset_diff_case_str.json" should exist in the database
+  
 Scenario: Question deletions are correctly detected
   Given the data in "question.json" exists
   And I select "Question_Sets (json)"
