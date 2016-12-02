@@ -22,11 +22,10 @@ class QuestionSet < ActiveRecord::Base
         non_exist_tags = []
         file_qsets.keys.each do |qset_name|
             question_hash = file_qsets[qset_name]
-            question_hash.each do |question_text, wa_hash|
-                wrong_answer_list = question_hash[question_text]
+            question_hash.each do |question_text, wrong_answer_list|
                 wrong_answer_list.each do |wrong_answer_text, tag_list|
                     if wrong_answer_text != "CASE_STR"
-                       wrong_answer_list[wrong_answer_text].each do |tag_name|
+                       tag_list.each do |tag_name|
                             if not Tag.find_by_name(tag_name)
                                 if not non_exist_tags.include?(tag_name)
                                     non_exist_tags << tag_name
@@ -45,13 +44,7 @@ class QuestionSet < ActiveRecord::Base
         #a message, which may be an empty string if we do not want to create a new message
         edits = {}
         additions = {}
-        deletions = []
-        QuestionSet.all.each do |exist_qset|
-            if !file_qsets.key?(exist_qset.name)
-                deletions += [exist_qset]
-            end
-        end
-        
+        deletions = QuestionSet.find_deletions(file_qsets)
         #check additions and edits
         file_qsets.keys.each do |qset_name|
             #Check if questionset not in db
@@ -70,32 +63,41 @@ class QuestionSet < ActiveRecord::Base
                         db_display_list[question.text] = question.get_wrong_answers
                     end
                 end
-                
                 #find additions/edits
-                question_hash.each do |question_text, wa_hash|
-                    question = Question.find_by_text(question_text)
-                    if not question
-                        # addition of question
-                        upload_display_list[question_text] = question_hash[question_text]
-                    else
-                        question_display_lists = question.find_edits(question_hash[question_text])
-                        if not question_display_lists[0].empty? or not question_display_lists[1].empty?
-                            db_display_list[question_text] = question_display_lists[0]
-                            upload_display_list[question_text] = question_display_lists[1]
-                            # edits happened, add to lists accordingly
-                        end
-                    end
-                end
+                QuestionSet.find_additions_and_edits(question_hash, upload_display_list, db_display_list)
                 if not (db_display_list.empty? and upload_display_list.empty?)
                     edits[qset_name] = [db_display_list, upload_display_list]
                 end
-                
-                
-                 
-                
             end
         end
         return {:additions => additions, :deletions => deletions, :edits => edits}
+    end
+    
+    def self.find_additions_and_edits(question_hash, upload_display_list, db_display_list)
+        question_hash.each do |question_text, wa_hash|
+            question = Question.find_by_text(question_text)
+            if not question
+                # addition of question
+                upload_display_list[question_text] = wa_hash
+            else
+                question_display_lists = question.find_edits(question_hash[question_text])
+                if not question_display_lists[0].empty? or not question_display_lists[1].empty?
+                    db_display_list[question_text] = question_display_lists[0]
+                    upload_display_list[question_text] = question_display_lists[1]
+                    # edits happened, add to lists accordingly
+                end
+            end
+        end
+    end
+    
+    def self.find_deletions(file_qsets)
+        deletions = []
+        QuestionSet.all.each do |exist_qset|
+            if !file_qsets.key?(exist_qset.name)
+                deletions += [exist_qset]
+            end
+        end
+        return deletions
     end
     
     def self.save_changes(changes)
@@ -124,6 +126,13 @@ class QuestionSet < ActiveRecord::Base
         end
         
         question_additions = changes[:question_additions]
+        QuestionSet.add_questions(changes[:question_additions])
+        QuestionSet.apply_edits(changes[:question_edits])
+        QuestionSet.delete_questions(changes[:question_deletions])
+        
+    end
+    
+    def self.add_questions(question_additions)
         question_additions.each do |qset_name, question_text, wa_hash|
             qset = QuestionSet.find_by_name(qset_name)
             question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
@@ -136,8 +145,20 @@ class QuestionSet < ActiveRecord::Base
             end
             qset.questions << question
         end
-        
-        question_edits = changes[:question_edits]
+    end
+    
+    def self.delete_questions(question_deletions)
+        question_deletions.each do |qset_name, question_text|
+            qset = QuestionSet.find_by_name(qset_name)
+            qset.questions.each do |question|
+                if question.text == question_text
+                    question.destroy
+                end
+            end
+        end
+    end
+    
+    def self.apply_edits(question_edits)
         question_edits.each do |qset_name, question_text, wa_hash|
             qset = QuestionSet.find_by_name(qset_name)
             question = Question.create(:text => question_text, :case_string => wa_hash["CASE_STR"])
@@ -150,18 +171,6 @@ class QuestionSet < ActiveRecord::Base
             end
             qset.questions << question
         end
-        
-        
-        question_deletions = changes[:question_deletions]
-        question_deletions.each do |qset_name, question_text|
-            qset = QuestionSet.find_by_name(qset_name)
-            qset.questions.each do |question|
-                if question.text == question_text
-                    question.destroy
-                end
-            end
-        end
-        
     end
     
     
