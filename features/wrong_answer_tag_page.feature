@@ -73,3 +73,11 @@ Scenario: A user can select to add other hints from same tag
   Given I upvote the hint "printing is not the same as return"
   Then the hint "printing is not the same as return" should have 1 upvote
   
+Scenario: A user can sort their messages
+  Given I downvote the hint "print takes in strings as arguments"
+  And I upvote the hint "print statements evaluate to None"
+  When I sort by "Downvotes"
+  Then I should see "print takes in strings as arguments" before "print statements evaluate to None"
+  When I sort by "Upvotes"
+  Then I should see "print statements evaluate to None" before "print takes in strings as arguments" 
+  
