@@ -16,6 +16,8 @@ class HintsController < ApplicationController
     def destroy
         hint = Hint.find(params[:id])
         hint.destroy!
+        tag2wronganswer = Tag2wronganswer.find_by_id(params[:tag2wronganswer_id])
+        tag2wronganswer.update_status
         redirect_to tag2wronganswer_path(params[:tag2wronganswer_id])
     end
     
@@ -42,12 +44,16 @@ class HintsController < ApplicationController
     def finalize
         hint = Hint.find(params[:id])
         hint.finalize
+        tag2wronganswer = Tag2wronganswer.find(params[:tag2wronganswer_id])
+        tag2wronganswer.update_status
         redirect_to tag2wronganswer_path(params[:tag2wronganswer_id])
     end
     
     def unfinalize
         hint = Hint.find(params[:id])
         hint.unfinalize
+        tag2wronganswer = Tag2wronganswer.find(params[:tag2wronganswer_id])
+        tag2wronganswer.update_status
         redirect_to tag2wronganswer_path(params[:tag2wronganswer_id])
     end
 end

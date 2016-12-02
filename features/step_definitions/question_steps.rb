@@ -103,4 +103,9 @@ Given /^the hint threshold is (\d)$/ do |threshold|
     Rails.application.config.hintthreshold = threshold
 end
 
+Then /^the hint threshold should be (\d)$/ do |threshold|
+    expect(Rails.application.config.hintthreshold.to_s).to eq(threshold)
+    find('#threshold-display').should have_content(threshold)
+end
+
 
