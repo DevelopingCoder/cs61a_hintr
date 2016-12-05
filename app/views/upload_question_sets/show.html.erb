@@ -13,7 +13,7 @@
                             </div>
                             <div class="row wrong-answer-list">
                                 <div class="col-md-offset-1 col-md-11">
-                                    <%wa_hash.each do |wa_text, tag_list| %>
+                                    <% wa_hash.each do |wa_text, tag_list| %>
                                         <div class="row wrong-answer-text">
                                             <%= wa_text%>
                                         </div>
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="row wrong-answer-tags">
                                             <div class="col-md-offset-1 col-md-11">
-                                                wrong_answer.get_tags
+                                                <%= wrong_answer.get_tags %>
                                             </div>
                                         </div>
                                     <% end %>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 confirmation-checkboxes">
-                        <%= check_box_tag("confirmed_qset_deletions[]", qset.name.to_s, true, :id => "delete_"+ qset.name) %>
+                        <%= check_box_tag("confirmed_qset_deletions[]", qset.name.to_s, false, :id => "delete_"+ qset.name) %>
                     </div>
                 <% end %>
             <% end %>
