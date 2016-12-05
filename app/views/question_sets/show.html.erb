@@ -2,7 +2,7 @@
 <% @question_set.questions.each do |question| %>
   <div class="row question">
     <div class="row question-case-str">
-      <h4><%= question.text %></h4>
+      <h4><%= question.case_string %></h4>
     </div>
     <% question.wrong_answers.each do |wrong_answer| %>
       <div class="row wrong-answer">
