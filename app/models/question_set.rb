@@ -26,7 +26,8 @@ class QuestionSet < ActiveRecord::Base
                 wrong_answer_list.each do |wrong_answer_text, tag_list|
                     if wrong_answer_text != "CASE_STR"
                        tag_list.each do |tag_name|
-                            if not Tag.find_by_name(tag_name)
+                            existing_tag = Tag.where("lower(name) = ?", tag_name.downcase)
+                            if not existing_tag or not existing_tag.first
                                 if not non_exist_tags.include?(tag_name)
                                     non_exist_tags << tag_name
                                 end

@@ -34,7 +34,7 @@ class WrongAnswer < ActiveRecord::Base
     
     def associate_tags(tag_list)
         tag_list.each do |tag_name|
-            tag = Tag.find_by_name(tag_name)
+            tag = Tag.where("lower(name) = ?", tag_name.downcase).first
             if tag
                 self.tags << tag
             end
