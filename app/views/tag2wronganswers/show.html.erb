@@ -1,7 +1,10 @@
-<h1><%= "Question Set: " + @wrong_answer.question.question_set.name %></h1>
-<h3>
-    Question: <%= @wrong_answer.question.text %>
-</h3>
+<h2><%= "Question Set: " + @wrong_answer.question.question_set.name %></h2>
+<h4>
+    Case String: <%= @wrong_answer.question.case_string %>
+</h4>
+<h4>
+    Question: <%= simple_format(@wrong_answer.question.text) %>
+</h4>
 <h4>
     Wrong Answer: <%= @wrong_answer.text %>
 </h4>
